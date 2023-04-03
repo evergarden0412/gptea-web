@@ -26,7 +26,7 @@ const dummyMessage = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium rerum et ea! Nam, tempore eius corporis vitae quia cupiditate ut expedita nulla minus numquam quae, dolore, exercitationem ipsam. Eum, quo!",
     role: "user",
     createdAt: 1680414069243,
-    scrapbooks: [],
+    scrapbooks: [881],
     highlights: [],
   },
   {
@@ -36,7 +36,7 @@ const dummyMessage = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium rerum et ea! Nam, tempore eius corporis vitae quia cupiditate ut expedita nulla minus numquam quae, dolore, exercitationem ipsam. Eum, quo!",
     role: "ai",
     createdAt: 1680414086189,
-    scrapbooks: [],
+    scrapbooks: [881],
     highlights: [],
   },
   {
