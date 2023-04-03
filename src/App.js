@@ -1,7 +1,11 @@
 import "./App.css";
+import MyGptea from "./pages/MyGptea";
+import Welcome from "./pages/Welcome";
 
 function App() {
-  return <div className="App"></div>;
+  let isLoggedIn = true;
+
+  return <div className="wrapper">{isLoggedIn ? <MyGptea /> : <Welcome />}</div>;
 }
 
 export default App;
