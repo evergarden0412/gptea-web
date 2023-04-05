@@ -7,7 +7,10 @@ const MessageWrapper = styled.li`
   border-radius: 3rem;
   ${(props) => (props.role === 'user' ? 'border-top-left-radius: 0' : 'border-bottom-right-radius:0')};
   padding: 1rem 2rem;
-  margin-bottom: 1rem;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const MessageContent = styled.div``;

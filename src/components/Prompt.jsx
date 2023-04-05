@@ -15,20 +15,20 @@ const PromptForm = styled.form`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 1rem;
+  height: 100%;
+  padding: 0.5rem 2rem;
   border-radius: 1rem;
   background-color: var(--hover);
 `;
 
 const PromptInput = styled.textarea`
   width: 100%;
-  height: 2rem;
+  height: 100%;
   font-size: 1rem;
   font-weight: 600;
   background-color: transparent;
   border: none;
   outline: none;
-  padding: 0.5rem;
   padding-right: 3rem;
 `;
 
