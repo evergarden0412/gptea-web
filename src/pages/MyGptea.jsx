@@ -1,13 +1,19 @@
-import Feature from "../components/Feature";
-import Nav from "../components/Nav";
+import styled from 'styled-components';
+import Feature from '../components/Feature';
+import Nav from '../components/Nav';
+
+const MyGpteaWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+`;
 
 function MyGptea() {
   return (
-    <div className="mygptea">
-      <h1>MyGptea</h1>
+    <MyGpteaWrapper>
       <Nav />
       <Feature />
-    </div>
+    </MyGpteaWrapper>
   );
 }
 
