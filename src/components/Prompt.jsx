@@ -1,11 +1,58 @@
+import styled from 'styled-components';
+
+const PromptWrapper = styled.div`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+`;
+
+const PromptForm = styled.form`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--hover);
+`;
+
+const PromptInput = styled.textarea`
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  padding-right: 3rem;
+`;
+
+const PromptButton = styled.button`
+  position: absolute;
+  right: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+
+  i {
+    font-size: 1.5rem;
+  }
+`;
+
 function Prompt() {
   return (
-    <form className="Prompt">
-      <input className="Prompt__input" placeholder="ask anything" />
-      <button>
-        <i className="Prompt__button--submit fa-solid fa-paper-plane"></i>
-      </button>
-    </form>
+    <PromptWrapper>
+      <PromptForm>
+        <PromptInput placeholder="ask anything" />
+        <PromptButton>
+          <i className="Prompt__button--submit fa-solid fa-paper-plane"></i>
+        </PromptButton>
+      </PromptForm>
+    </PromptWrapper>
   );
 }
 

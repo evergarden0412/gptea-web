@@ -1,17 +1,25 @@
-import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
-import Messages from "../components/Messages";
-import Prompt from "../components/Prompt";
+import Messages from '../components/Messages';
+import Prompt from '../components/Prompt';
+
+const Box = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+`;
 
 function Chat() {
   const { chatId } = useParams();
 
   return (
-    <div className="Chat">
-      <h1>Chat</h1>
+    <Box className="Chat">
       <Messages chatId={Number(chatId)} />
       <Prompt />
-    </div>
+    </Box>
   );
 }
 
