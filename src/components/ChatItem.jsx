@@ -1,14 +1,52 @@
+import styled from 'styled-components';
+
+const ChatItemWrapper = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3.5rem;
+  padding: 1rem 1.5rem;
+
+  &:hover {
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--hover);
+  }
+`;
+
+const ChatItemText = styled.div`
+  font-size: 1.5rem;
+`;
+
+const ChatItemButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChatItemButton = styled.button`
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+
+  i {
+    font-size: 1.5rem;
+  }
+`;
+
 function ChatItem({ chat }) {
   return (
-    <li className="ChatItem">
-      <div className="ChatItem__text">{chat.title}</div>
-      <button className="ChatItem__button--modify">
-        <i className="fa-solid fa-pen-to-square"></i>
-      </button>
-      <button className="ChatItem__button--remove">
-        <i className="fa-solid fa-trash-can"></i>
-      </button>
-    </li>
+    <ChatItemWrapper>
+      <ChatItemText>{chat.title}</ChatItemText>
+      <ChatItemButtons>
+        <ChatItemButton>
+          <i className="fa-solid fa-pen-to-square"></i>
+        </ChatItemButton>
+        <ChatItemButton>
+          <i className="fa-solid fa-trash-can"></i>
+        </ChatItemButton>
+      </ChatItemButtons>
+    </ChatItemWrapper>
   );
 }
 
