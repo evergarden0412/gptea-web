@@ -6,7 +6,7 @@ const NavWrapper = styled.section`
   background-color: green;
 `;
 
-const NavStyle = styled(NavLink)`
+const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
   font-size: 2rem;
@@ -32,24 +32,24 @@ const NavText = styled.div`
 function Nav() {
   return (
     <NavWrapper>
-      <NavStyle to="/" className="navItem">
+      <NavItem to="/">
         <NavIcon>
           <i className="fa-solid fa-mug-hot"></i>
         </NavIcon>
         <NavText>Chat</NavText>
-      </NavStyle>
-      <NavStyle to="/scrapbooks" className="navItem">
+      </NavItem>
+      <NavItem to="/scrapbooks">
         <NavIcon>
           <i className="fa-regular fa-bookmark"></i>
         </NavIcon>
         <NavText>Scrap</NavText>
-      </NavStyle>
-      <NavStyle to="/highlights" className="navItem">
+      </NavItem>
+      <NavItem to="/highlights">
         <NavIcon>
           <i className="fa-solid fa-highlighter"></i>
         </NavIcon>
         <NavText>Highlight</NavText>
-      </NavStyle>
+      </NavItem>
     </NavWrapper>
   );
 }
