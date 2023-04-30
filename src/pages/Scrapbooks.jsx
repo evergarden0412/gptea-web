@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import dummyScrapbook from '../dummyScrapbook';
 import Scrapbook from '../components/Scrapbook';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
@@ -11,9 +11,19 @@ const ScrapbooksWrapper = styled.div`
 `;
 
 function Scrapbooks() {
+  const [scrapbooks, setScrapbooks] = useState([]);
+
+  useEffect(() => {
+    fetch('/me/scrapbooks')
+      .then((response) => response.json())
+      .then((json) => setScrapbooks(json.scrapbooks));
+  }, []);
+
+  console.log('Scrapbooks', scrapbooks);
+
   return (
     <ScrapbooksWrapper>
-      {dummyScrapbook.map((scrapbook) => (
+      {scrapbooks.map((scrapbook) => (
         <Link to={`/scrapbooks/${scrapbook.id}`} key={scrapbook.id}>
           <Scrapbook scrapbook={scrapbook} />
         </Link>

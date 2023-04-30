@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import dummyMessage from '../dummyMessage';
 import Message from './Message';
+import { useState, useEffect } from 'react';
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -14,14 +14,29 @@ const MessagesContainer = styled.ul`
 `;
 
 function Messages({ chatId }) {
-  const chatMessages = dummyMessage.filter((message) => message.chat === chatId);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    fetch(`/me/chats/${chatId}/messages`)
+      .then((response) => response.json())
+      .then((json) => {
+        const newMessages = json.messages.map((message) => {
+          message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
+          return message;
+        }); // message.role api에 추가될 예정
+        setMessages(newMessages);
+      });
+  }, []);
+
+  console.log('Messages', messages);
 
   return (
     <MessagesWrapper>
       <MessagesContainer>
-        {chatMessages.map((message) => (
-          <Message key={message.id} message={message} />
-        ))}
+        {messages.map((message) => {
+          const messageId = message.chatId + message.seq.toString(); // message.id가 따로 존재하지 않음
+          return <Message key={messageId} message={message} />;
+        })}
       </MessagesContainer>
     </MessagesWrapper>
   );

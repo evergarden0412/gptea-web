@@ -37,13 +37,13 @@ const ChatItemButton = styled.button`
 function ChatItem({ chat }) {
   return (
     <ChatItemWrapper>
-      <ChatItemText>{chat.title}</ChatItemText>
+      <ChatItemText>{chat.name}</ChatItemText>
       <ChatItemButtons>
         <ChatItemButton>
-          <i className="fa-solid fa-pen-to-square"></i>
+          <i className='fa-solid fa-pen-to-square'></i>
         </ChatItemButton>
         <ChatItemButton>
-          <i className="fa-solid fa-trash-can"></i>
+          <i className='fa-solid fa-trash-can'></i>
         </ChatItemButton>
       </ChatItemButtons>
     </ChatItemWrapper>

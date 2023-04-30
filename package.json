@@ -1,6 +1,7 @@
 {
   "name": "gptea-web",
   "version": "0.1.0",
+  "proxy": "https://api.gptea-test.keenranger.dev",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

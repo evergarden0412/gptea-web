@@ -36,8 +36,8 @@ const ScrapbookColor = styled.div`
 function Scrapbook({ scrapbook }) {
   return (
     <ScrapbookWrapper>
-      <ScrapbookIcon className="Scrapbook__text--icon fa-regular fa-bookmark"></ScrapbookIcon>
-      <ScrapbookTitle>{scrapbook.title}</ScrapbookTitle>
+      <ScrapbookIcon className='Scrapbook__text--icon fa-regular fa-bookmark'></ScrapbookIcon>
+      <ScrapbookTitle>{scrapbook.name === 'basic' ? '기본 스크랩 북' : scrapbook.name}</ScrapbookTitle>
       <ScrapbookColor></ScrapbookColor>
     </ScrapbookWrapper>
   );
