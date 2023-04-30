@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IScrapbook } from '../pages/Scrapbooks';
 
 const ScrapbookWrapper = styled.div`
   position: relative;
@@ -33,7 +34,11 @@ const ScrapbookColor = styled.div`
   bottom: 2rem;
 `;
 
-function Scrapbook({ scrapbook }) {
+interface IScrapbookProps {
+  scrapbook: IScrapbook;
+}
+
+function Scrapbook({ scrapbook }: IScrapbookProps) {
   return (
     <ScrapbookWrapper>
       <ScrapbookIcon className='Scrapbook__text--icon fa-regular fa-bookmark'></ScrapbookIcon>

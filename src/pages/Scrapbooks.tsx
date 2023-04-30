@@ -10,8 +10,14 @@ const ScrapbooksWrapper = styled.div`
   align-items: center;
 `;
 
+export interface IScrapbook {
+  createdAt: string;
+  id: string;
+  name: string;
+}
+
 function Scrapbooks() {
-  const [scrapbooks, setScrapbooks] = useState([]);
+  const [scrapbooks, setScrapbooks] = useState<IScrapbook[]>([]);
 
   useEffect(() => {
     fetch('/me/scrapbooks')

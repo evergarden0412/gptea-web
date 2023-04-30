@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IMessage } from './Messages';
 
 const MessageWrapper = styled.li`
   width: 80%;
@@ -34,14 +35,18 @@ const ScrapButton = styled.button`
   }
 `;
 
-function Message({ message }) {
+interface IMessageProps {
+  message: IMessage;
+}
+
+function Message({ message }: IMessageProps) {
   return (
     <MessageWrapper role={message.role}>
       <MessageContent>{message.content}</MessageContent>
       <MessageInfo>
         <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
         <ScrapButton>
-          <i className="fa-regular fa-bookmark"></i>
+          <i className='fa-regular fa-bookmark'></i>
         </ScrapButton>
       </MessageInfo>
     </MessageWrapper>

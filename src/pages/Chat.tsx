@@ -16,7 +16,7 @@ function Chat() {
 
   return (
     <ChatWrapper>
-      <Messages chatId={Number(chatId)} />
+      <Messages chatId={chatId} />
       <Prompt />
     </ChatWrapper>
   );

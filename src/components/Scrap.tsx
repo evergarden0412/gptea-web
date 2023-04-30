@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { IScrap } from '../pages/Scraps';
 
-const ScrapWrapper = styled.li`
+const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +16,7 @@ const ScrapWrapper = styled.li`
   }
 `;
 
-const ScrapContent = styled.div`
+const ScrapContent = styled.div<{ isExpand: boolean }>`
   width: 90%;
   ${(props) =>
     props.isExpand
@@ -35,7 +36,7 @@ const Buttons = styled.div`
   flex-direction: column;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isExpand?: boolean }>`
   width: 1.5rem;
   height: 1.5rem;
   ${(props) => props.isExpand && 'margin-bottom: 1rem;'}
@@ -45,7 +46,11 @@ const Button = styled.button`
   }
 `;
 
-function Scrap({ scrap }) {
+interface IScrapProps {
+  scrap: IScrap;
+}
+
+function Scrap({ scrap }: IScrapProps) {
   const [isExpand, setIsExpand] = useState(false);
 
   const expandScrap = () => {
@@ -57,11 +62,11 @@ function Scrap({ scrap }) {
       <ScrapContent isExpand={isExpand}>{scrap.content}</ScrapContent>
       <Buttons>
         <Button isExpand={isExpand}>
-          <i className="Scrap__icon--remove fa-regular fa-bookmark"></i>
+          <i className='Scrap__icon--remove fa-regular fa-bookmark'></i>
         </Button>
         {isExpand && (
           <Button>
-            <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
+            <i className='Scrap__icon--move fa-sharp fa-solid fa-share'></i>
           </Button>
         )}
       </Buttons>

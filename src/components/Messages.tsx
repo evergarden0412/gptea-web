@@ -13,14 +13,26 @@ const MessagesContainer = styled.ul`
   overflow-y: auto;
 `;
 
-function Messages({ chatId }) {
-  const [messages, setMessages] = useState([]);
+export interface IMessage {
+  chatId: string;
+  content: string;
+  createdAt: string;
+  seq: number;
+  role: string;
+}
+
+interface IMessagesProps {
+  chatId?: string;
+}
+
+function Messages({ chatId }: IMessagesProps) {
+  const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
     fetch(`/me/chats/${chatId}/messages`)
       .then((response) => response.json())
       .then((json) => {
-        const newMessages = json.messages.map((message) => {
+        const newMessages = json.messages.map((message: IMessage) => {
           message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
           return message;
         }); // message.role api에 추가될 예정

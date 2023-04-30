@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IChat } from '../pages/Chats';
 
 const ChatItemWrapper = styled.li`
   display: flex;
@@ -34,7 +35,11 @@ const ChatItemButton = styled.button`
   }
 `;
 
-function ChatItem({ chat }) {
+interface IChatItemProps {
+  chat: IChat;
+}
+
+function ChatItem({ chat }: IChatItemProps) {
   return (
     <ChatItemWrapper>
       <ChatItemText>{chat.name}</ChatItemText>

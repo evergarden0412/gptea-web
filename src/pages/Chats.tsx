@@ -10,8 +10,14 @@ const ChatsWrapper = styled.div`
   overflow-y: auto;
 `;
 
+export interface IChat {
+  createdAt: string;
+  id: string;
+  name: string;
+}
+
 function Chats() {
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState<IChat[]>([]);
 
   useEffect(() => {
     fetch('/me/chats')
