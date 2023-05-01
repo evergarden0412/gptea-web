@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+## gptea 프로젝트  
+GPT API를 사용하여 GPT를 리디자인한다.  
+메세지를 즐겨찾기로 저장할 수 있는 **Scrap** 기능을 추가하고, 추후에 메세지에서 특정 문구를 형광펜을 칠하는 등의 텍스트꾸미기를 할 수 있도록 **Highlight**기능을 추가할 예정이다.  
+![image](https://user-images.githubusercontent.com/88613455/235450882-dcb4146f-a096-4790-8205-9f800d7a7e0d.png)
+![image](https://user-images.githubusercontent.com/88613455/235450923-cf1e7e11-3b73-4ead-b133-ad9f291d7b7c.png)
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/88613455/235451034-54f05af8-e0d0-40df-96a0-79549220756c.png">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## member
+### FE
+🧑🏻‍💼 Jeongwon Lee  
+https://github.com/hahagarden  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### BE 
+🧑🏻‍💼 Hankyeol Kyung  
+https://github.com/keenranger  
 
-### `npm test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Figma 프로토타입
+https://www.figma.com/proto/Hy9deg0PnnTrf90nye1pOV/gptea?node-id=112-772&starting-point-node-id=112%3A772
 
-### `npm run build`
+<br />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 프로젝트 블로깅
+https://hahagarden.tistory.com/category/Project/gptea.tsx
