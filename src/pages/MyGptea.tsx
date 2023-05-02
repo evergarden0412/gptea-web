@@ -8,10 +8,10 @@ const MyGpteaWrapper = styled.div`
   display: flex;
 `;
 
-function MyGptea() {
+function MyGptea({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
   return (
     <MyGpteaWrapper>
-      <Nav />
+      <Nav setIsLoggedIn={setIsLoggedIn} />
       <Feature />
     </MyGpteaWrapper>
   );

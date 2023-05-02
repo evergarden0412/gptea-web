@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import MyGptea from './pages/MyGptea';
 import Welcome from './pages/Welcome';
+import Loggedin from './pages/Loggedin';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 const AppWrapper = styled.div`
   width: 80vw;
@@ -8,9 +11,16 @@ const AppWrapper = styled.div`
 `;
 
 function App() {
-  let isLoggedIn = true;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  return <AppWrapper>{isLoggedIn ? <MyGptea /> : <Welcome />}</AppWrapper>;
+  return (
+    <AppWrapper>
+      <Routes>
+        <Route path='/*' element={isLoggedIn ? <MyGptea setIsLoggedIn={setIsLoggedIn} /> : <Welcome />} />
+        <Route path='/login' element={<Loggedin setIsLoggedIn={setIsLoggedIn} />} />
+      </Routes>
+    </AppWrapper>
+  );
 }
 
 export default App;

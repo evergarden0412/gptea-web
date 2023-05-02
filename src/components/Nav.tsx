@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -13,6 +14,28 @@ const NavItem = styled(NavLink)`
   text-decoration: none;
   padding: 1rem;
   color: white;
+
+  &:hover {
+    background-color: var(--hover);
+  }
+`;
+
+const NavItemLogout = styled.button.attrs({
+  type: 'button',
+})`
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  text-decoration: none;
+  padding: 1rem;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover);
+  }
 `;
 
 const NavIcon = styled.div`
@@ -29,27 +52,51 @@ const NavText = styled.div`
   margin-left: 1rem;
 `;
 
-function Nav() {
+function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const navigate = useNavigate();
+
+  const handleNaverLogout = () => {
+    fetch(
+      `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
+      &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
+      &access_token=${JSON.parse(localStorage.getItem('access') || '')}
+      &service_provider=NAVER`,
+      { mode: 'no-cors' }
+    )
+      .then(() => {
+        localStorage.removeItem('access');
+        setIsLoggedIn(false);
+        navigate('/');
+      })
+      .catch((e) => console.log('error!', e));
+  };
+
   return (
     <NavWrapper>
-      <NavItem to="/">
+      <NavItem to='/'>
         <NavIcon>
-          <i className="fa-solid fa-mug-hot"></i>
+          <i className='fa-solid fa-mug-hot'></i>
         </NavIcon>
         <NavText>Chat</NavText>
       </NavItem>
-      <NavItem to="/scrapbooks">
+      <NavItem to='/scrapbooks'>
         <NavIcon>
-          <i className="fa-regular fa-bookmark"></i>
+          <i className='fa-regular fa-bookmark'></i>
         </NavIcon>
         <NavText>Scrap</NavText>
       </NavItem>
-      <NavItem to="/highlights">
+      <NavItem to='/highlights'>
         <NavIcon>
-          <i className="fa-solid fa-highlighter"></i>
+          <i className='fa-solid fa-highlighter'></i>
         </NavIcon>
         <NavText>Highlight</NavText>
       </NavItem>
+      <NavItemLogout onClick={handleNaverLogout}>
+        <NavIcon>
+          <i className='fa-solid fa-right-from-bracket'></i>
+        </NavIcon>
+        <NavText>Logout</NavText>
+      </NavItemLogout>
     </NavWrapper>
   );
 }
