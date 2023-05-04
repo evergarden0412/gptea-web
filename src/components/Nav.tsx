@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -67,8 +66,38 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
         localStorage.removeItem('access');
         setIsLoggedIn(false);
         navigate('/');
+        alert('bye naver!');
       })
       .catch((e) => console.log('error!', e));
+  };
+
+  const handleKakaoLogout = () => {
+    if (!localStorage.getItem('kakao_access')) {
+      console.log('not logged in.');
+      return;
+    }
+
+    fetch('https://kapi.kakao.com/v1/user/logout', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${localStorage.getItem('kakao_access')}`,
+      },
+    })
+      .then(() => {
+        localStorage.removeItem('kakao_access');
+        setIsLoggedIn(false);
+        navigate('/');
+        alert('bye kakao!');
+      })
+      .catch((e) => console.log('error!', e));
+  };
+
+  const handleLogout = () => {
+    if (localStorage.getItem('access')) {
+      handleNaverLogout();
+    } else if (localStorage.getItem('kakao_access')) {
+      handleKakaoLogout();
+    }
   };
 
   return (
@@ -91,7 +120,7 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
         </NavIcon>
         <NavText>Highlight</NavText>
       </NavItem>
-      <NavItemLogout onClick={handleNaverLogout}>
+      <NavItemLogout onClick={handleLogout}>
         <NavIcon>
           <i className='fa-solid fa-right-from-bracket'></i>
         </NavIcon>
