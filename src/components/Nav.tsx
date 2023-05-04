@@ -31,6 +31,7 @@ const NavItemLogout = styled.button.attrs({
   background-color: transparent;
   border: none;
   cursor: pointer;
+  width: 100%;
 
   &:hover {
     background-color: var(--hover);
@@ -58,12 +59,12 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
     fetch(
       `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
       &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
-      &access_token=${JSON.parse(localStorage.getItem('access') || '')}
+      &access_token=${localStorage.getItem('naver_access')}
       &service_provider=NAVER`,
       { mode: 'no-cors' }
     )
       .then(() => {
-        localStorage.removeItem('access');
+        localStorage.removeItem('naver_access');
         setIsLoggedIn(false);
         navigate('/');
         alert('bye naver!');
@@ -93,7 +94,7 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
   };
 
   const handleLogout = () => {
-    if (localStorage.getItem('access')) {
+    if (localStorage.getItem('naver_access')) {
       handleNaverLogout();
     } else if (localStorage.getItem('kakao_access')) {
       handleKakaoLogout();

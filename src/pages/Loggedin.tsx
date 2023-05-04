@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Loggedin({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
   const navigate = useNavigate();
+  const access_token = window.location.href.split('=')[1].split('&')[0];
 
   useEffect(() => {
-    if (window.location.href.includes('access_token')) {
+    if (access_token) {
       // gptea login api에 전달 예정
-      if (!localStorage.getItem('access')) localStorage.setItem('access', JSON.stringify(window.location.href.split('=')[1].split('&')[0]));
+      if (!localStorage.getItem('naver_access')) localStorage.setItem('naver_access', access_token);
       setIsLoggedIn(true);
     }
     navigate('/');
