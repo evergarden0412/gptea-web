@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Message from './Message';
 import { useState, useEffect } from 'react';
 import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
+import axios from 'axios';
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -30,20 +31,18 @@ function Messages({ chatId }: IMessagesProps) {
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
-    fetch(`/me/chats/${chatId}/messages`, {
+    axios(`/me/chats/${chatId}/messages`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const newMessages = json.messages.map((message: IMessage) => {
-          message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
-          return message;
-        }); // message.role api에 추가될 예정
-        setMessages(newMessages);
-      });
+    }).then((res) => {
+      const newMessages = res.data.messages.map((message: IMessage) => {
+        message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
+        return message;
+      }); // message.role api에 추가될 예정
+      setMessages(newMessages);
+    });
   }, []);
 
   console.log('Messages', messages);

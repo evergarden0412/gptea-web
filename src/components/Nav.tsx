@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { KAKAO_ACCESS_TOKEN } from '../pages/LoggedinKakao';
 import { NAVER_ACCESS_TOKEN } from '../pages/LoggedinNaver';
+import axios from 'axios';
+import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -58,17 +60,16 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
   const navigate = useNavigate();
 
   const handleNaverLogout = () => {
-    fetch(
-      `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
+    axios(
+      `/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
       &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
       &access_token=${localStorage.getItem(NAVER_ACCESS_TOKEN)}
-      &service_provider=NAVER`,
-      { mode: 'no-cors' }
+      &service_provider=NAVER`
     )
       .then(() => {
         localStorage.removeItem(NAVER_ACCESS_TOKEN);
       })
-      .catch((e) => console.log('error!', e));
+      .catch((err) => console.log('eee', err));
   };
 
   const handleKakaoLogout = () => {
@@ -77,7 +78,7 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
       return;
     }
 
-    fetch('https://kapi.kakao.com/v1/user/logout', {
+    axios('https://kapi.kakao.com/v1/user/logout', {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: `Bearer ${localStorage.getItem(KAKAO_ACCESS_TOKEN)}`,
@@ -86,11 +87,11 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
       .then(() => {
         localStorage.removeItem(KAKAO_ACCESS_TOKEN);
       })
-      .catch((e) => console.log('error!', e));
+      .catch((err) => console.log('error!', err));
   };
 
   const handleGpteaLogout = () => {
-    localStorage.removeItem('gptea_access');
+    localStorage.removeItem(GPTEA_ACCESS_TOKEN);
     setIsLoggedIn(false);
     navigate('/');
     alert('logged out!');

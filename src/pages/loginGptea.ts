@@ -1,41 +1,36 @@
 import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA } from '../errors';
+import axios from 'axios';
 
 export const GPTEA_ACCESS_TOKEN = 'gptea_access_token';
 
-const registerInGptea = (accessToken: string, social: string): Promise<void | string> => {
+const registerInGptea = (accessToken: string, social: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    fetch('/auth/cred/register', { method: 'POST', body: JSON.stringify({ accessToken, cred: social }) })
-      .then((response) => {
-        if (response.status === 200) {
-          resolve();
-          getGpteaToken(accessToken, social);
-        } else throw new Error(ERROR_REGISTER_IN_GPTEA);
+    axios('/auth/cred/register', { method: 'POST', data: { accessToken, cred: social } })
+      .then(() => {
+        resolve();
+        getGpteaToken(accessToken, social);
       })
       .catch((error) => {
-        console.log(error);
-        reject(error);
+        console.log({ ERROR_REGISTER_IN_GPTEA, error });
+        reject();
       });
   });
 };
 
 export const getGpteaToken = (accessToken: string, social: string): Promise<void | string> => {
   return new Promise((resolve, reject) => {
-    fetch('/auth/cred/sign-in', { method: 'POST', body: JSON.stringify({ accessToken, cred: social }) })
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        } else throw new Error(ERROR_GET_GPTEA_TOKENS);
-      })
-      .then((json) => {
+    axios('/auth/cred/sign-in', { method: 'POST', data: { accessToken, cred: social } })
+      .then((res) => {
+        const { accessToken } = res.data;
         if (!localStorage.getItem(GPTEA_ACCESS_TOKEN)) {
-          localStorage.setItem(GPTEA_ACCESS_TOKEN, json.accessToken);
+          localStorage.setItem(GPTEA_ACCESS_TOKEN, accessToken);
         }
         resolve();
         // setIsLoggedIn(true);
       })
-      .catch((error) => {
-        console.log(error);
-        registerInGptea(accessToken, social).catch((error) => reject(error));
+      .catch((err) => {
+        console.log({ ERROR_GET_GPTEA_TOKENS, err });
+        registerInGptea(accessToken, social).catch(() => reject(ERROR_GET_GPTEA_TOKENS));
       });
   });
 };

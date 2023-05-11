@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Scrap from '../components/Scrap';
 import { useState, useEffect } from 'react';
 import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import axios from 'axios';
 
 const ScrapsWrapper = styled.div``;
 
@@ -26,25 +27,23 @@ function Scraps() {
   const [scraps, setScraps] = useState<IScrap[]>([]);
 
   useEffect(() => {
-    fetch(`/me/scrapbooks/${scrapbookId}/scraps`, {
+    axios(`/me/scrapbooks/${scrapbookId}/scraps`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const newScraps = json.scraps.map((scrap: IScrapJSON) => {
-          return {
-            chatId: scrap.chatID, // chatID in golang
-            content: scrap.content,
-            createdAt: scrap.createdAt,
-            seq: scrap.seq,
-            id: scrap.id,
-          };
-        });
-        setScraps(newScraps);
+    }).then((res) => {
+      const newScraps = res.data.scraps.map((scrap: IScrapJSON) => {
+        return {
+          chatId: scrap.chatID, // chatID in golang
+          content: scrap.content,
+          createdAt: scrap.createdAt,
+          seq: scrap.seq,
+          id: scrap.id,
+        };
       });
+      setScraps(newScraps);
+    });
   }, []);
 
   console.log('Scraps', scraps);

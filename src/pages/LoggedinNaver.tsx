@@ -19,7 +19,7 @@ function LoggedinNaver({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.
           setIsLoggedIn(true);
           navigate('/');
         })
-        .catch((error) => alert(error));
+        .catch((err) => alert(err));
     }
   }, []);
 

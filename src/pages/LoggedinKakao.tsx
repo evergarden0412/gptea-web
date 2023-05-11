@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getGpteaToken } from './loginGptea';
 import { ERROR_GET_KAKAO_TOKENS } from '../errors';
+import axios from 'axios';
 
 const KAKAO = 'kakao';
 export const KAKAO_ACCESS_TOKEN = 'kakao_access_token';
@@ -24,23 +25,20 @@ function LoggedinKakao({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.
         .map((param: any) => encodeURIComponent(param) + '=' + encodeURIComponent(parameterForTokenRequest[param]))
         .join('&');
 
-      fetch(`https://kauth.kakao.com/oauth/token?${queryString}`, {
+      axios(`https://kauth.kakao.com/oauth/token?${queryString}`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
         },
       })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          else throw new Error(ERROR_GET_KAKAO_TOKENS);
-        })
-        .then((json) => {
-          if (json.access_token) {
-            localStorage.setItem(KAKAO_ACCESS_TOKEN, json.access_token);
-            resolve(json.access_token);
+        .then((res) => {
+          const { access_token: accessToken } = res.data;
+          if (accessToken) {
+            localStorage.setItem(KAKAO_ACCESS_TOKEN, accessToken);
+            resolve(accessToken);
           }
         })
-        .catch((error) => reject(error));
+        .catch((err) => reject({ ERROR_GET_KAKAO_TOKENS, err }));
     });
   };
 
@@ -53,7 +51,7 @@ function LoggedinKakao({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.
           setIsLoggedIn(true);
           navigate('/');
         })
-        .catch((error) => alert(error));
+        .catch((err) => alert(err));
   }, []);
 
   return <></>;
