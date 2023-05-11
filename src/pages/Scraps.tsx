@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Scrap from '../components/Scrap';
 import { useState, useEffect } from 'react';
+import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 
 const ScrapsWrapper = styled.div``;
 
@@ -25,7 +26,12 @@ function Scraps() {
   const [scraps, setScraps] = useState<IScrap[]>([]);
 
   useEffect(() => {
-    fetch(`/me/scrapbooks/${scrapbookId}/scraps`)
+    fetch(`/me/scrapbooks/${scrapbookId}/scraps`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+    })
       .then((response) => response.json())
       .then((json) => {
         const newScraps = json.scraps.map((scrap: IScrapJSON) => {

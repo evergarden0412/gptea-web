@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom';
+import { KAKAO_ACCESS_TOKEN } from '../pages/LoggedinKakao';
+import { NAVER_ACCESS_TOKEN } from '../pages/LoggedinNaver';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -59,21 +61,18 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
     fetch(
       `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
       &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
-      &access_token=${localStorage.getItem('naver_access')}
+      &access_token=${localStorage.getItem(NAVER_ACCESS_TOKEN)}
       &service_provider=NAVER`,
       { mode: 'no-cors' }
     )
       .then(() => {
-        localStorage.removeItem('naver_access');
-        setIsLoggedIn(false);
-        navigate('/');
-        alert('bye naver!');
+        localStorage.removeItem(NAVER_ACCESS_TOKEN);
       })
       .catch((e) => console.log('error!', e));
   };
 
   const handleKakaoLogout = () => {
-    if (!localStorage.getItem('kakao_access')) {
+    if (!localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
       console.log('not logged in.');
       return;
     }
@@ -81,24 +80,29 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
     fetch('https://kapi.kakao.com/v1/user/logout', {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${localStorage.getItem('kakao_access')}`,
+        Authorization: `Bearer ${localStorage.getItem(KAKAO_ACCESS_TOKEN)}`,
       },
     })
       .then(() => {
-        localStorage.removeItem('kakao_access');
-        setIsLoggedIn(false);
-        navigate('/');
-        alert('bye kakao!');
+        localStorage.removeItem(KAKAO_ACCESS_TOKEN);
       })
       .catch((e) => console.log('error!', e));
   };
 
+  const handleGpteaLogout = () => {
+    localStorage.removeItem('gptea_access');
+    setIsLoggedIn(false);
+    navigate('/');
+    alert('logged out!');
+  };
+
   const handleLogout = () => {
-    if (localStorage.getItem('naver_access')) {
+    if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
       handleNaverLogout();
-    } else if (localStorage.getItem('kakao_access')) {
+    } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
       handleKakaoLogout();
     }
+    handleGpteaLogout();
   };
 
   return (

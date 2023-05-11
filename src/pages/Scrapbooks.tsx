@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Scrapbook from '../components/Scrapbook';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
@@ -20,7 +21,12 @@ function Scrapbooks() {
   const [scrapbooks, setScrapbooks] = useState<IScrapbook[]>([]);
 
   useEffect(() => {
-    fetch('/me/scrapbooks')
+    fetch('/me/scrapbooks', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+    })
       .then((response) => response.json())
       .then((json) => setScrapbooks(json.scrapbooks));
   }, []);

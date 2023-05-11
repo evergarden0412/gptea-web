@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Message from './Message';
 import { useState, useEffect } from 'react';
+import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -29,7 +30,12 @@ function Messages({ chatId }: IMessagesProps) {
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
-    fetch(`/me/chats/${chatId}/messages`)
+    fetch(`/me/chats/${chatId}/messages`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+    })
       .then((response) => response.json())
       .then((json) => {
         const newMessages = json.messages.map((message: IMessage) => {

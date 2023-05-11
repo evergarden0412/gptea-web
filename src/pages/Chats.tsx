@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import ChatItem from '../components/ChatItem';
 import { useEffect, useState } from 'react';
+import { ERROR_GET_DATA } from '../errors';
+import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 
 const ChatsWrapper = styled.div`
   width: 100%;
@@ -20,9 +22,20 @@ function Chats() {
   const [chats, setChats] = useState<IChat[]>([]);
 
   useEffect(() => {
-    fetch('/me/chats')
-      .then((response) => response.json())
-      .then((json) => setChats(json.chats));
+    fetch('/me/chats', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else throw new Error(ERROR_GET_DATA);
+      })
+      .then((json) => {
+        setChats(json.chats);
+      })
+      .catch((error) => alert(error));
   }, []);
 
   console.log('Chats', chats);
