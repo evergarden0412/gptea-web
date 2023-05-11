@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MyGptea from './pages/MyGptea';
 import Welcome from './pages/Welcome';
-import Loggedin from './pages/Loggedin';
+import LoggedinNaver from './pages/LoggedinNaver';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import LoggedinKakao from './pages/LoggedinKakao';
@@ -18,7 +18,7 @@ function App() {
     <AppWrapper>
       <Routes>
         <Route path='/*' element={isLoggedIn ? <MyGptea setIsLoggedIn={setIsLoggedIn} /> : <Welcome />} />
-        <Route path='/login' element={<Loggedin setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path='/login' element={<LoggedinNaver setIsLoggedIn={setIsLoggedIn} />} />
         <Route path='/login/kakao' element={<LoggedinKakao setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
     </AppWrapper>

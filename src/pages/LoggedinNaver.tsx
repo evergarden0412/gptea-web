@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Loggedin({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+function LoggedinNaver({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
   const navigate = useNavigate();
   const access_token = window.location.href.split('=')[1].split('&')[0];
 
@@ -17,4 +17,4 @@ function Loggedin({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetSt
   return <></>;
 }
 
-export default Loggedin;
+export default LoggedinNaver;
