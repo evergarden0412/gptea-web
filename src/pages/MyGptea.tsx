@@ -12,7 +12,7 @@ function MyGptea({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetSta
   return (
     <MyGpteaWrapper>
       <Nav setIsLoggedIn={setIsLoggedIn} />
-      <Feature />
+      <Feature setIsLoggedIn={setIsLoggedIn} />
     </MyGpteaWrapper>
   );
 }

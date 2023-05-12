@@ -4,6 +4,7 @@ import Chats from '../pages/Chats';
 import Chat from '../pages/Chat';
 import Scrapbooks from '../pages/Scrapbooks';
 import Scraps from '../pages/Scraps';
+import MyPage from '../pages/MyPage';
 
 const FeatureWrapper = styled.section`
   width: 80%;
@@ -12,14 +13,15 @@ const FeatureWrapper = styled.section`
   padding: 1rem;
 `;
 
-function Feature() {
+function Feature({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
   return (
     <FeatureWrapper>
       <Routes>
-        <Route path="/" element={<Chats />} />
-        <Route path="/chats/:chatId" element={<Chat />} />
-        <Route path="/scrapbooks" element={<Scrapbooks />} />
-        <Route path="/scrapbooks/:scrapbookId" element={<Scraps />} />
+        <Route path='/' element={<Chats />} />
+        <Route path='/chats/:chatId' element={<Chat />} />
+        <Route path='/scrapbooks' element={<Scrapbooks />} />
+        <Route path='/scrapbooks/:scrapbookId' element={<Scraps />} />
+        <Route path='/mypage' element={<MyPage setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
     </FeatureWrapper>
   );

@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { KAKAO_ACCESS_TOKEN } from '../pages/LoggedinKakao';
-import { NAVER_ACCESS_TOKEN } from '../pages/LoggedinNaver';
-import axios from 'axios';
-import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
+import { handleLogout } from '../pages/logoutFunc';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -59,51 +56,10 @@ const NavText = styled.div`
 function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
   const navigate = useNavigate();
 
-  const handleNaverLogout = () => {
-    axios(
-      `/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
-      &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
-      &access_token=${localStorage.getItem(NAVER_ACCESS_TOKEN)}
-      &service_provider=NAVER`
-    )
-      .then(() => {
-        localStorage.removeItem(NAVER_ACCESS_TOKEN);
-      })
-      .catch((err) => console.log('eee', err));
-  };
-
-  const handleKakaoLogout = () => {
-    if (!localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-      console.log('not logged in.');
-      return;
-    }
-
-    axios('https://kapi.kakao.com/v1/user/logout', {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${localStorage.getItem(KAKAO_ACCESS_TOKEN)}`,
-      },
-    })
-      .then(() => {
-        localStorage.removeItem(KAKAO_ACCESS_TOKEN);
-      })
-      .catch((err) => console.log('error!', err));
-  };
-
-  const handleGpteaLogout = () => {
-    localStorage.removeItem(GPTEA_ACCESS_TOKEN);
+  const handleLogoutClick = () => {
+    handleLogout();
     setIsLoggedIn(false);
     navigate('/');
-    alert('logged out!');
-  };
-
-  const handleLogout = () => {
-    if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
-      handleNaverLogout();
-    } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-      handleKakaoLogout();
-    }
-    handleGpteaLogout();
   };
 
   return (
@@ -126,7 +82,13 @@ function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAc
         </NavIcon>
         <NavText>Highlight</NavText>
       </NavItem>
-      <NavItemLogout onClick={handleLogout}>
+      <NavItem to='/mypage'>
+        <NavIcon>
+          <i className='fa-solid fa-user'></i>
+        </NavIcon>
+        <NavText>My Page</NavText>
+      </NavItem>
+      <NavItemLogout onClick={handleLogoutClick}>
         <NavIcon>
           <i className='fa-solid fa-right-from-bracket'></i>
         </NavIcon>
