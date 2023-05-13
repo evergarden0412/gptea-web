@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { getGpteaToken } from './loginGptea';
 import { ERROR_GET_KAKAO_TOKENS } from '../errors';
 import axios from 'axios';
+import { useAppDispatch } from '../redux/hooks';
+import { login } from '../redux/isLoggedInSlice';
 
 const KAKAO = 'kakao';
 export const KAKAO_ACCESS_TOKEN = 'kakao_access_token';
 
-function LoggedinKakao({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const code = new URL(window.location.href).searchParams.get('code');
+function LoggedinKakao() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const code = new URL(window.location.href).searchParams.get('code');
 
   const getKakaoAccessToken = (): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -48,7 +52,7 @@ function LoggedinKakao({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.
         .then((kakaoAccessToken) => getGpteaToken(kakaoAccessToken, KAKAO))
         .then(() => {
           alert('Gptea logged in!');
-          setIsLoggedIn(true);
+          dispatch(login());
           navigate('/');
         })
         .catch((err) => alert(err));

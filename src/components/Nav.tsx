@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, NavLink, useMatch } from 'react-router-dom';
 import { handleLogout } from '../pages/logoutFunc';
+import { useAppDispatch } from '../redux/hooks';
+import { logout } from '../redux/isLoggedInSlice';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -53,12 +55,15 @@ const NavText = styled.div`
   margin-left: 1rem;
 `;
 
-function Nav({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+function Nav() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const matchChats = useMatch('/');
 
   const handleLogoutClick = () => {
     handleLogout();
-    setIsLoggedIn(false);
+    dispatch(logout());
     navigate('/');
   };
 

@@ -1,22 +1,25 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getGpteaToken } from './loginGptea';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { login } from '../redux/isLoggedInSlice';
 
 const NAVER = 'naver';
 export const NAVER_ACCESS_TOKEN = 'naver_access_token';
 
-function LoggedinNaver({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+function LoggedinNaver() {
   const navigate = useNavigate();
-  const naverAccessToken = window.location.href.split('=')[1].split('&')[0];
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const naverAccessToken = window.location.href.split('=')[1].split('&')[0]; // 리렌더링되기 때문에 useEffect안으로 이동
     if (naverAccessToken) {
       // gptea login api에 전달 예정
       if (!localStorage.getItem(NAVER_ACCESS_TOKEN)) localStorage.setItem(NAVER_ACCESS_TOKEN, naverAccessToken);
       getGpteaToken(naverAccessToken, NAVER)
         .then(() => {
           alert('Gptea logged in!');
-          setIsLoggedIn(true);
+          dispatch(login());
           navigate('/');
         })
         .catch((err) => alert(err));

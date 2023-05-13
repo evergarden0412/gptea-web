@@ -13,7 +13,7 @@ const FeatureWrapper = styled.section`
   padding: 1rem;
 `;
 
-function Feature({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+function Feature() {
   return (
     <FeatureWrapper>
       <Routes>
@@ -21,7 +21,7 @@ function Feature({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetSta
         <Route path='/chats/:chatId' element={<Chat />} />
         <Route path='/scrapbooks' element={<Scrapbooks />} />
         <Route path='/scrapbooks/:scrapbookId' element={<Scraps />} />
-        <Route path='/mypage' element={<MyPage setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path='/mypage' element={<MyPage />} />
       </Routes>
     </FeatureWrapper>
   );
