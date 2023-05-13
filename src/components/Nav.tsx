@@ -3,6 +3,7 @@ import { useNavigate, NavLink, useMatch } from 'react-router-dom';
 import { handleLogout } from '../pages/logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
+import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
 
 const NavWrapper = styled.section`
   width: 20%;
@@ -55,6 +56,13 @@ const NavText = styled.div`
   margin-left: 1rem;
 `;
 
+const NavButton = styled.button`
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  line-height: 2rem;
+`;
+
 function Nav() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -67,6 +75,10 @@ function Nav() {
     navigate('/');
   };
 
+  const handleOpenNewChatModal = () => {
+    dispatch(isOpenNewChatModalAction.open());
+  };
+
   return (
     <NavWrapper>
       <NavItem to='/'>
@@ -74,6 +86,7 @@ function Nav() {
           <i className='fa-solid fa-mug-hot'></i>
         </NavIcon>
         <NavText>Chat</NavText>
+        {matchChats && <NavButton onClick={handleOpenNewChatModal}>+</NavButton>}
       </NavItem>
       <NavItem to='/scrapbooks'>
         <NavIcon>

@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { ERROR_GET_DATA } from '../errors';
 import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 import axios from 'axios';
+import { useAppSelector } from '../redux/hooks';
+import NewChatModal from '../components/NewChatModal';
 
 const ChatsWrapper = styled.div`
   width: 100%;
@@ -20,6 +22,7 @@ export interface IChat {
 
 function Chats() {
   const [chats, setChats] = useState<IChat[]>([]);
+  const isOpenNewChatModal = useAppSelector((state) => state.isOpenNewChatModal);
 
   useEffect(() => {
     axios('/me/chats', {
@@ -37,15 +40,18 @@ function Chats() {
   console.log('Chats', chats);
 
   return (
-    <ChatsWrapper>
-      <ul className='Chats__list'>
-        {chats.map((chat) => (
-          <Link to={`/chats/${chat.id}`} key={chat.id}>
-            <ChatItem chat={chat} />
-          </Link>
-        ))}
-      </ul>
-    </ChatsWrapper>
+    <>
+      <ChatsWrapper>
+        <ul className='Chats__list'>
+          {chats.map((chat) => (
+            <Link to={`/chats/${chat.id}`} key={chat.id}>
+              <ChatItem chat={chat} />
+            </Link>
+          ))}
+        </ul>
+      </ChatsWrapper>
+      {isOpenNewChatModal && <NewChatModal />}
+    </>
   );
 }
 
