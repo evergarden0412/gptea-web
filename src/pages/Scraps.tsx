@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import Scrap from '../components/Scrap';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 
 const ScrapsWrapper = styled.div``;
 

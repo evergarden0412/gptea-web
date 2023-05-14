@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 
 import ChatItem from '../components/ChatItem';
 import NewChatModal from '../components/NewChatModal';
-import { ERROR_GET_DATA } from '../errors';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import { ERROR_GET_DATA } from '../utils/errorMessage';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 import { useAppSelector } from '../redux/hooks';
 
 const ChatsWrapper = styled.div`

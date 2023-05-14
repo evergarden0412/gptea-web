@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 import Message from './Message';
-import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 
 const MessagesWrapper = styled.div`
   height: 90%;

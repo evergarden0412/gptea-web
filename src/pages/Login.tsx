@@ -15,7 +15,7 @@ const naverLogin = new window.naver.LoginWithNaverId({
 
 const kakaoLogin = window.Kakao;
 
-function Welcome() {
+function Login() {
   useEffect(() => {
     naverLogin.init();
     if (!kakaoLogin.isInitialized()) kakaoLogin.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
@@ -38,4 +38,4 @@ function Welcome() {
   );
 }
 
-export default Welcome;
+export default Login;

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { NAVER_ACCESS_TOKEN } from './LoggedinNaver';
-import { KAKAO_ACCESS_TOKEN } from './LoggedinKakao';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import { NAVER_ACCESS_TOKEN } from '../pages/NaverLogin';
+import { KAKAO_ACCESS_TOKEN } from '../pages/KakaoLogin';
+import { GPTEA_ACCESS_TOKEN } from './loginGpteaFunc';
 
 export const removeNaverToken = () => {
   axios(

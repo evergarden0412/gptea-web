@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './redux/hooks';
 
 import MyGptea from './pages/MyGptea';
-import Welcome from './pages/Welcome';
-import LoggedinNaver from './pages/LoggedinNaver';
-import LoggedinKakao from './pages/LoggedinKakao';
+import Login from './pages/Login';
+import NaverLogin from './pages/NaverLogin';
+import KakaoLogin from './pages/KakaoLogin';
 
 const AppWrapper = styled.div`
   width: 80vw;
@@ -18,9 +18,9 @@ function App() {
   return (
     <AppWrapper>
       <Routes>
-        <Route path='/*' element={isLoggedIn ? <MyGptea /> : <Welcome />} />
-        <Route path='/login' element={<LoggedinNaver />} />
-        <Route path='/login/kakao' element={<LoggedinKakao />} />
+        <Route path='/*' element={isLoggedIn ? <MyGptea /> : <Login />} />
+        <Route path='/login/naver' element={<NaverLogin />} />
+        <Route path='/login/kakao' element={<KakaoLogin />} />
       </Routes>
     </AppWrapper>
   );

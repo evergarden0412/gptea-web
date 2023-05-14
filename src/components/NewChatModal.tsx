@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useAppDispatch } from '../redux/hooks';
 import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
-import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 
 const ModalWrapper = styled.div`
   width: 100vw;

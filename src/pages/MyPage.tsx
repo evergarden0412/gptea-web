@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
-import { logoutGptea } from './logoutFunc';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+import { logoutGptea } from '../utils/logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
 

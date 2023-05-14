@@ -2,15 +2,15 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getGpteaToken } from './loginGptea';
-import { ERROR_GET_KAKAO_TOKENS } from '../errors';
+import { getGpteaToken } from '../utils/loginGpteaFunc';
+import { ERROR_GET_KAKAO_TOKENS } from '../utils/errorMessage';
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/isLoggedInSlice';
 
 const KAKAO = 'kakao';
 export const KAKAO_ACCESS_TOKEN = 'kakao_access_token';
 
-function LoggedinKakao() {
+function KakaoLogin() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -62,4 +62,4 @@ function LoggedinKakao() {
   return <></>;
 }
 
-export default LoggedinKakao;
+export default KakaoLogin;

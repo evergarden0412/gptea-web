@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA } from '../errors';
+import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA } from './errorMessage';
 
 export const GPTEA_ACCESS_TOKEN = 'gptea_access_token';
 

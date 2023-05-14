@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../redux/hooks';
 
-import { getGpteaToken } from './loginGptea';
+import { getGpteaToken } from '../utils/loginGpteaFunc';
 import { login } from '../redux/isLoggedInSlice';
 
 const NAVER = 'naver';
 export const NAVER_ACCESS_TOKEN = 'naver_access_token';
 
-function LoggedinNaver() {
+function NaverLogin() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -30,4 +30,4 @@ function LoggedinNaver() {
   return <></>;
 }
 
-export default LoggedinNaver;
+export default NaverLogin;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, NavLink, useMatch } from 'react-router-dom';
 
-import { logoutGptea } from '../pages/logoutFunc';
+import { logoutGptea } from '../utils/logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
 import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';

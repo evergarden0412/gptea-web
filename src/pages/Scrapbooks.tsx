@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import Scrapbook from '../components/Scrapbook';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
