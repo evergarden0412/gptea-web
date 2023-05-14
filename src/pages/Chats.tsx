@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import ChatItem from '../components/ChatItem';
 import NewChatModal from '../components/NewChatModal';
-import { ERROR_GET_DATA } from '../utils/errorMessage';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
-import { useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { requestGetChats } from '../redux/requestGetChatsSlice';
 
 const ChatsWrapper = styled.div`
   width: 100%;
@@ -22,32 +20,28 @@ export interface IChat {
 }
 
 function Chats() {
-  const [chats, setChats] = useState<IChat[]>([]);
+  const dispatch = useAppDispatch();
   const isOpenNewChatModal = useAppSelector((state) => state.isOpenNewChatModal);
+  const { data: chats, status } = useAppSelector((state) => state.requestGetChats);
 
   useEffect(() => {
-    axios('/me/chats', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    })
-      .then((res) => {
-        setChats(res.data.chats);
-      })
-      .catch((err) => alert({ ERROR_GET_DATA, err }));
+    dispatch(requestGetChats());
   }, []);
 
   return (
     <>
       <ChatsWrapper>
-        <ul className='Chats__list'>
-          {chats.map((chat) => (
-            <Link to={`/chats/${chat.id}`} key={chat.id}>
-              <ChatItem chat={chat} />
-            </Link>
-          ))}
-        </ul>
+        {status === 'loading' ? (
+          'loading...'
+        ) : (
+          <ul className='Chats__list'>
+            {chats.map((chat) => (
+              <Link to={`/chats/${chat.id}`} key={chat.id}>
+                <ChatItem chat={chat} />
+              </Link>
+            ))}
+          </ul>
+        )}
       </ChatsWrapper>
       {isOpenNewChatModal && <NewChatModal />}
     </>

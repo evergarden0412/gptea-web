@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
 import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+import { requestGetChats } from '../redux/requestGetChatsSlice';
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -49,6 +50,7 @@ function NewChatModal() {
       .then((res) => {
         console.log(res);
         setChatName('');
+        dispatch(requestGetChats());
       })
       .catch((error) => console.log(error));
   };
