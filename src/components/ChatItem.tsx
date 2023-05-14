@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { IChat } from '../pages/Chats';
 
 const ChatItemWrapper = styled.li`

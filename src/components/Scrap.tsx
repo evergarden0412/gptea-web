@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+
 import { IScrap } from '../pages/Scraps';
 
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
@@ -53,12 +54,12 @@ interface IScrapProps {
 function Scrap({ scrap }: IScrapProps) {
   const [isExpand, setIsExpand] = useState(false);
 
-  const expandScrap = () => {
+  const handleExpandScrap = () => {
     setIsExpand((prev) => !prev);
   };
 
   return (
-    <ScrapWrapper isExpand={isExpand} onClick={expandScrap}>
+    <ScrapWrapper isExpand={isExpand} onClick={handleExpandScrap}>
       <ScrapContent isExpand={isExpand}>{scrap.content}</ScrapContent>
       <Buttons>
         <Button isExpand={isExpand}>

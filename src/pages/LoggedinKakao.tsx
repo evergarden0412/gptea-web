@@ -1,8 +1,9 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { getGpteaToken } from './loginGptea';
 import { ERROR_GET_KAKAO_TOKENS } from '../errors';
-import axios from 'axios';
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/isLoggedInSlice';
 

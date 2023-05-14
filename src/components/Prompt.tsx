@@ -47,9 +47,9 @@ function Prompt() {
   return (
     <PromptWrapper>
       <PromptForm>
-        <PromptInput placeholder="ask anything" />
+        <PromptInput placeholder='ask anything' />
         <PromptButton>
-          <i className="Prompt__button--submit fa-solid fa-paper-plane"></i>
+          <i className='Prompt__button--submit fa-solid fa-paper-plane'></i>
         </PromptButton>
       </PromptForm>
     </PromptWrapper>

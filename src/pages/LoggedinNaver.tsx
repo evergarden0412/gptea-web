@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/hooks';
+
 import { getGpteaToken } from './loginGptea';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { login } from '../redux/isLoggedInSlice';
 
 const NAVER = 'naver';

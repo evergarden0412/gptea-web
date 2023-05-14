@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { IScrapbook } from '../pages/Scrapbooks';
 
 const ScrapbookWrapper = styled.div`

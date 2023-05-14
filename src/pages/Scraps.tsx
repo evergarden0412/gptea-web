@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import Scrap from '../components/Scrap';
-import { useState, useEffect } from 'react';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import Scrap from '../components/Scrap';
+import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 
 const ScrapsWrapper = styled.div``;
 
@@ -45,8 +46,6 @@ function Scraps() {
       setScraps(newScraps);
     });
   }, []);
-
-  console.log('Scraps', scraps);
 
   return (
     <ScrapsWrapper>

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { useState } from 'react';
+
 import { useAppDispatch } from '../redux/hooks';
 import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
-import { useState } from 'react';
-import axios from 'axios';
 import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
 
 const ModalWrapper = styled.div`

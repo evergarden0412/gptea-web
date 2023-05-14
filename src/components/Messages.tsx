@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import Message from './Message';
-import { useState, useEffect } from 'react';
-import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+import Message from './Message';
+import { GPTEA_ACCESS_TOKEN } from '../pages/loginGptea';
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -44,8 +45,6 @@ function Messages({ chatId }: IMessagesProps) {
       setMessages(newMessages);
     });
   }, []);
-
-  console.log('Messages', messages);
 
   return (
     <MessagesWrapper>

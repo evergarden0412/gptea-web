@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { Routes, Route } from 'react-router-dom';
+import { useAppSelector } from './redux/hooks';
+
 import MyGptea from './pages/MyGptea';
 import Welcome from './pages/Welcome';
 import LoggedinNaver from './pages/LoggedinNaver';
-import { Routes, Route } from 'react-router-dom';
 import LoggedinKakao from './pages/LoggedinKakao';
-import { useAppSelector } from './redux/hooks';
 
 const AppWrapper = styled.div`
   width: 80vw;

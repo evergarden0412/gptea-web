@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 import { useNavigate } from 'react-router-dom';
-import { handleLogout } from './logoutFunc';
+
+import { GPTEA_ACCESS_TOKEN } from './loginGptea';
+import { logoutGptea } from './logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
 
@@ -18,7 +19,7 @@ function MyPage() {
       })
       .then(() => {
         alert('unregisterd!');
-        handleLogout();
+        logoutGptea();
         dispatch(logout());
         navigate('/');
       })

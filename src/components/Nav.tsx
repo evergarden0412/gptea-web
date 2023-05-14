@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, NavLink, useMatch } from 'react-router-dom';
-import { handleLogout } from '../pages/logoutFunc';
+
+import { logoutGptea } from '../pages/logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
 import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
@@ -69,8 +70,8 @@ function Nav() {
 
   const matchChats = useMatch('/');
 
-  const handleLogoutClick = () => {
-    handleLogout();
+  const handleLogout = () => {
+    logoutGptea();
     dispatch(logout());
     navigate('/');
   };
@@ -106,7 +107,7 @@ function Nav() {
         </NavIcon>
         <NavText>My Page</NavText>
       </NavItem>
-      <NavItemLogout onClick={handleLogoutClick}>
+      <NavItemLogout onClick={handleLogout}>
         <NavIcon>
           <i className='fa-solid fa-right-from-bracket'></i>
         </NavIcon>

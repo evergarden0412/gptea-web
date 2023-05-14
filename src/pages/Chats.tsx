@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import ChatItem from '../components/ChatItem';
 import { useEffect, useState } from 'react';
+
+import ChatItem from '../components/ChatItem';
+import NewChatModal from '../components/NewChatModal';
 import { ERROR_GET_DATA } from '../errors';
 import { GPTEA_ACCESS_TOKEN } from './loginGptea';
-import axios from 'axios';
 import { useAppSelector } from '../redux/hooks';
-import NewChatModal from '../components/NewChatModal';
 
 const ChatsWrapper = styled.div`
   width: 100%;
@@ -36,8 +37,6 @@ function Chats() {
       })
       .catch((err) => alert({ ERROR_GET_DATA, err }));
   }, []);
-
-  console.log('Chats', chats);
 
   return (
     <>

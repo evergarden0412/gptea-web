@@ -1,9 +1,10 @@
 import axios from 'axios';
+
 import { NAVER_ACCESS_TOKEN } from './LoggedinNaver';
 import { KAKAO_ACCESS_TOKEN } from './LoggedinKakao';
 import { GPTEA_ACCESS_TOKEN } from './loginGptea';
 
-export const handleNaverLogout = () => {
+export const removeNaverToken = () => {
   axios(
     `/oauth2.0/token?grant_type=delete&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}
       &client_secret=${process.env.REACT_APP_NAVER_SECRET_KEY}
@@ -16,12 +17,7 @@ export const handleNaverLogout = () => {
     .catch((err) => console.log('eee', err));
 };
 
-export const handleKakaoLogout = () => {
-  if (!localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-    console.log('not logged in.');
-    return;
-  }
-
+export const removeKakaoToken = () => {
   axios('https://kapi.kakao.com/v1/user/logout', {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -34,17 +30,16 @@ export const handleKakaoLogout = () => {
     .catch((err) => console.log('error!', err));
 };
 
-export const handleGpteaLogout = () => {
+export const removeGpteaToken = () => {
   localStorage.removeItem(GPTEA_ACCESS_TOKEN);
-  alert('logged out!');
-  // setIsLoggedIn(false); 전역상태로
 };
 
-export const handleLogout = () => {
+export const logoutGptea = () => {
   if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
-    handleNaverLogout();
+    removeNaverToken();
   } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-    handleKakaoLogout();
+    removeKakaoToken();
   }
-  handleGpteaLogout();
+  removeGpteaToken();
+  alert('logged out!');
 };

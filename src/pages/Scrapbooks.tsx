@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import Scrapbook from '../components/Scrapbook';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
+import Scrapbook from '../components/Scrapbook';
 import { GPTEA_ACCESS_TOKEN } from './loginGptea';
-import axios from 'axios';
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
@@ -29,8 +30,6 @@ function Scrapbooks() {
       },
     }).then((res) => setScrapbooks(res.data.scrapbooks));
   }, []);
-
-  console.log('Scrapbooks', scrapbooks);
 
   return (
     <ScrapbooksWrapper>
