@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getGpteaToken } from '../utils/loginGpteaFunc';
+import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from '../utils/loginGpteaFunc';
 import { ERROR_GET_KAKAO_TOKENS } from '../utils/errorMessage';
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/isLoggedInSlice';
@@ -51,6 +51,15 @@ function KakaoLogin() {
     if (code)
       getKakaoAccessToken()
         .then((kakaoAccessToken) => getGpteaToken(kakaoAccessToken, KAKAO))
+        .then(() => verifyGpteaToken())
+        .then((decoded) => {
+          const now = Date.now() / 1000;
+          const expire = new Date(decoded.exp).getTime() / 1000;
+          // 만료가 60초 이내 남으면
+          if (expire - now < 60) {
+            return refreshGpteaToken();
+          }
+        })
         .then(() => {
           alert('Gptea logged in!');
           dispatch(login());

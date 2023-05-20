@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../redux/hooks';
 
-import { getGpteaToken } from '../utils/loginGpteaFunc';
+import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from '../utils/loginGpteaFunc';
 import { login } from '../redux/isLoggedInSlice';
 
 const NAVER = 'naver';
@@ -18,6 +18,15 @@ function NaverLogin() {
       // gptea login api에 전달 예정
       if (!localStorage.getItem(NAVER_ACCESS_TOKEN)) localStorage.setItem(NAVER_ACCESS_TOKEN, naverAccessToken);
       getGpteaToken(naverAccessToken, NAVER)
+        .then(() => verifyGpteaToken())
+        .then((decoded) => {
+          const now = Date.now() / 1000;
+          const expire = new Date(decoded.exp).getTime() / 1000;
+          // 만료가 60초 이내 남으면
+          if (expire - now < 60) {
+            return refreshGpteaToken();
+          }
+        })
         .then(() => {
           alert('Gptea logged in!');
           dispatch(login());
