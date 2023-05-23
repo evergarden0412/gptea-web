@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import ChatItem from '../components/ChatItem';
-import ChatItemModal from '../components/NewChatModal';
+import ChatItemModal from '../components/ChatItemModal';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
 

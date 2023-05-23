@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import isLoggedInReducer from './isLoggedInSlice';
-import isOpenChatItemModalReducer from './isOpenNewChatModalSlice';
+import isOpenChatItemModalReducer from './isOpenChatItemModalSlice';
 import requestGetChatsReducer from './requestGetChatsSlice';
 
 const store = configureStore({

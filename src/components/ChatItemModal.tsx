@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import { useAppDispatch } from '../redux/hooks';
-import { isOpenChatItemModalAction } from '../redux/isOpenNewChatModalSlice';
+import { isOpenChatItemModalAction } from '../redux/isOpenChatItemModalSlice';
 import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
 import { IChat } from '../pages/Chats';

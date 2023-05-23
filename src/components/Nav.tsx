@@ -4,7 +4,7 @@ import { useNavigate, NavLink, useMatch } from 'react-router-dom';
 import { logoutGptea } from '../utils/logoutFunc';
 import { useAppDispatch } from '../redux/hooks';
 import { logout } from '../redux/isLoggedInSlice';
-import { isOpenChatItemModalAction } from '../redux/isOpenNewChatModalSlice';
+import { isOpenChatItemModalAction } from '../redux/isOpenChatItemModalSlice';
 
 const NavWrapper = styled.section`
   width: 20%;

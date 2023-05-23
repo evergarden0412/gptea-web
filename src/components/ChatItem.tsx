@@ -5,7 +5,7 @@ import axios from 'axios';
 import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
 import { useAppDispatch } from '../redux/hooks';
-import { isOpenChatItemModalAction } from '../redux/isOpenNewChatModalSlice';
+import { isOpenChatItemModalAction } from '../redux/isOpenChatItemModalSlice';
 
 const ChatItemWrapper = styled.li`
   display: flex;
