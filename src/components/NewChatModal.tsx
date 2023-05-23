@@ -3,9 +3,10 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import { useAppDispatch } from '../redux/hooks';
-import { isOpenNewChatModalAction } from '../redux/isOpenNewChatModalSlice';
+import { isOpenChatItemModalAction } from '../redux/isOpenNewChatModalSlice';
 import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
+import { IChat } from '../pages/Chats';
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -28,12 +29,16 @@ const ModalBox = styled.div`
   align-items: center;
 `;
 
-function NewChatModal() {
-  const dispatch = useAppDispatch();
-  const [chatName, setChatName] = useState('');
+interface INewChatModal {
+  chat: IChat | null;
+}
 
-  const handleCloseNewChatModal = () => {
-    dispatch(isOpenNewChatModalAction.close());
+function ChatItemModal({ chat }: INewChatModal) {
+  const dispatch = useAppDispatch();
+  const [chatName, setChatName] = useState(chat ? chat.name : '');
+
+  const handleCloseChatItemModal = () => {
+    dispatch(isOpenChatItemModalAction.close());
   };
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,21 +47,35 @@ function NewChatModal() {
 
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios('/me/chats', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-      data: { name: chatName },
-    })
-      .then((res) => {
-        console.log(res);
-        setChatName('');
-        dispatch(requestGetChats());
+
+    if (chat)
+      axios(`/me/chats/${chat.id}`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
+        data: { name: chatName },
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          console.log(res);
+          setChatName('');
+          dispatch(requestGetChats());
+        })
+        .catch((error) => console.log(error));
+    else
+      axios('/me/chats', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
+        data: { name: chatName },
+      })
+        .then((res) => {
+          console.log(res);
+          setChatName('');
+          dispatch(requestGetChats());
+        })
+        .catch((error) => console.log(error));
   };
 
   return (
-    <ModalWrapper onClick={handleCloseNewChatModal}>
+    <ModalWrapper onClick={handleCloseChatItemModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmitForm}>
           <label>chat name</label>
@@ -68,4 +87,4 @@ function NewChatModal() {
   );
 }
 
-export default NewChatModal;
+export default ChatItemModal;

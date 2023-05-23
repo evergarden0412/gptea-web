@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import ChatItem from '../components/ChatItem';
-import NewChatModal from '../components/NewChatModal';
+import ChatItemModal from '../components/NewChatModal';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
 
@@ -21,8 +21,10 @@ export interface IChat {
 
 function Chats() {
   const dispatch = useAppDispatch();
-  const isOpenNewChatModal = useAppSelector((state) => state.isOpenNewChatModal);
-  const { data: chats, status } = useAppSelector((state) => state.requestGetChats);
+  const {
+    isOpenChatItemModal,
+    requestGetChats: { data: chats },
+  } = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(requestGetChats());
@@ -31,19 +33,15 @@ function Chats() {
   return (
     <>
       <ChatsWrapper>
-        {status === 'loading' ? (
-          'loading...'
-        ) : (
-          <ul className='Chats__list'>
-            {chats.map((chat) => (
-              <Link to={`/chats/${chat.id}`} key={chat.id}>
-                <ChatItem chat={chat} />
-              </Link>
-            ))}
-          </ul>
-        )}
+        <ul className='Chats__list'>
+          {chats.map((chat) => (
+            <Link to={`/chats/${chat.id}`} key={chat.id}>
+              <ChatItem chat={chat} />
+            </Link>
+          ))}
+        </ul>
       </ChatsWrapper>
-      {isOpenNewChatModal && <NewChatModal />}
+      {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
     </>
   );
 }
