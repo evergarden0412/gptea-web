@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { NAVER_ACCESS_TOKEN } from '../pages/NaverLogin';
 import { KAKAO_ACCESS_TOKEN } from '../pages/KakaoLogin';
-import { GPTEA_ACCESS_TOKEN } from './loginGpteaFunc';
+import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN } from './loginGpteaFunc';
 
 export const removeNaverToken = () => {
   axios(
@@ -32,6 +32,7 @@ export const removeKakaoToken = () => {
 
 export const removeGpteaToken = () => {
   localStorage.removeItem(GPTEA_ACCESS_TOKEN);
+  localStorage.removeItem(GPTEA_REFRESH_TOKEN);
 };
 
 export const logoutGptea = () => {

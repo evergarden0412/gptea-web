@@ -22,7 +22,7 @@ export const requestGetChats = createAsyncThunk<IChat[]>('requestGetChats', asyn
     });
     return chats;
   } catch (err) {
-    alert({ ERROR_GET_DATA, err });
+    alert(`${ERROR_GET_DATA}, ${err} `);
   }
 });
 

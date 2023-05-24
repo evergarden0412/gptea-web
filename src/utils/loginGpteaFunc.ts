@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA, ERROR_VERIFY_GPTEA_TOKENS } from './errorMessage';
+import { KAKAO_ACCESS_TOKEN } from '../pages/KakaoLogin';
+import { removeKakaoToken, removeNaverToken } from './logoutFunc';
+import { NAVER_ACCESS_TOKEN } from '../pages/NaverLogin';
 
 export const GPTEA_ACCESS_TOKEN = 'gptea_access_token';
 export const GPTEA_REFRESH_TOKEN = 'gptea_refresh_token';
@@ -28,6 +31,9 @@ export const getGpteaToken = (accessToken: string, social: string): Promise<void
         localStorage.setItem(GPTEA_ACCESS_TOKEN, accessToken);
         localStorage.setItem(GPTEA_REFRESH_TOKEN, refreshToken);
         console.log('tokens generated.');
+
+        if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) removeKakaoToken();
+        if (localStorage.getItem(NAVER_ACCESS_TOKEN)) removeNaverToken();
         resolve();
         // setIsLoggedIn(true);
       })
