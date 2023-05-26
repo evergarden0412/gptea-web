@@ -41,7 +41,7 @@ function Messages({ chatId }: IMessagesProps) {
     message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
     return message;
   }); // message.role api에 추가될 예정
-  newMessages = newMessages.reverse(); // 최신메세지 맨 밑으로
+  newMessages = newMessages.sort((a: IMessage, b: IMessage) => a.seq - b.seq);
 
   useEffect(() => {
     dispatch(requestGetMessages(chatId));

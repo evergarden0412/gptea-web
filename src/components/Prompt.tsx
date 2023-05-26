@@ -55,9 +55,13 @@ interface IPrompt {
 function Prompt({ chatId }: IPrompt) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState('');
+  let isFetching = false;
 
   const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isFetching) return;
+
+    isFetching = true;
     axios(`/me/chats/${chatId}/messages`, {
       method: 'POST',
       headers: {
@@ -72,6 +76,9 @@ function Prompt({ chatId }: IPrompt) {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        isFetching = false;
       });
   };
 
