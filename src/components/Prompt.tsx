@@ -1,4 +1,9 @@
+import axios from 'axios';
 import styled from 'styled-components';
+import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+import { useState } from 'react';
+import { useAppDispatch } from '../redux/hooks';
+import { requestGetMessages } from '../redux/requestGetMessagesSlice';
 
 const PromptWrapper = styled.div`
   width: 100%;
@@ -43,11 +48,37 @@ const PromptButton = styled.button`
   }
 `;
 
-function Prompt() {
+interface IPrompt {
+  chatId?: string;
+}
+
+function Prompt({ chatId }: IPrompt) {
+  const dispatch = useAppDispatch();
+  const [message, setMessage] = useState('');
+
+  const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios(`/me/chats/${chatId}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+      data: { content: message },
+    })
+      .then((res) => {
+        console.log(res);
+        dispatch(requestGetMessages(chatId));
+        setMessage('');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <PromptWrapper>
-      <PromptForm>
-        <PromptInput placeholder='ask anything' />
+      <PromptForm onSubmit={handleSubmitMessage}>
+        <PromptInput placeholder='ask anything' value={message} onChange={(e) => setMessage(e.target.value)} />
         <PromptButton>
           <i className='Prompt__button--submit fa-solid fa-paper-plane'></i>
         </PromptButton>

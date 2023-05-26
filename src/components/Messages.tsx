@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import Message from './Message';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { requestGetMessages } from '../redux/requestGetMessagesSlice';
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -21,35 +22,39 @@ export interface IMessage {
   content: string;
   createdAt: string;
   seq: number;
-  role: string;
+  role?: string;
 }
 
 interface IMessagesProps {
   chatId?: string;
-}
+} // optional because of {chatId} = useParams()
 
 function Messages({ chatId }: IMessagesProps) {
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const dispatch = useAppDispatch();
+  const scrollRef = useRef<HTMLUListElement>(null);
+
+  const {
+    requestGetMessages: { data: messages },
+  } = useAppSelector((state) => state);
+
+  let newMessages = JSON.parse(JSON.stringify(messages)).map((message: IMessage) => {
+    message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
+    return message;
+  }); // message.role api에 추가될 예정
+  newMessages = newMessages.reverse(); // 최신메세지 맨 밑으로
 
   useEffect(() => {
-    axios(`/me/chats/${chatId}/messages`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    }).then((res) => {
-      const newMessages = res.data.messages.map((message: IMessage) => {
-        message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
-        return message;
-      }); // message.role api에 추가될 예정
-      setMessages(newMessages);
-    });
+    dispatch(requestGetMessages(chatId));
   }, []);
+
+  useEffect(() => {
+    scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
+  }, [newMessages]);
 
   return (
     <MessagesWrapper>
-      <MessagesContainer>
-        {messages.map((message) => {
+      <MessagesContainer ref={scrollRef}>
+        {newMessages.map((message: IMessage) => {
           const messageId = message.chatId + message.seq.toString(); // message.id가 따로 존재하지 않음
           return <Message key={messageId} message={message} />;
         })}
