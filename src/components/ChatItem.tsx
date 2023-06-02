@@ -11,36 +11,45 @@ const ChatItemWrapper = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 3.5rem;
+  height: 3rem;
   padding: 1rem 1.5rem;
 
   &:hover {
-    border: none;
-    border-radius: 1rem;
-    background-color: var(--hover);
+    font-weight: 600;
+    background-color: #f9f9f9;
   }
 `;
 
 const ChatItemText = styled.div`
-  font-size: 1.5rem;
+  font-size: 1rem;
 `;
 
 const ChatItemButtons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 3rem;
+  cursor: auto;
 `;
 
 const ChatItemButton = styled.button`
   width: 2rem;
   height: 2rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--white);
+  }
 
   &:last-child {
     margin-left: 1rem;
   }
 
   i {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 

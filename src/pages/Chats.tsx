@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import ChatItem from '../components/ChatItem';
-import ChatItemModal from '../components/ChatItemModal';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { requestGetChats } from '../redux/requestGetChatsSlice';
 
@@ -22,7 +21,6 @@ export interface IChat {
 function Chats() {
   const dispatch = useAppDispatch();
   const {
-    isOpenChatItemModal,
     requestGetChats: { data: chats },
   } = useAppSelector((state) => state);
 
@@ -41,7 +39,6 @@ function Chats() {
           ))}
         </ul>
       </ChatsWrapper>
-      {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
     </>
   );
 }

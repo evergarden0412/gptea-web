@@ -10,14 +10,20 @@ import { useAppSelector, useAppDispatch } from './redux/hooks';
 import { login } from './redux/isLoggedInSlice';
 import { useEffect } from 'react';
 import { decode } from 'jsonwebtoken';
+import ChatItemModal from './components/ChatItemModal';
 
 const AppWrapper = styled.div`
-  width: 80vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {
   const dispatch = useAppDispatch();
+  const { isOpenChatItemModal } = useAppSelector((state) => state);
 
   useEffect(() => {
     // 로컬스토리지에 접근 토근이 있으면 검증
@@ -53,6 +59,7 @@ function App() {
         <Route path='/login/naver' element={<NaverLogin />} />
         <Route path='/login/kakao' element={<KakaoLogin />} />
       </Routes>
+      {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
     </AppWrapper>
   );
 }

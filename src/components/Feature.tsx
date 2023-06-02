@@ -10,8 +10,6 @@ import MyPage from '../pages/MyPage';
 const FeatureWrapper = styled.section`
   width: 80%;
   height: 100%;
-  background-color: skyblue;
-  padding: 1rem;
 `;
 
 function Feature() {

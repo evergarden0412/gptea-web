@@ -4,7 +4,10 @@ import { IMessage } from './Messages';
 
 const MessageWrapper = styled.li`
   width: 80%;
-  background-color: ${(props) => (props.role === 'user' ? 'pink' : 'lightyellow')};
+  background-color: ${(props) => (props.role === 'user' ? 'transparent' : 'var(--message)')};
+  color: ${(props) => (props.role === 'user' ? 'inherit' : 'white')};
+  border: ${(props) => (props.role === 'user' ? '1.5px solid var(--message)' : 'none')};
+
   float: ${(props) => (props.role === 'user' ? 'left' : 'right')};
   border-radius: 3rem;
   ${(props) => (props.role === 'user' ? 'border-top-left-radius: 0' : 'border-bottom-right-radius:0')};
@@ -12,6 +15,10 @@ const MessageWrapper = styled.li`
 
   &:not(:last-child) {
     margin-bottom: 1rem;
+  }
+
+  * {
+    font-size: 0.8rem;
   }
 `;
 
@@ -24,15 +31,23 @@ const MessageInfo = styled.div`
 
 const MessageCreatedAt = styled.div`
   display: inline-block;
-  margin-right: 1rem;
+  margin-right: 0.1rem;
 `;
 
 const ScrapButton = styled.button`
   width: 1.5rem;
   height: 1.5rem;
+  background-color: transparent;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--white);
+  }
 
   i {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
@@ -47,7 +62,7 @@ function Message({ message }: IMessageProps) {
       <MessageInfo>
         <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
         <ScrapButton>
-          <i className='fa-regular fa-bookmark'></i>
+          <i className='fa-solid fa-bookmark'></i>
         </ScrapButton>
       </MessageInfo>
     </MessageWrapper>

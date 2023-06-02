@@ -8,8 +8,7 @@ import { requestGetMessages } from '../redux/requestGetMessagesSlice';
 
 const MessagesWrapper = styled.div`
   height: 90%;
-  padding: 1rem;
-  padding-top: 0;
+  margin-bottom: 1rem;
 `;
 
 const MessagesContainer = styled.ul`
@@ -37,11 +36,7 @@ function Messages({ chatId }: IMessagesProps) {
     requestGetMessages: { data: messages },
   } = useAppSelector((state) => state);
 
-  let newMessages = JSON.parse(JSON.stringify(messages)).map((message: IMessage) => {
-    message.seq % 2 === 1 ? (message.role = 'user') : (message.role = 'ai');
-    return message;
-  }); // message.role api에 추가될 예정
-  newMessages = newMessages.sort((a: IMessage, b: IMessage) => a.seq - b.seq);
+  const orderedMessages = JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq);
 
   useEffect(() => {
     dispatch(requestGetMessages(chatId));
@@ -49,12 +44,12 @@ function Messages({ chatId }: IMessagesProps) {
 
   useEffect(() => {
     scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
-  }, [newMessages]);
+  }, [orderedMessages]);
 
   return (
     <MessagesWrapper>
       <MessagesContainer ref={scrollRef}>
-        {newMessages.map((message: IMessage) => {
+        {orderedMessages.map((message: IMessage) => {
           const messageId = message.chatId + message.seq.toString(); // message.id가 따로 존재하지 않음
           return <Message key={messageId} message={message} />;
         })}

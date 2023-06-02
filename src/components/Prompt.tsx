@@ -11,7 +11,7 @@ const PromptWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0;
 `;
 
 const PromptForm = styled.form`
@@ -21,20 +21,23 @@ const PromptForm = styled.form`
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 1rem;
-  background-color: var(--hover);
+  border: 2px solid #ededed;
 `;
 
-const PromptInput = styled.textarea`
+const PromptInput = styled.input`
   width: 100%;
   height: 100%;
   font-size: 1rem;
-  font-weight: 600;
   background-color: transparent;
   border: none;
   outline: none;
-  padding-right: 3rem;
+  padding-right: 1.5rem;
+
+  &::placeholder {
+    color: var(--gray);
+  }
 `;
 
 const PromptButton = styled.button`
@@ -42,9 +45,18 @@ const PromptButton = styled.button`
   right: 1.5rem;
   width: 2rem;
   height: 2rem;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
 
   i {
-    font-size: 1.5rem;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    i {
+      text-shadow: white 1px 0 10px;
+    }
   }
 `;
 

@@ -8,18 +8,12 @@ import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
 
 const ScrapsWrapper = styled.div``;
 
-interface IScrapBase {
+export interface IScrap {
   content: string;
   createdAt: string;
   seq: number;
   id: string;
-}
-
-interface IScrapJSON extends IScrapBase {
-  chatID: string;
-}
-
-export interface IScrap extends IScrapBase {
+  chatID?: string;
   chatId: string;
 }
 
@@ -34,7 +28,7 @@ function Scraps() {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
     }).then((res) => {
-      const newScraps = res.data.scraps.map((scrap: IScrapJSON) => {
+      const newScraps = res.data.scraps.map((scrap: IScrap) => {
         return {
           chatId: scrap.chatID, // chatID in golang
           content: scrap.content,

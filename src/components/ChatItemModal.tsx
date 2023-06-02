@@ -11,22 +11,26 @@ import { IChat } from '../pages/Chats';
 const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 `;
 
 const ModalBox = styled.div`
   width: 50%;
   height: 50%;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--white);
 `;
 
 interface INewChatModal {
@@ -58,6 +62,7 @@ function ChatItemModal({ chat }: INewChatModal) {
           console.log(res);
           setChatName('');
           dispatch(requestGetChats());
+          dispatch(isOpenChatItemModalAction.close());
         })
         .catch((error) => console.log(error));
     else
@@ -70,6 +75,7 @@ function ChatItemModal({ chat }: INewChatModal) {
           console.log(res);
           setChatName('');
           dispatch(requestGetChats());
+          dispatch(isOpenChatItemModalAction.close());
         })
         .catch((error) => console.log(error));
   };
