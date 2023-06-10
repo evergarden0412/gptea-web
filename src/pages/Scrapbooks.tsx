@@ -1,10 +1,13 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import styled from "styled-components";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-import Scrapbook from '../components/Scrapbook';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+import Scrapbook from "../components/Scrapbook";
+import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
+import NewScrapbook from "../components/NewScrapbook";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
@@ -20,17 +23,16 @@ export interface IScrapbook {
 }
 
 function Scrapbooks() {
-  const [scrapbooks, setScrapbooks] = useState<IScrapbook[]>([]);
+  const dispatch = useAppDispatch();
+  const {
+    requestGetScrapbooks: { data: scrapbooks },
+  } = useAppSelector((state) => state);
 
   useEffect(() => {
-    axios('/me/scrapbooks', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    }).then((res) => setScrapbooks(res.data.scrapbooks));
+    dispatch(requestGetScrapbooks());
   }, []);
 
+  console.log(scrapbooks);
   return (
     <ScrapbooksWrapper>
       {scrapbooks.map((scrapbook) => (
@@ -38,6 +40,7 @@ function Scrapbooks() {
           <Scrapbook scrapbook={scrapbook} />
         </Link>
       ))}
+      <NewScrapbook />
     </ScrapbooksWrapper>
   );
 }

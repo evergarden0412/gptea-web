@@ -1,16 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import isLoggedInReducer from './isLoggedInSlice';
-import isOpenChatItemModalReducer from './isOpenChatItemModalSlice';
-import requestGetChatsReducer from './requestGetChatsSlice';
-import requestGetMessagesReducer from './requestGetMessagesSlice';
+import isLoggedInReducer from "./isLoggedInSlice";
+import isOpenChatItemModalReducer from "./isOpenChatItemModalSlice";
+import requestGetChatsReducer from "./requestGetChatsSlice";
+import requestGetMessagesReducer from "./requestGetMessagesSlice";
+import isOpenScrapbookModalReducer from "./isOpenScrapbookModalSlice";
+import requestGetScrapbooksReducer from "./requestGetScrapbooksSlice";
 
 const store = configureStore({
   reducer: {
     isLoggedIn: isLoggedInReducer,
     isOpenChatItemModal: isOpenChatItemModalReducer,
+    isOpenScrapbookModal: isOpenScrapbookModalReducer,
     requestGetChats: requestGetChatsReducer,
     requestGetMessages: requestGetMessagesReducer,
+    requestGetScrapbooks: requestGetScrapbooksReducer,
   },
 });
 

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { IScrapbook } from '../pages/Scrapbooks';
+import { IScrapbook } from "../pages/Scrapbooks";
 
 const ScrapbookWrapper = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ const ScrapbookWrapper = styled.div`
   color: white;
 
   &:hover {
-    background-color: var(--hover);
+    background-color: rgba(0, 0, 0, 0.8);
   }
 `;
 
@@ -42,8 +42,8 @@ interface IScrapbookProps {
 function Scrapbook({ scrapbook }: IScrapbookProps) {
   return (
     <ScrapbookWrapper>
-      <ScrapbookIcon className='Scrapbook__text--icon fa-regular fa-bookmark'></ScrapbookIcon>
-      <ScrapbookTitle>{scrapbook.name === 'basic' ? '기본 스크랩 북' : scrapbook.name}</ScrapbookTitle>
+      <ScrapbookIcon className="Scrapbook__text--icon fa-regular fa-bookmark"></ScrapbookIcon>
+      <ScrapbookTitle>{scrapbook.name === "basic" ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
       <ScrapbookColor></ScrapbookColor>
     </ScrapbookWrapper>
   );
