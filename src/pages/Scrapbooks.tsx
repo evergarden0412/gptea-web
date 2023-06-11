@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import Scrapbook from "../components/Scrapbook";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import NewScrapbook from "../components/NewScrapbook";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
@@ -14,6 +12,7 @@ const ScrapbooksWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  overflow-x: auto;
 `;
 
 export interface IScrapbook {
@@ -32,7 +31,6 @@ function Scrapbooks() {
     dispatch(requestGetScrapbooks());
   }, []);
 
-  console.log(scrapbooks);
   return (
     <ScrapbooksWrapper>
       {scrapbooks.map((scrapbook) => (
