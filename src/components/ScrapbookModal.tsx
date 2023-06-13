@@ -15,22 +15,73 @@ const ModalWrapper = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
+  cursor: pointer;
 `;
 
 const ModalBox = styled.div`
-  width: 50%;
-  height: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  width: 600px;
+  height: 400px;
+  padding: 50px;
+  border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  background-color: var(--white);
+  cursor: auto;
+`;
+
+const Title = styled.div`
+  font-weight: 600;
+  margin-bottom: 50px;
+
+  & span {
+    font-size: 28px;
+    background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+    padding: 0 5px;
+  }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  color: var(--white);
+  width: 100%;
+`;
+
+const InputLine = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 50px;
+`;
+
+const Label = styled.label`
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px;
+  font-size: 24px;
+  background-color: #efefef;
+  border: none;
+  outline: none;
+`;
+
+const Button = styled.button`
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
 `;
 
 interface IScrapbookModal {
@@ -83,11 +134,22 @@ function ScrapbookModal({ scrapbook }: IScrapbookModal) {
   return (
     <ModalWrapper onClick={handleCloseScrapbookModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <form onSubmit={handleSubmitForm}>
-          <label>scrapbook name</label>
-          <input placeholder="스크랩북 이름을 입력하세요." value={scrapbookName} onChange={handleChangeInput} autoComplete="false"></input>
-          <button>submit</button>
-        </form>
+        <Title>
+          <span>Scrapbook 추가</span>
+        </Title>
+        <Form onSubmit={handleSubmitForm}>
+          <InputLine>
+            <Label>스크랩북 이름</Label>
+            <Input
+              placeholder="스크랩북 이름을 입력하세요."
+              value={scrapbookName}
+              onChange={handleChangeInput}
+              autoComplete="false"
+            ></Input>
+          </InputLine>
+
+          <Button>submit</Button>
+        </Form>
       </ModalBox>
     </ModalWrapper>
   );
