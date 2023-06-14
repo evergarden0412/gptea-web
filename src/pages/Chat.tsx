@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
-import Messages from '../components/Messages';
-import Prompt from '../components/Prompt';
+import Messages from "../components/Messages";
+import Prompt from "../components/Prompt";
 
 const ChatWrapper = styled.div`
   padding: 1rem;

@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import kakaoLoginLogo from '../asset/kakao_login_logo.png';
+import kakaoLoginLogo from "../asset/kakao_login_logo.png";
 
 const naverLogin = new window.naver.LoginWithNaverId({
   clientId: process.env.REACT_APP_NAVER_CLIENT_ID,
   callbackUrl: process.env.REACT_APP_NAVER_CALLBACK_URL,
   isPopup: false,
   loginButton: {
-    color: 'green',
+    color: "green",
     type: 3,
     height: 50,
   },
@@ -28,10 +28,10 @@ function Login() {
   };
 
   return (
-    <div className='welcome'>
+    <div className="welcome">
       <h1>Welcome</h1>
-      <div id='naverIdLogin' />
-      <div id='kakaoIdLogin' onClick={handleKakaoLogin}>
+      <div id="naverIdLogin" />
+      <div id="kakaoIdLogin" onClick={handleKakaoLogin}>
         <img src={kakaoLoginLogo} />
       </div>
     </div>

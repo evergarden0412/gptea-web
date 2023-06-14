@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import styled from "styled-components";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-import Scrap from '../components/Scrap';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
+import Scrap from "../components/Scrap";
+import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 
 const ScrapsWrapper = styled.div``;
 
@@ -23,7 +23,7 @@ function Scraps() {
 
   useEffect(() => {
     axios(`/me/scrapbooks/${scrapbookId}/scraps`, {
-      method: 'GET',
+      method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
@@ -43,7 +43,7 @@ function Scraps() {
 
   return (
     <ScrapsWrapper>
-      <ul className='Scraps__list'>
+      <ul className="Scraps__list">
         {scraps.map((scrap) => (
           <Scrap key={scrap.id} scrap={scrap} />
         ))}

@@ -43,7 +43,13 @@ const DropboxButton = styled.button.attrs({ type: "button" })`
   }
 `;
 
-function ScrapbookDropbox({ scrapbook, setIsOpenDrobpox }: { scrapbook: IScrapbook; setIsOpenDrobpox: Dispatch<SetStateAction<boolean>> }) {
+function ScrapbookDropbox({
+  scrapbook,
+  setIsOpenDrobpox,
+}: {
+  scrapbook: IScrapbook;
+  setIsOpenDrobpox: Dispatch<SetStateAction<boolean>>;
+}) {
   const dispatch = useAppDispatch();
 
   const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

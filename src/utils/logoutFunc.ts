@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { NAVER_ACCESS_TOKEN } from '../pages/NaverLogin';
-import { KAKAO_ACCESS_TOKEN } from '../pages/KakaoLogin';
-import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN } from './loginGpteaFunc';
+import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
+import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
+import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN } from "./loginGpteaFunc";
 
 export const removeNaverToken = () => {
   axios(
@@ -14,20 +14,20 @@ export const removeNaverToken = () => {
     .then(() => {
       localStorage.removeItem(NAVER_ACCESS_TOKEN);
     })
-    .catch((err) => console.log('eee', err));
+    .catch((err) => console.log("eee", err));
 };
 
 export const removeKakaoToken = () => {
-  axios('https://kapi.kakao.com/v1/user/logout', {
+  axios("https://kapi.kakao.com/v1/user/logout", {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Bearer ${localStorage.getItem(KAKAO_ACCESS_TOKEN)}`,
     },
   })
     .then(() => {
       localStorage.removeItem(KAKAO_ACCESS_TOKEN);
     })
-    .catch((err) => console.log('error!', err));
+    .catch((err) => console.log("error!", err));
 };
 
 export const removeGpteaToken = () => {
@@ -42,5 +42,5 @@ export const logoutGptea = () => {
     removeKakaoToken();
   }
   removeGpteaToken();
-  alert('logged out!');
+  alert("logged out!");
 };

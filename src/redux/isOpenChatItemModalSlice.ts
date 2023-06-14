@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const isOpenChatItemModal = createSlice({
-  name: 'isOpenChatItemModal',
+  name: "isOpenChatItemModal",
   initialState: { status: false, chat: null },
   reducers: {
     open: (state, action) => {

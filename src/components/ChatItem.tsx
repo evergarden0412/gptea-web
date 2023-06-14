@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { IChat } from '../pages/Chats';
-import axios from 'axios';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
-import { requestGetChats } from '../redux/requestGetChatsSlice';
-import { useAppDispatch } from '../redux/hooks';
-import { isOpenChatItemModalAction } from '../redux/isOpenChatItemModalSlice';
+import { IChat } from "../pages/Chats";
+import axios from "axios";
+import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
+import { requestGetChats } from "../redux/requestGetChatsSlice";
+import { useAppDispatch } from "../redux/hooks";
+import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 
 const ChatItemWrapper = styled.li`
   display: flex;
@@ -65,7 +65,10 @@ function ChatItem({ chat }: IChatItemProps) {
   };
 
   const handleDeleteChat = () => {
-    axios(`/me/chats/${chat.id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` } })
+    axios(`/me/chats/${chat.id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
+    })
       .then((res) => {
         console.log(res);
         dispatch(requestGetChats());
@@ -83,10 +86,10 @@ function ChatItem({ chat }: IChatItemProps) {
         }}
       >
         <ChatItemButton onClick={handleOpenChatItemModal}>
-          <i className='fa-solid fa-pen-to-square'></i>
+          <i className="fa-solid fa-pen-to-square"></i>
         </ChatItemButton>
         <ChatItemButton onClick={handleDeleteChat}>
-          <i className='fa-solid fa-trash-can'></i>
+          <i className="fa-solid fa-trash-can"></i>
         </ChatItemButton>
       </ChatItemButtons>
     </ChatItemWrapper>

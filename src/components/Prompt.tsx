@@ -1,9 +1,9 @@
-import axios from 'axios';
-import styled from 'styled-components';
-import { GPTEA_ACCESS_TOKEN } from '../utils/loginGpteaFunc';
-import { useState } from 'react';
-import { useAppDispatch } from '../redux/hooks';
-import { requestGetMessages } from '../redux/requestGetMessagesSlice';
+import axios from "axios";
+import styled from "styled-components";
+import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
+import { useState } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 
 const PromptWrapper = styled.div`
   width: 100%;
@@ -66,7 +66,7 @@ interface IPrompt {
 
 function Prompt({ chatId }: IPrompt) {
   const dispatch = useAppDispatch();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   let isFetching = false;
 
   const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,7 +75,7 @@ function Prompt({ chatId }: IPrompt) {
 
     isFetching = true;
     axios(`/me/chats/${chatId}/messages`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
@@ -84,7 +84,7 @@ function Prompt({ chatId }: IPrompt) {
       .then((res) => {
         console.log(res);
         dispatch(requestGetMessages(chatId));
-        setMessage('');
+        setMessage("");
       })
       .catch((err) => {
         console.log(err);
@@ -97,9 +97,9 @@ function Prompt({ chatId }: IPrompt) {
   return (
     <PromptWrapper>
       <PromptForm onSubmit={handleSubmitMessage}>
-        <PromptInput placeholder='ask anything' value={message} onChange={(e) => setMessage(e.target.value)} />
+        <PromptInput placeholder="ask anything" value={message} onChange={(e) => setMessage(e.target.value)} />
         <PromptButton>
-          <i className='Prompt__button--submit fa-solid fa-paper-plane'></i>
+          <i className="Prompt__button--submit fa-solid fa-paper-plane"></i>
         </PromptButton>
       </PromptForm>
     </PromptWrapper>

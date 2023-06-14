@@ -1,25 +1,25 @@
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from '../utils/loginGpteaFunc';
-import { ERROR_GET_KAKAO_TOKENS } from '../utils/errorMessage';
-import { useAppDispatch } from '../redux/hooks';
-import { login } from '../redux/isLoggedInSlice';
+import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
+import { ERROR_GET_KAKAO_TOKENS } from "../utils/errorMessage";
+import { useAppDispatch } from "../redux/hooks";
+import { login } from "../redux/isLoggedInSlice";
 
-const KAKAO = 'kakao';
-export const KAKAO_ACCESS_TOKEN = 'kakao_access_token';
+const KAKAO = "kakao";
+export const KAKAO_ACCESS_TOKEN = "kakao_access_token";
 
 function KakaoLogin() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const code = new URL(window.location.href).searchParams.get('code');
+  const code = new URL(window.location.href).searchParams.get("code");
 
   const getKakaoAccessToken = (): Promise<string> => {
     return new Promise((resolve, reject) => {
       const parameterForTokenRequest: any = {
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         client_id: `${process.env.REACT_APP_KAKAO_API_KEY}`,
         redirect_uri: `${process.env.REACT_APP_KAKAO_CALLBACK_URL}`,
         code: code,
@@ -27,13 +27,13 @@ function KakaoLogin() {
       };
 
       const queryString = Object.keys(parameterForTokenRequest)
-        .map((param: any) => encodeURIComponent(param) + '=' + encodeURIComponent(parameterForTokenRequest[param]))
-        .join('&');
+        .map((param: any) => encodeURIComponent(param) + "=" + encodeURIComponent(parameterForTokenRequest[param]))
+        .join("&");
 
       axios(`https://kauth.kakao.com/oauth/token?${queryString}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
       })
         .then((res) => {
@@ -53,9 +53,9 @@ function KakaoLogin() {
         .then((kakaoAccessToken) => getGpteaToken(kakaoAccessToken, KAKAO))
         .then(() => verifyGpteaToken())
         .then(() => {
-          alert('Gptea logged in!');
+          alert("Gptea logged in!");
           dispatch(login());
-          navigate('/');
+          navigate("/");
         })
         .catch((err) => alert(err));
   }, []);

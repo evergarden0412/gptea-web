@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-import ChatItem from '../components/ChatItem';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { requestGetChats } from '../redux/requestGetChatsSlice';
+import ChatItem from "../components/ChatItem";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { requestGetChats } from "../redux/requestGetChatsSlice";
 
 const ChatsWrapper = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ function Chats() {
   return (
     <>
       <ChatsWrapper>
-        <ul className='Chats__list'>
+        <ul className="Chats__list">
           {chats.map((chat) => (
             <Link to={`/chats/${chat.id}`} key={chat.id}>
               <ChatItem chat={chat} />

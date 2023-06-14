@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import styled from "styled-components";
+import { useEffect, useRef } from "react";
 
-import Message from './Message';
+import Message from "./Message";
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { requestGetMessages } from '../redux/requestGetMessagesSlice';
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -43,7 +43,8 @@ function Messages({ chatId }: IMessagesProps) {
   }, []);
 
   useEffect(() => {
-    scrollRef.current && (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
+    scrollRef.current &&
+      (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
   }, [orderedMessages]);
 
   return (

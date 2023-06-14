@@ -1,16 +1,16 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { IMessage } from './Messages';
+import { IMessage } from "./Messages";
 
 const MessageWrapper = styled.li`
   width: 80%;
-  background-color: ${(props) => (props.role === 'user' ? 'transparent' : 'var(--message)')};
-  color: ${(props) => (props.role === 'user' ? 'inherit' : 'white')};
-  border: ${(props) => (props.role === 'user' ? '1.5px solid var(--message)' : 'none')};
+  background-color: ${(props) => (props.role === "user" ? "transparent" : "var(--message)")};
+  color: ${(props) => (props.role === "user" ? "inherit" : "white")};
+  border: ${(props) => (props.role === "user" ? "1.5px solid var(--message)" : "none")};
 
-  float: ${(props) => (props.role === 'user' ? 'left' : 'right')};
+  float: ${(props) => (props.role === "user" ? "left" : "right")};
   border-radius: 3rem;
-  ${(props) => (props.role === 'user' ? 'border-top-left-radius: 0' : 'border-bottom-right-radius:0')};
+  ${(props) => (props.role === "user" ? "border-top-left-radius: 0" : "border-bottom-right-radius:0")};
   padding: 1rem 2rem;
 
   &:not(:last-child) {
@@ -62,7 +62,7 @@ function Message({ message }: IMessageProps) {
       <MessageInfo>
         <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
         <ScrapButton>
-          <i className='fa-solid fa-bookmark'></i>
+          <i className="fa-solid fa-bookmark"></i>
         </ScrapButton>
       </MessageInfo>
     </MessageWrapper>
