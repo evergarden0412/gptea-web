@@ -1,19 +1,22 @@
-import styled from 'styled-components';
-import { useState } from 'react';
+import styled from "styled-components";
+import { useState } from "react";
 
-import { IScrap } from '../pages/Scraps';
+import { IScrap } from "../pages/Scraps";
 
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${(props) => (props.isExpand ? 'height: auto;' : 'height: 4rem;')}
+  ${(props) => (props.isExpand ? "height: auto;" : "height: 4rem;")}
   padding: 1rem 1.5rem;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #e3e2e0;
+  }
 
   &:hover {
-    border: none;
-    border-radius: 1rem;
-    background-color: var(--hover);
+    background-color: #f9f9f9;
   }
 `;
 
@@ -21,7 +24,7 @@ const ScrapContent = styled.div<{ isExpand: boolean }>`
   width: 90%;
   ${(props) =>
     props.isExpand
-      ? ''
+      ? ""
       : `text-overflow: ellipsis;
       overflow: hidden;
       word-break: break-word;
@@ -35,15 +38,24 @@ const Buttons = styled.div`
   width: 5%;
   display: flex;
   flex-direction: column;
+  cursor: auto;
 `;
 
 const Button = styled.button<{ isExpand?: boolean }>`
-  width: 1.5rem;
-  height: 1.5rem;
-  ${(props) => props.isExpand && 'margin-bottom: 1rem;'}
+  width: 2rem;
+  height: 2rem;
+  ${(props) => props.isExpand && "margin-bottom: 1rem;"}
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
 
   i {
-    font-size: 1.5rem;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background-color: var(--white);
   }
 `;
 
@@ -61,13 +73,18 @@ function Scrap({ scrap }: IScrapProps) {
   return (
     <ScrapWrapper isExpand={isExpand} onClick={handleExpandScrap}>
       <ScrapContent isExpand={isExpand}>{scrap.content}</ScrapContent>
-      <Buttons>
+      <Buttons
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
         <Button isExpand={isExpand}>
-          <i className='Scrap__icon--remove fa-regular fa-bookmark'></i>
+          <i className="Scrap__icon--remove fa-regular fa-bookmark"></i>
         </Button>
         {isExpand && (
           <Button>
-            <i className='Scrap__icon--move fa-sharp fa-solid fa-share'></i>
+            <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
           </Button>
         )}
       </Buttons>
