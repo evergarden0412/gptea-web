@@ -19,6 +19,7 @@ export interface IScrapbook {
   createdAt: string;
   id: string;
   name: string;
+  isDefault: boolean;
 }
 
 function Scrapbooks() {

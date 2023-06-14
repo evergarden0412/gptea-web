@@ -88,7 +88,7 @@ function Scrapbook({ scrapbook }: IScrapbookProps) {
           {isOpenDropbox && <ScrapbookDropbox scrapbook={scrapbook} setIsOpenDrobpox={setIsOpenDrobpox} />}
         </ScrapbookButton>
       </ScrapbookIcons>
-      <ScrapbookTitle>{scrapbook.name === "basic" ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
+      <ScrapbookTitle>{scrapbook.isDefault ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
       <ScrapbookColor></ScrapbookColor>
     </ScrapbookWrapper>
   );
