@@ -1,17 +1,17 @@
-import styled from 'styled-components';
-import { useNavigate, NavLink, useLocation, matchPath } from 'react-router-dom';
+import styled from "styled-components";
+import { useNavigate, NavLink, useLocation, matchPath } from "react-router-dom";
 
-import { logoutGptea } from '../utils/logoutFunc';
-import { useAppDispatch } from '../redux/hooks';
-import { logout } from '../redux/isLoggedInSlice';
-import { isOpenChatItemModalAction } from '../redux/isOpenChatItemModalSlice';
+import { logoutGptea } from "../utils/logoutFunc";
+import { useAppDispatch } from "../redux/hooks";
+import { logout } from "../redux/isLoggedInSlice";
+import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 
 const NavWrapper = styled.section`
   width: 20%;
   background-color: var(--nav);
 `;
 
-const NavItem = styled(NavLink)<{ match: boolean }>`
+const NavItem = styled(NavLink)<{ $match: boolean }>`
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -19,9 +19,9 @@ const NavItem = styled(NavLink)<{ match: boolean }>`
   padding: 0.7rem;
   margin: 0.3rem;
   position: relative;
-  background-color: ${(props) => (props.match ? 'var(--white)' : 'transparent')};
+  background-color: ${(props) => (props.$match ? "var(--white)" : "transparent")};
   border-radius: 5px;
-  color: ${(props) => (props.match ? 'var(--defalt)' : 'var(--white)')};
+  color: ${(props) => (props.$match ? "var(--defalt)" : "var(--white)")};
 
   &:hover {
     background-color: var(--hover);
@@ -89,7 +89,7 @@ function Nav() {
   const handleLogout = () => {
     logoutGptea();
     dispatch(logout());
-    navigate('/');
+    navigate("/");
   };
 
   const handleOpenChatItemModal = () => {
@@ -98,28 +98,28 @@ function Nav() {
 
   return (
     <NavWrapper>
-      <NavItem to='/' match={match('/') || match('/chats/:id')}>
+      <NavItem to="/" $match={match("/") || match("/chats/:id")}>
         <NavIcon>
-          <i className='fa-solid fa-mug-hot'></i>
+          <i className="fa-solid fa-mug-hot"></i>
         </NavIcon>
         <NavText>chat</NavText>
-        {match('/') && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
+        {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
       </NavItem>
-      <NavItem to='/scrapbooks' match={match('/scrapbooks') || match('/scrapbooks/:id/scraps')}>
+      <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id/scraps")}>
         <NavIcon>
-          <i className='fa-regular fa-bookmark'></i>
+          <i className="fa-regular fa-bookmark"></i>
         </NavIcon>
         <NavText>scrap</NavText>
       </NavItem>
-      <NavItem to='/mypage' match={match('/mypage')}>
+      <NavItem to="/mypage" $match={match("/mypage")}>
         <NavIcon>
-          <i className='fa-solid fa-user'></i>
+          <i className="fa-solid fa-user"></i>
         </NavIcon>
         <NavText>my page</NavText>
       </NavItem>
       <NavItemLogout onClick={handleLogout}>
         <NavIcon>
-          <i className='fa-solid fa-right-from-bracket'></i>
+          <i className="fa-solid fa-right-from-bracket"></i>
         </NavIcon>
         <NavText>logout</NavText>
       </NavItemLogout>
