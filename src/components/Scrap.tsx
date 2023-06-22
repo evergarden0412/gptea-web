@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IScrap } from "../pages/Scraps";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 import { useAppDispatch } from "../redux/hooks";
+import { Link } from "react-router-dom";
 
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
@@ -92,7 +93,9 @@ function Scrap({ scrap }: IScrapProps) {
         </Button>
         {isExpand && (
           <Button>
-            <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
+            <Link to={`/chats/${scrap.message?.chatId}#${scrap.message?.seq}`}>
+              <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
+            </Link>
           </Button>
         )}
       </Buttons>
