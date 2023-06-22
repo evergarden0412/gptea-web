@@ -5,6 +5,7 @@ import Message from "./Message";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import { IScrap } from "../pages/Scraps";
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -17,11 +18,13 @@ const MessagesContainer = styled.ul`
 `;
 
 export interface IMessage {
-  chatId: string;
+  chatId?: string;
+  chatID?: string;
   content: string;
   createdAt: string;
   seq: number;
   role?: string;
+  scrap?: IScrap;
 }
 
 interface IMessagesProps {

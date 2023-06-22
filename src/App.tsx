@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { decode } from "jsonwebtoken";
 import ChatItemModal from "./components/ChatItemModal";
 import ScrapbookModal from "./components/ScrapbookModal";
+import ScrapModal from "./components/ScrapModal";
 
 const AppWrapper = styled.div`
   width: 100vw;
@@ -24,7 +25,7 @@ const AppWrapper = styled.div`
 
 function App() {
   const dispatch = useAppDispatch();
-  const { isOpenChatItemModal, isOpenScrapbookModal } = useAppSelector((state) => state);
+  const { isOpenChatItemModal, isOpenScrapbookModal, isOpenScrapModal } = useAppSelector((state) => state);
 
   useEffect(() => {
     // 로컬스토리지에 접근 토근이 있으면 검증
@@ -62,6 +63,7 @@ function App() {
       </Routes>
       {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
       {isOpenScrapbookModal.status && <ScrapbookModal scrapbook={isOpenScrapbookModal.scrapbook} />}
+      {isOpenScrapModal.status && <ScrapModal message={isOpenScrapModal.message} />}
     </AppWrapper>
   );
 }

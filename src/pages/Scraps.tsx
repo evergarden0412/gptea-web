@@ -5,16 +5,15 @@ import { useState, useEffect } from "react";
 
 import Scrap from "../components/Scrap";
 import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
+import { IMessage } from "../components/Messages";
 
 const ScrapsWrapper = styled.div``;
 
 export interface IScrap {
-  content: string;
   createdAt: string;
-  seq: number;
   id: string;
-  chatID?: string;
-  chatId: string;
+  memo: string;
+  message?: IMessage;
 }
 
 function Scraps() {
@@ -29,13 +28,10 @@ function Scraps() {
       },
     }).then((res) => {
       const newScraps = res.data.scraps.map((scrap: IScrap) => {
-        return {
-          chatId: scrap.chatID, // chatID in golang
-          content: scrap.content,
-          createdAt: scrap.createdAt,
-          seq: scrap.seq,
-          id: scrap.id,
-        };
+        if (!scrap.message) return;
+        scrap.message.chatId = scrap.message.chatID;
+        delete scrap.message.chatID;
+        return scrap;
       });
       setScraps(newScraps);
     });

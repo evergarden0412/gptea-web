@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import { IScrap } from "../pages/Scraps";
+import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
+import { useAppDispatch } from "../redux/hooks";
 
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
@@ -65,21 +67,27 @@ interface IScrapProps {
 
 function Scrap({ scrap }: IScrapProps) {
   const [isExpand, setIsExpand] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleExpandScrap = () => {
     setIsExpand((prev) => !prev);
   };
 
+  const handleOpenScrapModal = () => {
+    // message 전달
+    dispatch(isOpenScrapModalAction.open(scrap.message));
+  };
+
   return (
     <ScrapWrapper isExpand={isExpand} onClick={handleExpandScrap}>
-      <ScrapContent isExpand={isExpand}>{scrap.content}</ScrapContent>
+      <ScrapContent isExpand={isExpand}>{scrap.message?.content}</ScrapContent>
       <Buttons
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
         }}
       >
-        <Button isExpand={isExpand}>
+        <Button isExpand={isExpand} onClick={handleOpenScrapModal}>
           <i className="Scrap__icon--remove fa-regular fa-bookmark"></i>
         </Button>
         {isExpand && (

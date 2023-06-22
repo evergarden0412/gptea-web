@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { ERROR_GET_DATA } from "../utils/errorMessage";
+import { IMessage } from "../components/Messages";
 
 export const requestGetMessages = createAsyncThunk("requestGetMessages", async (chatId: string | undefined) => {
   try {
@@ -13,7 +14,13 @@ export const requestGetMessages = createAsyncThunk("requestGetMessages", async (
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
     });
-    return messages;
+    console.log(messages);
+    const newMessages = messages.map((message: IMessage) => {
+      message.chatId = message.chatID;
+      delete message.chatID;
+      return message;
+    });
+    return newMessages;
   } catch (err) {
     alert(`${ERROR_GET_DATA} ${err}`);
   }

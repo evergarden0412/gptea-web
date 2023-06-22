@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import { IMessage } from "./Messages";
+import { useAppDispatch } from "../redux/hooks";
+import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 
 const MessageWrapper = styled.li`
   width: 80%;
@@ -34,20 +36,20 @@ const MessageCreatedAt = styled.div`
   margin-right: 0.1rem;
 `;
 
-const ScrapButton = styled.button`
+const ScrapButton = styled.button<{ $isScrap: boolean }>`
   width: 1.5rem;
   height: 1.5rem;
   background-color: transparent;
   border: none;
-  color: var(--gray);
   cursor: pointer;
-
-  &:hover {
-    color: var(--white);
-  }
 
   i {
     font-size: 1rem;
+    color: ${(props) => (props.$isScrap ? "var(--accent)" : "var(--gray)")};
+  }
+
+  &:hover i {
+    color: var(--lightgray);
   }
 `;
 
@@ -56,12 +58,19 @@ interface IMessageProps {
 }
 
 function Message({ message }: IMessageProps) {
+  const dispatch = useAppDispatch();
+
+  const handleOpenScrapModal = () => {
+    // scrapID 전달
+    dispatch(isOpenScrapModalAction.open(message));
+  };
+
   return (
-    <MessageWrapper role={message.role}>
+    <MessageWrapper role={message.role} id={`${message.seq}`}>
       <MessageContent>{message.content}</MessageContent>
       <MessageInfo>
         <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
-        <ScrapButton>
+        <ScrapButton onClick={handleOpenScrapModal} $isScrap={message.scrap ? true : false}>
           <i className="fa-solid fa-bookmark"></i>
         </ScrapButton>
       </MessageInfo>
