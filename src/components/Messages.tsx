@@ -44,21 +44,21 @@ function Messages({ chatId }: IMessagesProps) {
   const orderedMessages = JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq);
 
   useEffect(() => {
+    dispatch(requestGetMessages(chatId));
+
+    const scrollToHashElement = () => {
+      const { hash } = window.location;
+      const elementToScroll = document.getElementById(hash?.replace("#", ""));
+      console.log("el", elementToScroll);
+      if (!elementToScroll) return;
+      scrollRef.current && (scrollRef.current.scrollTop = elementToScroll.offsetTop - 30);
+    };
+
     if (window.location.hash) {
-      const scrollToHashElement = () => {
-        const { hash } = window.location;
-        const elementToScroll = document.getElementById(hash?.replace("#", ""));
-        console.log("el", elementToScroll);
-        if (!elementToScroll) return;
-
-        scrollRef.current && (scrollRef.current.scrollTop = elementToScroll.offsetTop - 30);
-      };
-
       scrollToHashElement();
       window.addEventListener("hashchange", scrollToHashElement);
-      return window.removeEventListener("hashchange", scrollToHashElement);
     }
-    dispatch(requestGetMessages(chatId));
+    return () => window.removeEventListener("hashchange", scrollToHashElement);
   }, []);
 
   useEffect(() => {
