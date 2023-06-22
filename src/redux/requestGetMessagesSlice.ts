@@ -14,7 +14,7 @@ export const requestGetMessages = createAsyncThunk("requestGetMessages", async (
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
     });
-    console.log(messages);
+
     const newMessages = messages.map((message: IMessage) => {
       message.chatId = message.chatID;
       delete message.chatID;

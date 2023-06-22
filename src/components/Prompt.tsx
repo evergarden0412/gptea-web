@@ -2,8 +2,9 @@ import axios from "axios";
 import styled from "styled-components";
 import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import { requestAsk } from "../redux/requestAskSlice";
 
 const PromptWrapper = styled.div`
   width: 100%;
@@ -67,31 +68,17 @@ interface IPrompt {
 function Prompt({ chatId }: IPrompt) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
-  let isFetching = false;
+  const {
+    requestAsk: { status },
+  } = useAppSelector((state) => state);
 
   const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isFetching) return;
-
-    isFetching = true;
-    axios(`/me/chats/${chatId}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-      data: { content: message },
-    })
-      .then((res) => {
-        console.log(res);
-        dispatch(requestGetMessages(chatId));
-        setMessage("");
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        isFetching = false;
-      });
+    if (status === "loading") return;
+    dispatch(requestAsk({ chatId, question: message })).then(() => {
+      dispatch(requestGetMessages(chatId));
+      setMessage("");
+    });
   };
 
   return (

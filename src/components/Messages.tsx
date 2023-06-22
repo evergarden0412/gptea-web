@@ -6,6 +6,7 @@ import Message from "./Message";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 import { IScrap } from "../pages/Scraps";
+import Loading from "./Loading";
 
 const MessagesWrapper = styled.div`
   height: 90%;
@@ -37,6 +38,7 @@ function Messages({ chatId }: IMessagesProps) {
 
   const {
     requestGetMessages: { data: messages },
+    requestAsk: { status },
   } = useAppSelector((state) => state);
 
   const orderedMessages = JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq);
@@ -72,6 +74,7 @@ function Messages({ chatId }: IMessagesProps) {
           const messageId = message.chatId + message.seq.toString(); // message.id가 따로 존재하지 않음
           return <Message key={messageId} message={message} />;
         })}
+        {status === "loading" && <Loading />}
       </MessagesContainer>
     </MessagesWrapper>
   );
