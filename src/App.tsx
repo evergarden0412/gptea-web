@@ -67,11 +67,11 @@ function App() {
       {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
       {isOpenScrapbookModal.status && <ScrapbookModal scrapbook={isOpenScrapbookModal.scrapbook} />}
       {isOpenScrapModal.status &&
-        (isOpenScrapModal.message ? (
+        (isOpenScrapModal.scrapId ? (
+          <ScrapModal message={isOpenScrapModal.message} scrapId={isOpenScrapModal.scrapId} />
+        ) : (
           <ScrapModal message={isOpenScrapModal.message} />
-        ) : isOpenScrapModal.scrapId ? (
-          <ScrapModal scrapId={isOpenScrapModal.scrapId} />
-        ) : null)}
+        ))}
       {isOpenWithdrawalModal.status && <WithdrawalModal />}
     </AppWrapper>
   );

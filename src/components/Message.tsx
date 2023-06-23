@@ -61,7 +61,7 @@ function Message({ message }: IMessageProps) {
   const dispatch = useAppDispatch();
 
   const handleOpenScrapModal = () => {
-    if (message.scrap) dispatch(isOpenScrapModalAction.open({ scrapId: message.scrap.id }));
+    if (message.scrap) dispatch(isOpenScrapModalAction.open({ message, scrapId: message.scrap.id }));
     else dispatch(isOpenScrapModalAction.open({ message }));
   };
 

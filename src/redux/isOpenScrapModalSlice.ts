@@ -5,10 +5,11 @@ const isOpenScrapModal = createSlice({
   initialState: { status: false, message: null, scrapId: "" },
   reducers: {
     open: (state, action) => {
-      state.status = true;
       const { message, scrapId } = action.payload;
-      if (message) state.message = message;
-      else if (scrapId) state.scrapId = scrapId;
+
+      state.status = true;
+      state.message = message;
+      if (scrapId) state.scrapId = scrapId;
     },
     close: (state) => {
       state.status = false;
