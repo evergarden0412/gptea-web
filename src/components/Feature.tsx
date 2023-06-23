@@ -5,7 +5,6 @@ import Chats from "../pages/Chats";
 import Chat from "../pages/Chat";
 import Scrapbooks from "../pages/Scrapbooks";
 import Scraps from "../pages/Scraps";
-import MyPage from "../pages/MyPage";
 
 const FeatureWrapper = styled.section`
   width: 80%;
@@ -20,7 +19,6 @@ function Feature() {
         <Route path="/chats/:chatId" element={<Chat />} />
         <Route path="/scrapbooks" element={<Scrapbooks />} />
         <Route path="/scrapbooks/:scrapbookId" element={<Scraps />} />
-        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </FeatureWrapper>
   );

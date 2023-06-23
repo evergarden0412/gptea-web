@@ -5,11 +5,18 @@ import { logoutGptea } from "../utils/logoutFunc";
 import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
+import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
 
 const NavWrapper = styled.section`
   width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--nav);
 `;
+
+const MainNav = styled.div``;
 
 const NavItem = styled(NavLink)<{ $match: boolean }>`
   display: flex;
@@ -29,7 +36,7 @@ const NavItem = styled(NavLink)<{ $match: boolean }>`
   }
 `;
 
-const NavItemLogout = styled.button`
+const NavItemButton = styled.button`
   height: auto;
   display: flex;
   align-items: center;
@@ -92,37 +99,43 @@ function Nav() {
     navigate("/");
   };
 
+  const handleWithdrawal = () => {
+    dispatch(isOpenWithdrawalModalAction.open());
+  };
+
   const handleOpenChatItemModal = () => {
     dispatch(isOpenChatItemModalAction.open(null));
   };
 
   return (
     <NavWrapper>
-      <NavItem to="/" $match={match("/") || match("/chats/:id")}>
-        <NavIcon>
-          <i className="fa-solid fa-mug-hot"></i>
-        </NavIcon>
-        <NavText>chat</NavText>
-        {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
-      </NavItem>
-      <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id/scraps")}>
-        <NavIcon>
-          <i className="fa-regular fa-bookmark"></i>
-        </NavIcon>
-        <NavText>scrap</NavText>
-      </NavItem>
-      <NavItem to="/mypage" $match={match("/mypage")}>
+      <MainNav>
+        <NavItem to="/" $match={match("/") || match("/chats/:id")}>
+          <NavIcon>
+            <i className="fa-solid fa-mug-hot"></i>
+          </NavIcon>
+          <NavText>chat</NavText>
+          {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
+        </NavItem>
+        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id/scraps")}>
+          <NavIcon>
+            <i className="fa-regular fa-bookmark"></i>
+          </NavIcon>
+          <NavText>scrap</NavText>
+        </NavItem>
+        <NavItemButton onClick={handleLogout}>
+          <NavIcon>
+            <i className="fa-solid fa-right-from-bracket"></i>
+          </NavIcon>
+          <NavText>logout</NavText>
+        </NavItemButton>
+      </MainNav>
+      <NavItemButton onClick={handleWithdrawal}>
         <NavIcon>
           <i className="fa-solid fa-user"></i>
         </NavIcon>
-        <NavText>my page</NavText>
-      </NavItem>
-      <NavItemLogout onClick={handleLogout}>
-        <NavIcon>
-          <i className="fa-solid fa-right-from-bracket"></i>
-        </NavIcon>
-        <NavText>logout</NavText>
-      </NavItemLogout>
+        <NavText>withdrawal</NavText>
+      </NavItemButton>
     </NavWrapper>
   );
 }

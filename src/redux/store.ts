@@ -8,6 +8,7 @@ import isOpenScrapbookModalReducer from "./isOpenScrapbookModalSlice";
 import requestGetScrapbooksReducer from "./requestGetScrapbooksSlice";
 import isOpenScrapModalReducer from "./isOpenScrapModalSlice";
 import requestAskReducer from "./requestAskSlice";
+import isOpenWithdrawalModalReducer from "./isOpenWithdrawalModalSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     requestGetMessages: requestGetMessagesReducer,
     requestGetScrapbooks: requestGetScrapbooksReducer,
     requestAsk: requestAskReducer,
+    isOpenWithdrawalModal: isOpenWithdrawalModalReducer,
   },
 });
 
