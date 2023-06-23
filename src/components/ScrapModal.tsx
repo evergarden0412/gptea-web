@@ -63,6 +63,7 @@ const InputLine = styled.div`
 
 const Label = styled.label`
   width: 200px;
+  min-width: fit-content;
   height: 50px;
   line-height: 50px;
 `;
