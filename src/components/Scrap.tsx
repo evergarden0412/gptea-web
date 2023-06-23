@@ -75,8 +75,7 @@ function Scrap({ scrap }: IScrapProps) {
   };
 
   const handleOpenScrapModal = () => {
-    // message 전달
-    dispatch(isOpenScrapModalAction.open(scrap.message));
+    dispatch(isOpenScrapModalAction.open({ scrapId: scrap.id }));
   };
 
   return (

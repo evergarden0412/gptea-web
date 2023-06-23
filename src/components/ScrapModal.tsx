@@ -88,10 +88,11 @@ const Button = styled.button`
 `;
 
 interface IScrapModal {
-  message: IMessage | null;
+  message?: IMessage | null;
+  scrapId?: string;
 }
 
-function ScrapModal({ message }: IScrapModal) {
+function ScrapModal({ message, scrapId }: IScrapModal) {
   const dispatch = useAppDispatch();
   const [checkedScrapbooks, setCheckedScrapbooks] = useState<string[]>([]);
 
@@ -107,7 +108,7 @@ function ScrapModal({ message }: IScrapModal) {
     console.log(checked, scrapbookId);
     if (checked) {
       setCheckedScrapbooks((prev) => [...prev, scrapbookId]);
-      axios(`/me/scraps/${message?.scrap?.id}/scrapbooks/${scrapbookId}`, {
+      axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
@@ -116,7 +117,7 @@ function ScrapModal({ message }: IScrapModal) {
     } else if (!checked) {
       if (checkedScrapbooks.length === 1) return; // 스크랩북 한개 이상 존재, 삭제는 별도 요청
       setCheckedScrapbooks(checkedScrapbooks.filter((id) => id !== scrapbookId));
-      axios(`/me/scraps/${message?.scrap?.id}/scrapbooks/${scrapbookId}`, {
+      axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
@@ -135,17 +136,17 @@ function ScrapModal({ message }: IScrapModal) {
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!message?.scrap) {
+    if (message) {
       axios(`/me/scraps`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
           "Content-Type": "application/json",
         },
-        data: { chatID: message?.chatId, memo: "hello", seq: message?.seq, scrapbookIDs: checkedScrapbooks },
+        data: { chatID: message.chatId, memo: "hello", seq: message.seq, scrapbookIDs: checkedScrapbooks },
       }).then(() => {
         console.log("scrap added to scrapbooks.");
-        dispatch(requestGetMessages(message?.chatId));
+        dispatch(requestGetMessages(message.chatId));
         dispatch(isOpenScrapModalAction.close());
       });
     }
@@ -157,8 +158,8 @@ function ScrapModal({ message }: IScrapModal) {
 
   useEffect(() => {
     if (scrapbooks.length === 0) dispatch(requestGetScrapbooks());
-    if (message?.scrap?.id) {
-      axios(`/me/scraps/${message?.scrap?.id}/scrapbooks`, {
+    if (scrapId) {
+      axios(`/me/scraps/${scrapId}/scrapbooks`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
@@ -177,7 +178,7 @@ function ScrapModal({ message }: IScrapModal) {
         <Title>
           <span>Scrap 추가</span>
         </Title>
-        {message?.scrap ? (
+        {scrapId ? (
           <Form>
             {scrapbooks.map((scrapbook) => (
               <InputLine key={scrapbook.id}>

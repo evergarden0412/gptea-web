@@ -2,14 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const isOpenScrapModal = createSlice({
   name: "isOpenScrapModal",
-  initialState: { status: false, message: null },
+  initialState: { status: false, message: null, scrapId: "" },
   reducers: {
     open: (state, action) => {
       state.status = true;
-      state.message = action.payload;
+      const { message, scrapId } = action.payload;
+      if (message) state.message = message;
+      else if (scrapId) state.scrapId = scrapId;
     },
     close: (state) => {
       state.status = false;
+      state.message = null;
+      state.scrapId = "";
     },
   },
 });
