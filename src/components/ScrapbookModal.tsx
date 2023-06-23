@@ -7,6 +7,7 @@ import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { IScrapbook } from "../pages/Scrapbooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
+import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -110,26 +111,32 @@ function ScrapbookModal({ scrapbook }: IScrapbookModal) {
         headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
         data: { name: scrapbookName },
       })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          toastSuccessToModifyScrapbookName();
           setScrapbookName("");
           dispatch(requestGetScrapbooks());
           dispatch(isOpenScrapbookModalAction.close());
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          toastFailToRequest();
+        });
     else
       axios("/me/scrapbooks", {
         method: "POST",
         headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
         data: { name: scrapbookName },
       })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          toastSuccessToCreateScrapbook();
           setScrapbookName("");
           dispatch(requestGetScrapbooks());
           dispatch(isOpenScrapbookModalAction.close());
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          toastFailToRequest();
+        });
   };
 
   return (

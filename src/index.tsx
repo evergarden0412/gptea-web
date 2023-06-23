@@ -6,6 +6,7 @@ import store from "./redux/store";
 import App from "./App";
 import "./index.css";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 
 axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "https://api.gptea-test.keenranger.dev";
 

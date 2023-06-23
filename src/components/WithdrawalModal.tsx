@@ -8,6 +8,7 @@ import { logoutGptea } from "../utils/logoutFunc";
 import { logout } from "../redux/isLoggedInSlice";
 import { useNavigate } from "react-router-dom";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
+import { toastFailToWithdrawal, toastSuccessToWithdrawal } from "../utils/toasts";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -114,7 +115,7 @@ function WithdrawalModal() {
         },
       })
       .then(() => {
-        alert("unregisterd!");
+        toastSuccessToWithdrawal();
         logoutGptea();
         dispatch(logout());
         dispatch(isOpenWithdrawalModalAction.close());
@@ -126,7 +127,10 @@ function WithdrawalModal() {
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (input === "delete my account") handleUnregister();
-    else return;
+    else {
+      toastFailToWithdrawal();
+      return;
+    }
   };
 
   return (

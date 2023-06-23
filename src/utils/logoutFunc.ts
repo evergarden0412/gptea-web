@@ -3,6 +3,7 @@ import axios from "axios";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
 import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN } from "./loginGpteaFunc";
+import { toastLogout } from "./toasts";
 
 export const removeNaverToken = () => {
   axios(
@@ -42,5 +43,5 @@ export const logoutGptea = () => {
     removeKakaoToken();
   }
   removeGpteaToken();
-  alert("logged out!");
+  toastLogout();
 };

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import MyGptea from "./pages/MyGptea";
 import Login from "./pages/Login";
@@ -14,6 +15,7 @@ import ChatItemModal from "./components/ChatItemModal";
 import ScrapbookModal from "./components/ScrapbookModal";
 import ScrapModal from "./components/ScrapModal";
 import WithdrawalModal from "./components/WithdrawalModal";
+import { toastFailToLogin, toastLogin } from "./utils/toasts";
 
 const AppWrapper = styled.div`
   width: 100vw;
@@ -22,6 +24,21 @@ const AppWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledToastContainer = styled(ToastContainer)`
+  // https://styled-components.com/docs/faqs#how-can-i-override-styles-with-higher-specificity
+  &&&.Toastify__toast-container {
+  }
+  .Toastify__toast {
+    width: fit-content;
+    min-width: 300px;
+    font-size: 20px;
+  }
+  .Toastify__toast-body {
+  }
+  .Toastify__progress-bar {
+  }
 `;
 
 function App() {
@@ -39,16 +56,17 @@ function App() {
     if (localStorage.getItem(GPTEA_ACCESS_TOKEN)) {
       const decoded = decode(localStorage.getItem(GPTEA_ACCESS_TOKEN) || "") as { exp: number };
       if (decoded.exp > Date.now() / 1000) {
-        alert("Gptea logged in!");
+        toastLogin();
         dispatch(login());
       } else
         refreshGpteaToken()
           .then(() => {
-            alert("Gptea logged in!");
+            toastLogin();
             dispatch(login());
           })
           .catch(() => {
             console.log("exsisting tokens are expired.");
+            toastFailToLogin();
             localStorage.removeItem(GPTEA_ACCESS_TOKEN);
             localStorage.removeItem(GPTEA_REFRESH_TOKEN);
           });
@@ -73,6 +91,15 @@ function App() {
           <ScrapModal message={isOpenScrapModal.message} />
         ))}
       {isOpenWithdrawalModal.status && <WithdrawalModal />}
+      <StyledToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        closeButton={false}
+        theme="light"
+      />
     </AppWrapper>
   );
 }

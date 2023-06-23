@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 
-import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
+import { getGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
 import { login } from "../redux/isLoggedInSlice";
+import { toastLogin } from "../utils/toasts";
 
 const NAVER = "naver";
 export const NAVER_ACCESS_TOKEN = "naver_access_token";
@@ -20,7 +21,7 @@ function NaverLogin() {
       getGpteaToken(naverAccessToken, NAVER)
         .then(() => verifyGpteaToken())
         .then(() => {
-          alert("Gptea logged in!");
+          toastLogin();
           dispatch(login());
           navigate("/");
         })

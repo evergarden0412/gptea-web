@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getGpteaToken, refreshGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
+import { getGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
 import { ERROR_GET_KAKAO_TOKENS } from "../utils/errorMessage";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
+import { toastLogin } from "../utils/toasts";
 
 const KAKAO = "kakao";
 export const KAKAO_ACCESS_TOKEN = "kakao_access_token";
@@ -53,7 +54,7 @@ function KakaoLogin() {
         .then((kakaoAccessToken) => getGpteaToken(kakaoAccessToken, KAKAO))
         .then(() => verifyGpteaToken())
         .then(() => {
-          alert("Gptea logged in!");
+          toastLogin();
           dispatch(login());
           navigate("/");
         })

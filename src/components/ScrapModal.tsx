@@ -10,6 +10,14 @@ import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 import { IMessage } from "./Messages";
 import { ERROR_GET_DATA } from "../utils/errorMessage";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import {
+  toastFailToDeleteScrap,
+  toastFailToRequest,
+  toastSuccessToAddScrap,
+  toastSuccessToCreateScrap,
+  toastSuccessToDeleteAllScrap,
+  toastSuccessToDeleteScrap,
+} from "../utils/toasts";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -106,9 +114,7 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   const dispatch = useAppDispatch();
   const [checkedScrapbooks, setCheckedScrapbooks] = useState<string[]>([]);
 
-  const handleCloseScrapModal = () => {
-    dispatch(isOpenScrapModalAction.close());
-  };
+  const handleCloseScrapModal = () => dispatch(isOpenScrapModalAction.close());
 
   // 기존 스크랩 추가시 체크 핸들러
   const handleControlScrap = (checked: boolean, scrapbookId: string) => {
@@ -120,16 +126,23 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
         },
-      }).then((res) => console.log(res));
+      })
+        .then(() => toastSuccessToAddScrap())
+        .catch(() => toastFailToRequest());
     } else if (!checked) {
-      if (checkedScrapbooks.length === 1) return; // 스크랩북 한개 이상 존재, 삭제는 별도 요청
+      if (checkedScrapbooks.length === 1) {
+        toastFailToDeleteScrap();
+        return;
+      } // 스크랩북 한개 이상 존재, 삭제는 별도 요청
       setCheckedScrapbooks(checkedScrapbooks.filter((id) => id !== scrapbookId));
       axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
         },
-      }).then((res) => console.log(res));
+      })
+        .then(() => toastSuccessToDeleteScrap())
+        .catch(() => toastFailToRequest());
     }
   };
 
@@ -151,11 +164,13 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
           "Content-Type": "application/json",
         },
         data: { chatID: message?.chatId, memo: "hello", seq: message?.seq, scrapbookIDs: checkedScrapbooks },
-      }).then(() => {
-        console.log("scrap added to scrapbooks.");
-        dispatch(requestGetMessages(message?.chatId));
-        dispatch(isOpenScrapModalAction.close());
-      });
+      })
+        .then(() => {
+          toastSuccessToCreateScrap();
+          dispatch(requestGetMessages(message?.chatId));
+          dispatch(isOpenScrapModalAction.close());
+        })
+        .catch(() => toastFailToRequest());
     }
   };
 
@@ -165,10 +180,13 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
       headers: {
         Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
       },
-    }).then(() => {
-      dispatch(requestGetMessages(message?.chatId));
-      dispatch(isOpenScrapModalAction.close());
-    });
+    })
+      .then(() => {
+        dispatch(requestGetMessages(message?.chatId));
+        dispatch(isOpenScrapModalAction.close());
+        toastSuccessToDeleteAllScrap();
+      })
+      .catch(() => toastFailToRequest());
   };
 
   const {
@@ -186,7 +204,7 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
       })
         .then((res) => setCheckedScrapbooks(res.data.scrapbooks.map((scrapbook: IScrapbook) => scrapbook.id)))
         .catch((err) => {
-          alert(`${ERROR_GET_DATA}, ${err} `);
+          console.log(`${ERROR_GET_DATA}, ${err} `);
         });
     }
   }, []);

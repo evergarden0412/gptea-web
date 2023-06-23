@@ -7,7 +7,7 @@ import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
-import { ERROR_DELETE_DATA } from "../utils/errorMessage";
+import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
 
 const DropboxWrapper = styled.div`
   position: absolute;
@@ -68,10 +68,12 @@ function ScrapbookDropbox({
       },
     })
       .then(() => {
+        toastSuccessToDeleteScrapbook();
         dispatch(requestGetScrapbooks());
       })
-      .catch(() => {
-        alert(ERROR_DELETE_DATA);
+      .catch((err) => {
+        toastFailToRequest();
+        console.log(err);
       });
   };
 

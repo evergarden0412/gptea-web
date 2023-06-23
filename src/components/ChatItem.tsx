@@ -6,6 +6,7 @@ import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
+import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
 
 const ChatItemWrapper = styled.li`
   display: flex;
@@ -69,11 +70,14 @@ function ChatItem({ chat }: IChatItemProps) {
       method: "DELETE",
       headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
     })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        toastSuccessToDeleteChat();
         dispatch(requestGetChats());
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        console.log(err);
+        toastFailToRequest();
+      });
   };
 
   return (

@@ -4,6 +4,7 @@ import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA, ERROR_VERIFY_GPTEA_TOK
 import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
 import { removeKakaoToken, removeNaverToken } from "./logoutFunc";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
+import { toastFailToRegister, toastRegister } from "./toasts";
 
 export const GPTEA_ACCESS_TOKEN = "gptea_access_token";
 export const GPTEA_REFRESH_TOKEN = "gptea_refresh_token";
@@ -13,10 +14,12 @@ const registerInGptea = (accessToken: string, social: string): Promise<void> => 
     axios("/auth/cred/register", { method: "POST", data: { accessToken, cred: social } })
       .then(() => {
         console.log("registered.");
+        toastRegister();
         resolve();
       })
       .catch((error) => {
         console.log({ ERROR_REGISTER_IN_GPTEA, error });
+        toastFailToRegister();
         reject();
       });
   });
