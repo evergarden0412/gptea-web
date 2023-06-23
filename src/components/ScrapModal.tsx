@@ -86,17 +86,25 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const DeleteButton = styled.button`
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: transparent;
+
+  &:hover {
+    color: var(--gray);
+  }
+`;
+
 interface IScrapModal {
-  message?: IMessage | null;
+  message: IMessage | null;
   scrapId?: string;
 }
 
 function ScrapModal({ message, scrapId }: IScrapModal) {
   const dispatch = useAppDispatch();
   const [checkedScrapbooks, setCheckedScrapbooks] = useState<string[]>([]);
-
-  console.log("this is message *** ", message);
-  console.log("*** checkedScrapbooks", checkedScrapbooks);
 
   const handleCloseScrapModal = () => {
     dispatch(isOpenScrapModalAction.close());
@@ -135,20 +143,32 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (message) {
+    if (!scrapId) {
       axios(`/me/scraps`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
           "Content-Type": "application/json",
         },
-        data: { chatID: message.chatId, memo: "hello", seq: message.seq, scrapbookIDs: checkedScrapbooks },
+        data: { chatID: message?.chatId, memo: "hello", seq: message?.seq, scrapbookIDs: checkedScrapbooks },
       }).then(() => {
         console.log("scrap added to scrapbooks.");
-        dispatch(requestGetMessages(message.chatId));
+        dispatch(requestGetMessages(message?.chatId));
         dispatch(isOpenScrapModalAction.close());
       });
     }
+  };
+
+  const handleDeleteScrap = () => {
+    axios(`/me/scraps/${scrapId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+    }).then(() => {
+      dispatch(requestGetMessages(message?.chatId));
+      dispatch(isOpenScrapModalAction.close());
+    });
   };
 
   const {
@@ -174,38 +194,48 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   return (
     <ModalWrapper onClick={handleCloseScrapModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <Title>
-          <span>Scrap 추가</span>
-        </Title>
         {scrapId ? (
-          <Form>
-            {scrapbooks.map((scrapbook) => (
-              <InputLine key={scrapbook.id}>
-                <Label htmlFor={scrapbook.id}>{scrapbook.name}</Label>
-                <Input
-                  type="checkbox"
-                  id={scrapbook.id}
-                  checked={checkedScrapbooks.includes(scrapbook.id) ? true : false}
-                  onChange={(event) => handleControlScrap(event.target.checked, scrapbook.id)}
-                ></Input>
-              </InputLine>
-            ))}
-          </Form>
+          <>
+            <Title>
+              <span>추가된 Scrap</span>
+            </Title>
+            <Form>
+              {scrapbooks.map((scrapbook) => (
+                <InputLine key={scrapbook.id}>
+                  <Label htmlFor={scrapbook.id}>{scrapbook.name}</Label>
+                  <Input
+                    type="checkbox"
+                    id={scrapbook.id}
+                    checked={checkedScrapbooks.includes(scrapbook.id) ? true : false}
+                    onChange={(event) => handleControlScrap(event.target.checked, scrapbook.id)}
+                  ></Input>
+                </InputLine>
+              ))}
+              <DeleteButton type="button" onClick={handleDeleteScrap}>
+                모든 스크랩북에서 삭제
+              </DeleteButton>
+            </Form>
+          </>
         ) : (
-          <Form onSubmit={handleSubmitForm}>
-            {scrapbooks.map((scrapbook) => (
-              <InputLine key={scrapbook.id}>
-                <Label htmlFor={scrapbook.id}>{scrapbook.name}</Label>
-                <Input
-                  type="checkbox"
-                  id={scrapbook.id}
-                  checked={checkedScrapbooks.includes(scrapbook.id)}
-                  onChange={(event) => handleCheckInput(event.target.checked, scrapbook.id)}
-                ></Input>
-              </InputLine>
-            ))}
-            <Button>추가</Button>
-          </Form>
+          <>
+            <Title>
+              <span>새로운 Scrap 추가</span>
+            </Title>
+            <Form onSubmit={handleSubmitForm}>
+              {scrapbooks.map((scrapbook) => (
+                <InputLine key={scrapbook.id}>
+                  <Label htmlFor={scrapbook.id}>{scrapbook.name}</Label>
+                  <Input
+                    type="checkbox"
+                    id={scrapbook.id}
+                    checked={checkedScrapbooks.includes(scrapbook.id)}
+                    onChange={(event) => handleCheckInput(event.target.checked, scrapbook.id)}
+                  ></Input>
+                </InputLine>
+              ))}
+              <Button>추가</Button>
+            </Form>
+          </>
         )}
       </ModalBox>
     </ModalWrapper>
