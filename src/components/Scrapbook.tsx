@@ -76,17 +76,19 @@ function Scrapbook({ scrapbook }: IScrapbookProps) {
     <ScrapbookWrapper>
       <ScrapbookIcons>
         <ScrapbookIcon className="Scrapbook__text--icon fa-regular fa-bookmark"></ScrapbookIcon>
-        <ScrapbookButton
-          onClick={(event) => {
-            event.preventDefault();
-            setIsOpenDrobpox((prev) => !prev);
-          }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512">
-            <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
-          </svg>
-          {isOpenDropbox && <ScrapbookDropbox scrapbook={scrapbook} setIsOpenDrobpox={setIsOpenDrobpox} />}
-        </ScrapbookButton>
+        {!scrapbook.isDefault && (
+          <ScrapbookButton
+            onClick={(event) => {
+              event.preventDefault();
+              setIsOpenDrobpox((prev) => !prev);
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512">
+              <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+            </svg>
+            {isOpenDropbox && <ScrapbookDropbox scrapbook={scrapbook} setIsOpenDrobpox={setIsOpenDrobpox} />}
+          </ScrapbookButton>
+        )}
       </ScrapbookIcons>
       <ScrapbookTitle>{scrapbook.isDefault ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
       <ScrapbookColor></ScrapbookColor>
