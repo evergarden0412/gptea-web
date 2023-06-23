@@ -27,7 +27,8 @@ const ModalWrapper = styled.div`
 
 const ModalBox = styled.div`
   width: 600px;
-  height: 400px;
+  height: auto;
+  min-height: 400px;
   padding: 50px;
   border-radius: 10px;
   display: flex;
@@ -58,25 +59,22 @@ const Form = styled.form`
 const InputLine = styled.div`
   width: 100%;
   display: flex;
+  justify-content: space-around;
   margin-bottom: 50px;
 `;
 
 const Label = styled.label`
-  width: 200px;
-  min-width: fit-content;
+  width: 250px;
   height: 50px;
   line-height: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 50px;
   height: 50px;
-  line-height: 50px;
-  padding: 0 15px;
-  font-size: 24px;
-  background-color: #efefef;
-  border: none;
-  outline: none;
 `;
 
 const Button = styled.button`
