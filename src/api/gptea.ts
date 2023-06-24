@@ -1,7 +1,7 @@
 import axios from "axios";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { IMessage } from "../components/Messages";
 import { IScrap } from "../pages/Scraps";
+import { GPTEA_ACCESS_TOKEN } from "../utils/util";
 
 /* GET */
 /* thunk함수는 thunk에서 toastFailToRequest 호출 */

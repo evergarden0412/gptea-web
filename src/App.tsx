@@ -6,7 +6,6 @@ import MyGptea from "./pages/MyGptea";
 import Login from "./pages/Login";
 import NaverLogin from "./pages/NaverLogin";
 import KakaoLogin from "./pages/KakaoLogin";
-import { GPTEA_ACCESS_TOKEN, refreshGpteaToken } from "./utils/loginGpteaFunc";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { login } from "./redux/isLoggedInSlice";
 import { useEffect } from "react";
@@ -15,8 +14,9 @@ import ChatItemModal from "./components/ChatItemModal";
 import ScrapbookModal from "./components/ScrapbookModal";
 import ScrapModal from "./components/ScrapModal";
 import WithdrawalModal from "./components/WithdrawalModal";
-import { toastFailToLogin, toastLogin } from "./utils/toasts";
-import { removeGpteaTokenInStorage } from "./utils/logoutFunc";
+import { toastLogin } from "./utils/toasts";
+import { GPTEA_ACCESS_TOKEN, setGpteaTokenInStorage } from "./utils/util";
+import { recreateGpteaToken } from "./api/gpteaAuth";
 
 const AppWrapper = styled.div`
   width: 100vw;
@@ -48,6 +48,18 @@ function App() {
     (state) => state
   );
 
+  const regenerateGpteaToken = async () => {
+    recreateGpteaToken()
+      .then((res) => {
+        const { accessToken, refreshToken } = res;
+        setGpteaTokenInStorage(accessToken, refreshToken);
+        console.log("tokens regenerated.");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     // 로컬스토리지에 접근 토근이 있으면 검증
     // 만료 전이면 로그인
@@ -60,15 +72,14 @@ function App() {
         toastLogin();
         dispatch(login());
       } else
-        refreshGpteaToken()
+        regenerateGpteaToken()
           .then(() => {
             toastLogin();
             dispatch(login());
           })
           .catch(() => {
             console.log("exsisting tokens are expired.");
-            toastFailToLogin();
-            removeGpteaTokenInStorage();
+            localStorage.clear();
           });
     }
   }, []);

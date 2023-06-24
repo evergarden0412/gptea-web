@@ -2,13 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
-import { logoutGptea } from "../utils/logoutFunc";
 import { logout } from "../redux/isLoggedInSlice";
 import { useNavigate } from "react-router-dom";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
-import { toastFailToRequest, toastFailToWithdrawal, toastSuccessToWithdrawal } from "../utils/toasts";
+import { toastFailToRequest, toastFailToWithdrawal, toastLogout, toastSuccessToWithdrawal } from "../utils/toasts";
 import { deleteGpteaAccount } from "../api/gpteaAuth";
-import { unlinkKakaoAccount } from "../api/kakao";
+import { unlinkKakaoAccount } from "../api/social";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -111,10 +110,11 @@ function WithdrawalModal() {
     try {
       await unlinkKakaoAccount();
       await deleteGpteaAccount();
+      localStorage.clear();
       toastSuccessToWithdrawal();
       dispatch(isOpenWithdrawalModalAction.close());
 
-      logoutGptea();
+      toastLogout();
       dispatch(logout());
       navigate("/");
     } catch {

@@ -4,11 +4,6 @@ import kakaoLoginLogo from "../asset/kakao_login_logo.png";
 import chats from "../asset/chats.gif";
 import scraps from "../asset/scraps.gif";
 import styled from "styled-components";
-import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN, refreshGpteaToken } from "../utils/loginGpteaFunc";
-import { decode } from "jsonwebtoken";
-import { toastLogin } from "../utils/toasts";
-import { useAppDispatch } from "../redux/hooks";
-import { login } from "../redux/isLoggedInSlice";
 
 const naverLogin = new window.naver.LoginWithNaverId({
   clientId: process.env.REACT_APP_NAVER_CLIENT_ID,
@@ -24,36 +19,9 @@ const naverLogin = new window.naver.LoginWithNaverId({
 const kakaoLogin = window.Kakao;
 
 function Login() {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     naverLogin.init();
     if (!kakaoLogin.isInitialized()) kakaoLogin.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-  }, []);
-
-  useEffect(() => {
-    // 로컬스토리지에 접근 토근이 있으면 검증
-    // 만료 전이면 로그인
-    // 만료됐으면 refresh토큰으로 재발급 시도
-    // 재발급 성공하면 로그인
-    // 재발급 실패하면 로컬스토리지 비우며 토큰 정보 삭제
-    if (localStorage.getItem(GPTEA_ACCESS_TOKEN)) {
-      const decoded = decode(localStorage.getItem(GPTEA_ACCESS_TOKEN) || "") as { exp: number };
-      if (decoded.exp > Date.now() / 1000) {
-        toastLogin();
-        dispatch(login());
-      } else
-        refreshGpteaToken()
-          .then(() => {
-            toastLogin();
-            dispatch(login());
-          })
-          .catch(() => {
-            console.log("exsisting tokens are expired.");
-            localStorage.removeItem(GPTEA_ACCESS_TOKEN);
-            localStorage.removeItem(GPTEA_REFRESH_TOKEN);
-          });
-    }
   }, []);
 
   const handleKakaoLogin = () => {

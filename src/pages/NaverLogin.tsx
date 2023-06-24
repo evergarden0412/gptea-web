@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 
-import { getGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
 import { login } from "../redux/isLoggedInSlice";
-import { toastLogin } from "../utils/toasts";
+import { verifyGpteaToken } from "../api/gpteaAuth";
+import { generateGpteaToken } from "./KakaoLogin";
 
 const NAVER = "naver";
 export const NAVER_ACCESS_TOKEN = "naver_access_token";
@@ -18,10 +18,9 @@ function NaverLogin() {
     if (naverAccessToken) {
       // gptea login api에 전달 예정
       if (!localStorage.getItem(NAVER_ACCESS_TOKEN)) localStorage.setItem(NAVER_ACCESS_TOKEN, naverAccessToken);
-      getGpteaToken(naverAccessToken, NAVER)
+      generateGpteaToken(naverAccessToken, NAVER)
         .then(() => verifyGpteaToken())
         .then(() => {
-          toastLogin();
           dispatch(login());
           navigate("/");
         })

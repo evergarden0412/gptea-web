@@ -2,16 +2,41 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getGpteaToken, verifyGpteaToken } from "../utils/loginGpteaFunc";
 import { ERROR_GET_KAKAO_TOKENS } from "../utils/errorMessage";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
-import { toastLogin } from "../utils/toasts";
 import { decode } from "jsonwebtoken";
+import { createGpteaAccount, createGpteaToken, verifyGpteaToken } from "../api/gpteaAuth";
+import { setGpteaTokenInStorage } from "../utils/util";
+import { toastFailToRegister, toastLogin, toastRegister } from "../utils/toasts";
 
 const KAKAO = "kakao";
 export const KAKAO_ACCESS_TOKEN = "kakao_access_token";
 export const KAKAO_USER_ID = "kakao_user_id";
+
+export const generateGpteaToken = async (socialAccessToken: string, social: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    createGpteaToken(socialAccessToken, social)
+      .then((res) => {
+        const { accessToken, refreshToken } = res;
+        setGpteaTokenInStorage(accessToken, refreshToken);
+        toastLogin();
+        resolve();
+      })
+      .catch(() => {
+        createGpteaAccount(socialAccessToken, social).then(
+          () => {
+            toastRegister();
+            generateGpteaToken(socialAccessToken, social).then(() => resolve());
+          },
+          () => {
+            toastFailToRegister();
+            reject();
+          }
+        );
+      });
+  });
+};
 
 function KakaoLogin() {
   const navigate = useNavigate();
@@ -55,10 +80,9 @@ function KakaoLogin() {
   useEffect(() => {
     if (code)
       getKakaoAccessToken()
-        .then((kakaoAccessToken) => getGpteaToken(kakaoAccessToken, KAKAO))
+        .then((kakaoAccessToken) => generateGpteaToken(kakaoAccessToken, KAKAO))
         .then(() => verifyGpteaToken())
         .then(() => {
-          toastLogin();
           dispatch(login());
           navigate("/");
         })
