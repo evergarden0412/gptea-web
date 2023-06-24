@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { Dispatch, SetStateAction } from "react";
-import axios from "axios";
 
 import { IScrapbook } from "../pages/Scrapbooks";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
+import { deleteScrapbook } from "../api/gptea";
 
 const DropboxWrapper = styled.div`
   position: absolute;
@@ -60,21 +59,17 @@ function ScrapbookDropbox({
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    setIsOpenDrobpox(false);
-    axios(`/me/scrapbooks/${scrapbook.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    })
+
+    deleteScrapbook(scrapbook.id)
       .then(() => {
         toastSuccessToDeleteScrapbook();
         dispatch(requestGetScrapbooks());
       })
-      .catch((err) => {
+      .catch(() => {
         toastFailToRequest();
-        console.log(err);
       });
+
+    setIsOpenDrobpox(false);
   };
 
   return (

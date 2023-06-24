@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { logoutGptea } from "../utils/logoutFunc";
 import { logout } from "../redux/isLoggedInSlice";
 import { useNavigate } from "react-router-dom";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
-import { toastFailToWithdrawal, toastSuccessToWithdrawal } from "../utils/toasts";
-import { KAKAO_USER_ID } from "../pages/KakaoLogin";
+import { toastFailToRequest, toastFailToWithdrawal, toastSuccessToWithdrawal } from "../utils/toasts";
+import { deleteGpteaAccount } from "../api/gpteaAuth";
+import { unlinkKakaoAccount } from "../api/kakao";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -108,49 +107,26 @@ function WithdrawalModal() {
     setInput(event.target.value);
   };
 
-  const unlinkKakaoRegister = async () => {
+  const handleUnregister = async () => {
     try {
-      axios({
-        url: `https://kapi.kakao.com/v1/user/unlink?target_id_type=user_id&target_id=${JSON.parse(
-          localStorage.getItem(KAKAO_USER_ID) || ""
-        )}`,
-        method: "POST",
-        headers: {
-          Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_ADMIN_KEY}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(() => {
-        axios
-          .delete("/me", {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-            },
-          })
-          .then(() => {
-            toastSuccessToWithdrawal();
-            logoutGptea();
-            dispatch(logout());
-            dispatch(isOpenWithdrawalModalAction.close());
-            navigate("/");
-          })
-          .catch((error) => alert(error));
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+      await unlinkKakaoAccount();
+      await deleteGpteaAccount();
+      toastSuccessToWithdrawal();
+      dispatch(isOpenWithdrawalModalAction.close());
 
-  const handleUnregister = () => {
-    unlinkKakaoRegister();
+      logoutGptea();
+      dispatch(logout());
+      navigate("/");
+    } catch {
+      toastFailToRequest();
+    }
   };
 
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (input === "delete my account") handleUnregister();
-    else {
-      toastFailToWithdrawal();
-      return;
-    }
+
+    if (input !== "delete my account") toastFailToWithdrawal();
+    else handleUnregister();
   };
 
   return (

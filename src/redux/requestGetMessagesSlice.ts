@@ -1,30 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
-import { ERROR_GET_DATA } from "../utils/errorMessage";
-import { IMessage } from "../components/Messages";
 
-export const requestGetMessages = createAsyncThunk("requestGetMessages", async (chatId: string | undefined) => {
-  try {
-    const {
-      data: { messages },
-    } = await axios(`/me/chats/${chatId}/messages`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    });
+import { getMessages } from "../api/gptea";
+import { toastFailToRequest } from "../utils/toasts";
 
-    const newMessages = messages.map((message: IMessage) => {
-      message.chatId = message.chatID;
-      delete message.chatID;
-      return message;
-    });
-    return newMessages;
-  } catch (err) {
-    alert(`${ERROR_GET_DATA} ${err}`);
-  }
-});
+export const requestGetMessages = createAsyncThunk("requestGetMessages", getMessages);
 
 const requestGetMessagesSlice = createSlice({
   name: "requestGetMessages",
@@ -40,6 +19,7 @@ const requestGetMessagesSlice = createSlice({
       }),
       builder.addCase(requestGetMessages.rejected, (state) => {
         state.status = "failure";
+        toastFailToRequest();
       });
   },
 });

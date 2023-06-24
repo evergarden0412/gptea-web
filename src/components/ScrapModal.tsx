@@ -1,14 +1,11 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { IScrapbook } from "../pages/Scrapbooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 import { IMessage } from "./Messages";
-import { ERROR_GET_DATA } from "../utils/errorMessage";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 import {
   toastFailToDeleteScrap,
@@ -18,6 +15,7 @@ import {
   toastSuccessToDeleteAllScrap,
   toastSuccessToDeleteScrap,
 } from "../utils/toasts";
+import { addSingleScrap, createScrap, deleteAllScrap, deleteSingleScrap, getScrapParents } from "../api/gptea";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -118,29 +116,15 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
 
   // 기존 스크랩 추가시 체크 핸들러
   const handleControlScrap = (checked: boolean, scrapbookId: string) => {
-    console.log(checked, scrapbookId);
     if (checked) {
       setCheckedScrapbooks((prev) => [...prev, scrapbookId]);
-      axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-        },
-      })
+      addSingleScrap(scrapId, scrapbookId)
         .then(() => toastSuccessToAddScrap())
         .catch(() => toastFailToRequest());
-    } else if (!checked) {
-      if (checkedScrapbooks.length === 1) {
-        toastFailToDeleteScrap();
-        return;
-      } // 스크랩북 한개 이상 존재, 삭제는 별도 요청
+    } else if (checkedScrapbooks.length === 1) toastFailToDeleteScrap();
+    else {
       setCheckedScrapbooks(checkedScrapbooks.filter((id) => id !== scrapbookId));
-      axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-        },
-      })
+      deleteSingleScrap(scrapId, scrapbookId)
         .then(() => toastSuccessToDeleteScrap())
         .catch(() => toastFailToRequest());
     }
@@ -157,14 +141,8 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
     event.preventDefault();
 
     if (!scrapId) {
-      axios(`/me/scraps`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-          "Content-Type": "application/json",
-        },
-        data: { chatID: message?.chatId, memo: "hello", seq: message?.seq, scrapbookIDs: checkedScrapbooks },
-      })
+      const data = { chatID: message?.chatId, memo: "hello", seq: message?.seq, scrapbookIDs: checkedScrapbooks };
+      createScrap(data)
         .then(() => {
           toastSuccessToCreateScrap();
           dispatch(requestGetMessages(message?.chatId));
@@ -175,16 +153,11 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   };
 
   const handleDeleteScrap = () => {
-    axios(`/me/scraps/${scrapId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    })
+    deleteAllScrap(scrapId)
       .then(() => {
+        toastSuccessToDeleteAllScrap();
         dispatch(requestGetMessages(message?.chatId));
         dispatch(isOpenScrapModalAction.close());
-        toastSuccessToDeleteAllScrap();
       })
       .catch(() => toastFailToRequest());
   };
@@ -196,16 +169,9 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   useEffect(() => {
     if (scrapbooks.length === 0) dispatch(requestGetScrapbooks());
     if (scrapId) {
-      axios(`/me/scraps/${scrapId}/scrapbooks`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-        },
-      })
-        .then((res) => setCheckedScrapbooks(res.data.scrapbooks.map((scrapbook: IScrapbook) => scrapbook.id)))
-        .catch((err) => {
-          console.log(`${ERROR_GET_DATA}, ${err} `);
-        });
+      getScrapParents(scrapId)
+        .then((res) => setCheckedScrapbooks(res.map((scrapbook: IScrapbook) => scrapbook.id)))
+        .catch(() => toastFailToRequest());
     }
   }, []);
 

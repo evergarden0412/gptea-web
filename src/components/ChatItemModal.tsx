@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { IChat } from "../pages/Chats";
 import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
+import { createChat, modifyChat } from "../api/gptea";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -106,36 +105,26 @@ function ChatItemModal({ chat }: INewChatModal) {
     event.preventDefault();
 
     if (chat)
-      axios(`/me/chats/${chat.id}`, {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-        data: { name: chatName },
-      })
+      modifyChat(chat.id, { name: chatName })
         .then(() => {
-          toastSuccessToModifyChatName();
           setChatName("");
+          toastSuccessToModifyChatName();
           dispatch(requestGetChats());
           dispatch(isOpenChatItemModalAction.close());
         })
-        .catch((err) => {
+        .catch(() => {
           toastFailToRequest();
-          console.log(err);
         });
     else
-      axios("/me/chats", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-        data: { name: chatName },
-      })
+      createChat({ name: chatName })
         .then(() => {
-          toastSuccessToCreateChat();
           setChatName("");
+          toastSuccessToCreateChat();
           dispatch(requestGetChats());
           dispatch(isOpenChatItemModalAction.close());
         })
-        .catch((err) => {
+        .catch(() => {
           toastFailToRequest();
-          console.log(err);
         });
   };
 

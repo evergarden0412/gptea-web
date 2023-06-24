@@ -1,9 +1,9 @@
-import axios from "axios";
 import styled from "styled-components";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import { sendMessage } from "../api/gptea";
+import { toastFailToRequest } from "../utils/toasts";
 
 const PromptWrapper = styled.div`
   width: 100%;
@@ -75,17 +75,15 @@ function Prompt({ chatId, isFetching, setIsFetching }: IPrompt) {
     if (isFetching) return;
 
     setIsFetching(true);
-    axios(`/me/chats/${chatId}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-      data: { content: message },
-    }).then(() => {
-      dispatch(requestGetMessages(chatId));
-      setMessage("");
-      setIsFetching(false);
-    });
+    sendMessage(chatId, { content: message })
+      .then(() => {
+        setMessage("");
+        dispatch(requestGetMessages(chatId));
+      })
+      .catch(() => {
+        toastFailToRequest();
+      })
+      .finally(() => setIsFetching(false));
   };
 
   return (

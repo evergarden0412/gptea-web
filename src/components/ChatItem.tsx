@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 import { IChat } from "../pages/Chats";
-import axios from "axios";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
+import { deleteChat } from "../api/gptea";
 
 const ChatItemWrapper = styled.li`
   display: flex;
@@ -66,16 +65,12 @@ function ChatItem({ chat }: IChatItemProps) {
   };
 
   const handleDeleteChat = () => {
-    axios(`/me/chats/${chat.id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-    })
+    deleteChat(chat.id)
       .then(() => {
         toastSuccessToDeleteChat();
         dispatch(requestGetChats());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toastFailToRequest();
       });
   };

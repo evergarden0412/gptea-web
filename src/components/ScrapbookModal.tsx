@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { IScrapbook } from "../pages/Scrapbooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
+import { createScrapbook, modifyScrapbook } from "../api/gptea";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -106,35 +105,25 @@ function ScrapbookModal({ scrapbook }: IScrapbookModal) {
     event.preventDefault();
 
     if (scrapbook)
-      axios(`/me/scrapbooks/${scrapbook.id}`, {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-        data: { name: scrapbookName },
-      })
+      modifyScrapbook(scrapbook.id, { name: scrapbookName })
         .then(() => {
-          toastSuccessToModifyScrapbookName();
           setScrapbookName("");
+          toastSuccessToModifyScrapbookName();
           dispatch(requestGetScrapbooks());
           dispatch(isOpenScrapbookModalAction.close());
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           toastFailToRequest();
         });
     else
-      axios("/me/scrapbooks", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-        data: { name: scrapbookName },
-      })
+      createScrapbook({ name: scrapbookName })
         .then(() => {
-          toastSuccessToCreateScrapbook();
           setScrapbookName("");
+          toastSuccessToCreateScrapbook();
           dispatch(requestGetScrapbooks());
           dispatch(isOpenScrapbookModalAction.close());
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           toastFailToRequest();
         });
   };

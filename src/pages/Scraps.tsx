@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import Scrap from "../components/Scrap";
-import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { IMessage } from "../components/Messages";
+import { getScrapsInScrapbook } from "../api/gptea";
 
 const ScrapsWrapper = styled.div``;
 
@@ -21,20 +20,7 @@ function Scraps() {
   const [scraps, setScraps] = useState<IScrap[]>([]);
 
   useEffect(() => {
-    axios(`/me/scrapbooks/${scrapbookId}/scraps`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      },
-    }).then((res) => {
-      const newScraps = res.data.scraps.map((scrap: IScrap) => {
-        if (!scrap.message) return;
-        scrap.message.chatId = scrap.message.chatID;
-        delete scrap.message.chatID;
-        return scrap;
-      });
-      setScraps(newScraps);
-    });
+    getScrapsInScrapbook(scrapbookId).then((res) => setScraps(res));
   }, []);
 
   return (
