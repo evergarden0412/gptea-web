@@ -1,13 +1,15 @@
 import axios from "axios";
 
 import { ERROR_GET_GPTEA_TOKENS, ERROR_REGISTER_IN_GPTEA, ERROR_VERIFY_GPTEA_TOKENS } from "./errorMessage";
-import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
-import { removeKakaoToken, removeNaverToken } from "./logoutFunc";
-import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 import { toastFailToRegister, toastRegister } from "./toasts";
 
 export const GPTEA_ACCESS_TOKEN = "gptea_access_token";
 export const GPTEA_REFRESH_TOKEN = "gptea_refresh_token";
+
+const setGpteaTokenInStorage = (accessToken: string, refreshToken: string) => {
+  localStorage.setItem(GPTEA_ACCESS_TOKEN, accessToken);
+  localStorage.setItem(GPTEA_REFRESH_TOKEN, refreshToken);
+};
 
 const registerInGptea = (accessToken: string, social: string): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -31,14 +33,10 @@ export const getGpteaToken = (accessToken: string, social: string): Promise<void
       .then((res) => {
         const { accessToken, refreshToken } = res.data;
 
-        localStorage.setItem(GPTEA_ACCESS_TOKEN, accessToken);
-        localStorage.setItem(GPTEA_REFRESH_TOKEN, refreshToken);
+        setGpteaTokenInStorage(accessToken, refreshToken);
         console.log("tokens generated.");
 
-        if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) removeKakaoToken();
-        if (localStorage.getItem(NAVER_ACCESS_TOKEN)) removeNaverToken();
         resolve();
-        // setIsLoggedIn(true);
       })
       .catch((err) => {
         console.log({ ERROR_GET_GPTEA_TOKENS, err });
@@ -87,12 +85,11 @@ export const refreshGpteaToken = (): Promise<void> => {
       .then((res) => {
         const { accessToken, refreshToken } = res.data;
 
-        localStorage.setItem(GPTEA_ACCESS_TOKEN, accessToken);
-        localStorage.setItem(GPTEA_REFRESH_TOKEN, refreshToken);
+        setGpteaTokenInStorage(accessToken, refreshToken);
         console.log("tokens refreshed.");
         resolve(res.data);
       })
-      .catch((err) => {
+      .catch(() => {
         reject(ERROR_VERIFY_GPTEA_TOKENS);
       });
   });

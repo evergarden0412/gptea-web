@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate, NavLink, useLocation, matchPath } from "react-router-dom";
 
-import { logoutGptea } from "../utils/logoutFunc";
+import { logoutGptea, removeSocialToken } from "../utils/logoutFunc";
 import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
@@ -95,6 +95,7 @@ function Nav() {
 
   const handleLogout = () => {
     logoutGptea();
+    removeSocialToken();
     dispatch(logout());
     navigate("/");
   };

@@ -7,9 +7,11 @@ import { ERROR_GET_KAKAO_TOKENS } from "../utils/errorMessage";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
 import { toastLogin } from "../utils/toasts";
+import { decode } from "jsonwebtoken";
 
 const KAKAO = "kakao";
 export const KAKAO_ACCESS_TOKEN = "kakao_access_token";
+export const KAKAO_USER_ID = "kakao_user_id";
 
 function KakaoLogin() {
   const navigate = useNavigate();
@@ -38,9 +40,11 @@ function KakaoLogin() {
         },
       })
         .then((res) => {
-          const { access_token: accessToken } = res.data;
+          const { access_token: accessToken, id_token: idToken } = res.data;
           if (accessToken) {
+            const decoded = decode(idToken); // 사용자 카카오 ID
             localStorage.setItem(KAKAO_ACCESS_TOKEN, accessToken);
+            localStorage.setItem(KAKAO_USER_ID, JSON.stringify(decoded?.sub));
             resolve(accessToken);
           }
         })

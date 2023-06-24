@@ -6,7 +6,7 @@ import MyGptea from "./pages/MyGptea";
 import Login from "./pages/Login";
 import NaverLogin from "./pages/NaverLogin";
 import KakaoLogin from "./pages/KakaoLogin";
-import { GPTEA_ACCESS_TOKEN, GPTEA_REFRESH_TOKEN, refreshGpteaToken } from "./utils/loginGpteaFunc";
+import { GPTEA_ACCESS_TOKEN, refreshGpteaToken } from "./utils/loginGpteaFunc";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { login } from "./redux/isLoggedInSlice";
 import { useEffect } from "react";
@@ -16,6 +16,7 @@ import ScrapbookModal from "./components/ScrapbookModal";
 import ScrapModal from "./components/ScrapModal";
 import WithdrawalModal from "./components/WithdrawalModal";
 import { toastFailToLogin, toastLogin } from "./utils/toasts";
+import { removeGpteaTokenInStorage } from "./utils/logoutFunc";
 
 const AppWrapper = styled.div`
   width: 100vw;
@@ -67,8 +68,7 @@ function App() {
           .catch(() => {
             console.log("exsisting tokens are expired.");
             toastFailToLogin();
-            localStorage.removeItem(GPTEA_ACCESS_TOKEN);
-            localStorage.removeItem(GPTEA_REFRESH_TOKEN);
+            removeGpteaTokenInStorage();
           });
     }
   }, []);

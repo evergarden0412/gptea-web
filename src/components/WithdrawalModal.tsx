@@ -9,6 +9,7 @@ import { logout } from "../redux/isLoggedInSlice";
 import { useNavigate } from "react-router-dom";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
 import { toastFailToWithdrawal, toastSuccessToWithdrawal } from "../utils/toasts";
+import { KAKAO_USER_ID } from "../pages/KakaoLogin";
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -107,21 +108,40 @@ function WithdrawalModal() {
     setInput(event.target.value);
   };
 
-  const handleUnregister = () => {
-    axios
-      .delete("/me", {
+  const unlinkKakaoRegister = async () => {
+    try {
+      axios({
+        url: `https://kapi.kakao.com/v1/user/unlink?target_id_type=user_id&target_id=${JSON.parse(
+          localStorage.getItem(KAKAO_USER_ID) || ""
+        )}`,
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+          Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_ADMIN_KEY}`,
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-      })
-      .then(() => {
-        toastSuccessToWithdrawal();
-        logoutGptea();
-        dispatch(logout());
-        dispatch(isOpenWithdrawalModalAction.close());
-        navigate("/");
-      })
-      .catch((error) => alert(error));
+      }).then(() => {
+        axios
+          .delete("/me", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+            },
+          })
+          .then(() => {
+            toastSuccessToWithdrawal();
+            logoutGptea();
+            dispatch(logout());
+            dispatch(isOpenWithdrawalModalAction.close());
+            navigate("/");
+          })
+          .catch((error) => alert(error));
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUnregister = () => {
+    unlinkKakaoRegister();
   };
 
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
@@ -148,7 +168,7 @@ function WithdrawalModal() {
               placeholder="delete my account"
               value={input}
               onChange={handleChangeInput}
-              autoComplete="false"
+              autoComplete="off"
             ></Input>
           </InputLine>
           <Button>확인</Button>
