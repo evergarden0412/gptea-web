@@ -2,9 +2,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { GPTEA_ACCESS_TOKEN } from "../utils/loginGpteaFunc";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
-import { requestAsk } from "../redux/requestAskSlice";
 
 const PromptWrapper = styled.div`
   width: 100%;
@@ -63,21 +62,29 @@ const PromptButton = styled.button`
 
 interface IPrompt {
   chatId?: string;
+  isFetching: boolean;
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Prompt({ chatId }: IPrompt) {
+function Prompt({ chatId, isFetching, setIsFetching }: IPrompt) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
-  const {
-    requestAsk: { status },
-  } = useAppSelector((state) => state);
 
   const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (status === "loading") return;
-    dispatch(requestAsk({ chatId, question: message })).then(() => {
+    if (isFetching) return;
+
+    setIsFetching(true);
+    axios(`/me/chats/${chatId}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+      },
+      data: { content: message },
+    }).then(() => {
       dispatch(requestGetMessages(chatId));
       setMessage("");
+      setIsFetching(false);
     });
   };
 

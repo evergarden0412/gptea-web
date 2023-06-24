@@ -30,15 +30,15 @@ export interface IMessage {
 
 interface IMessagesProps {
   chatId?: string;
+  isFetching: boolean;
 } // optional because of {chatId} = useParams()
 
-function Messages({ chatId }: IMessagesProps) {
+function Messages({ chatId, isFetching }: IMessagesProps) {
   const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLUListElement>(null);
 
   const {
     requestGetMessages: { data: messages },
-    requestAsk: { status },
   } = useAppSelector((state) => state);
 
   const orderedMessages = JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq);
@@ -74,7 +74,7 @@ function Messages({ chatId }: IMessagesProps) {
           const messageId = message.chatId + message.seq.toString(); // message.id가 따로 존재하지 않음
           return <Message key={messageId} message={message} />;
         })}
-        {status === "loading" && <Loading />}
+        {isFetching && <Loading />}
       </MessagesContainer>
     </MessagesWrapper>
   );

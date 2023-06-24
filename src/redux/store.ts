@@ -7,7 +7,6 @@ import requestGetMessagesReducer from "./requestGetMessagesSlice";
 import isOpenScrapbookModalReducer from "./isOpenScrapbookModalSlice";
 import requestGetScrapbooksReducer from "./requestGetScrapbooksSlice";
 import isOpenScrapModalReducer from "./isOpenScrapModalSlice";
-import requestAskReducer from "./requestAskSlice";
 import isOpenWithdrawalModalReducer from "./isOpenWithdrawalModalSlice";
 
 const store = configureStore({
@@ -19,7 +18,6 @@ const store = configureStore({
     requestGetChats: requestGetChatsReducer,
     requestGetMessages: requestGetMessagesReducer,
     requestGetScrapbooks: requestGetScrapbooksReducer,
-    requestAsk: requestAskReducer,
     isOpenWithdrawalModal: isOpenWithdrawalModalReducer,
   },
 });

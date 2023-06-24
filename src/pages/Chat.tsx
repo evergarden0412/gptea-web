@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import Messages from "../components/Messages";
 import Prompt from "../components/Prompt";
+import { useState } from "react";
 
 const ChatWrapper = styled.div`
   padding: 1rem;
@@ -14,11 +15,12 @@ const ChatWrapper = styled.div`
 
 function Chat() {
   const { chatId } = useParams();
+  const [isFetching, setIsFetching] = useState(false);
 
   return (
     <ChatWrapper>
-      <Messages chatId={chatId} />
-      <Prompt chatId={chatId} />
+      <Messages chatId={chatId} isFetching={isFetching} />
+      <Prompt chatId={chatId} isFetching={isFetching} setIsFetching={setIsFetching} />
     </ChatWrapper>
   );
 }
