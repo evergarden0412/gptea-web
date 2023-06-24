@@ -49,7 +49,7 @@ const ScrapButton = styled.button<{ $isScrap: boolean }>`
   }
 
   &:hover i {
-    color: var(--lightgray);
+    color: ${(props) => (props.$isScrap ? "var(--lightaccent)" : "var(--lightgray)")};
   }
 `;
 
