@@ -3,4 +3,5 @@ declare interface Window {
   Kakao: any;
 }
 
-declare module '*.png';
+declare module "*.png";
+declare module "*.gif";
