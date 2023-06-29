@@ -130,7 +130,7 @@ function Nav() {
           <NavText>chat</NavText>
           {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
         </NavItem>
-        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id/scraps")}>
+        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
           <NavIcon>
             <i className="fa-regular fa-bookmark"></i>
           </NavIcon>
