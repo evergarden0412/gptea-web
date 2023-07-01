@@ -4,8 +4,8 @@ export const isLoggedInSlice = createSlice({
   name: "isLoggedIn",
   initialState: false,
   reducers: {
-    login: (state) => true,
-    logout: (state) => false,
+    login: () => true,
+    logout: () => false,
   },
 });
 

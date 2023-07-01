@@ -50,9 +50,12 @@ function App() {
         const { accessToken, refreshToken } = res;
         setGpteaTokenInStorage(accessToken, refreshToken);
         console.log("tokens regenerated.");
+        toastLogin();
+        dispatch(login());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        console.log("exsisting tokens are expired.");
+        localStorage.clear();
       });
   };
 
@@ -67,16 +70,7 @@ function App() {
       if (decoded.exp > Date.now() / 1000) {
         toastLogin();
         dispatch(login());
-      } else
-        regenerateGpteaToken()
-          .then(() => {
-            toastLogin();
-            dispatch(login());
-          })
-          .catch(() => {
-            console.log("exsisting tokens are expired.");
-            localStorage.clear();
-          });
+      } else regenerateGpteaToken();
     }
   }, []);
 
