@@ -8,6 +8,74 @@ import { createChat, modifyChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
 import { IChat } from "../pages/Chats";
 
+interface INewChatModal {
+  chat: IChat | null;
+}
+
+export default function ChatItemModal({ chat }: INewChatModal) {
+  const dispatch = useAppDispatch();
+  const [chatName, setChatName] = useState(chat ? chat.name : "새 채팅");
+
+  const handleCloseChatItemModal = () => {
+    dispatch(isOpenChatItemModalAction.close());
+  };
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChatName(event.target.value);
+  };
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (chat)
+      modifyChat(chat.id, { name: chatName })
+        .then(() => {
+          setChatName("");
+          toastSuccessToModifyChatName();
+          dispatch(requestGetChats());
+          dispatch(isOpenChatItemModalAction.close());
+        })
+        .catch(() => {
+          toastFailToRequest();
+        });
+    else
+      createChat({ name: chatName })
+        .then(() => {
+          setChatName("");
+          toastSuccessToCreateChat();
+          dispatch(requestGetChats());
+          dispatch(isOpenChatItemModalAction.close());
+        })
+        .catch(() => {
+          toastFailToRequest();
+        });
+  };
+
+  return (
+    <ModalWrapper onClick={handleCloseChatItemModal}>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <Title>
+          <span>Chat 추가</span>
+        </Title>
+        <Form onSubmit={handleSubmitForm}>
+          <InputLine>
+            <Label>채팅 이름</Label>
+            <Input
+              placeholder="채팅 이름을 입력하세요."
+              value={chatName}
+              onChange={handleChangeInput}
+              autoComplete="false"
+              autoFocus
+              onFocus={(event) => event.target.select()}
+            ></Input>
+          </InputLine>
+          <Button>완료</Button>
+        </Form>
+      </ModalBox>
+    </ModalWrapper>
+  );
+}
+
 const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -84,73 +152,3 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-
-interface INewChatModal {
-  chat: IChat | null;
-}
-
-function ChatItemModal({ chat }: INewChatModal) {
-  const dispatch = useAppDispatch();
-  const [chatName, setChatName] = useState(chat ? chat.name : "새 채팅");
-
-  const handleCloseChatItemModal = () => {
-    dispatch(isOpenChatItemModalAction.close());
-  };
-
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChatName(event.target.value);
-  };
-
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (chat)
-      modifyChat(chat.id, { name: chatName })
-        .then(() => {
-          setChatName("");
-          toastSuccessToModifyChatName();
-          dispatch(requestGetChats());
-          dispatch(isOpenChatItemModalAction.close());
-        })
-        .catch(() => {
-          toastFailToRequest();
-        });
-    else
-      createChat({ name: chatName })
-        .then(() => {
-          setChatName("");
-          toastSuccessToCreateChat();
-          dispatch(requestGetChats());
-          dispatch(isOpenChatItemModalAction.close());
-        })
-        .catch(() => {
-          toastFailToRequest();
-        });
-  };
-
-  return (
-    <ModalWrapper onClick={handleCloseChatItemModal}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <Title>
-          <span>Chat 추가</span>
-        </Title>
-        <Form onSubmit={handleSubmitForm}>
-          <InputLine>
-            <Label>채팅 이름</Label>
-            <Input
-              placeholder="채팅 이름을 입력하세요."
-              value={chatName}
-              onChange={handleChangeInput}
-              autoComplete="false"
-              autoFocus
-              onFocus={(event) => event.target.select()}
-            ></Input>
-          </InputLine>
-          <Button>완료</Button>
-        </Form>
-      </ModalBox>
-    </ModalWrapper>
-  );
-}
-
-export default ChatItemModal;

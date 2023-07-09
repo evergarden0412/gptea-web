@@ -7,6 +7,48 @@ import { deleteChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
 import { IChat } from "../pages/Chats";
 
+interface IChatItemProps {
+  chat: IChat;
+}
+
+export default function ChatItem({ chat }: IChatItemProps) {
+  const dispatch = useAppDispatch();
+
+  const handleOpenChatItemModal = () => {
+    dispatch(isOpenChatItemModalAction.open(chat));
+  };
+
+  const handleDeleteChat = () => {
+    deleteChat(chat.id)
+      .then(() => {
+        toastSuccessToDeleteChat();
+        dispatch(requestGetChats());
+      })
+      .catch(() => {
+        toastFailToRequest();
+      });
+  };
+
+  return (
+    <ChatItemWrapper>
+      <ChatItemText>{chat.name}</ChatItemText>
+      <ChatItemButtons
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <ChatItemButton onClick={handleOpenChatItemModal}>
+          <i className="fa-solid fa-pen-to-square"></i>
+        </ChatItemButton>
+        <ChatItemButton onClick={handleDeleteChat}>
+          <i className="fa-solid fa-trash-can"></i>
+        </ChatItemButton>
+      </ChatItemButtons>
+    </ChatItemWrapper>
+  );
+}
+
 const ChatItemWrapper = styled.li`
   display: flex;
   justify-content: space-between;
@@ -52,47 +94,3 @@ const ChatItemButton = styled.button`
     font-size: 1rem;
   }
 `;
-
-interface IChatItemProps {
-  chat: IChat;
-}
-
-function ChatItem({ chat }: IChatItemProps) {
-  const dispatch = useAppDispatch();
-
-  const handleOpenChatItemModal = () => {
-    dispatch(isOpenChatItemModalAction.open(chat));
-  };
-
-  const handleDeleteChat = () => {
-    deleteChat(chat.id)
-      .then(() => {
-        toastSuccessToDeleteChat();
-        dispatch(requestGetChats());
-      })
-      .catch(() => {
-        toastFailToRequest();
-      });
-  };
-
-  return (
-    <ChatItemWrapper>
-      <ChatItemText>{chat.name}</ChatItemText>
-      <ChatItemButtons
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <ChatItemButton onClick={handleOpenChatItemModal}>
-          <i className="fa-solid fa-pen-to-square"></i>
-        </ChatItemButton>
-        <ChatItemButton onClick={handleDeleteChat}>
-          <i className="fa-solid fa-trash-can"></i>
-        </ChatItemButton>
-      </ChatItemButtons>
-    </ChatItemWrapper>
-  );
-}
-
-export default ChatItem;

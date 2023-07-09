@@ -7,16 +7,6 @@ import { IScrap } from "../pages/Scraps";
 import Message from "./Message";
 import Loading from "./Loading";
 
-const MessagesWrapper = styled.div`
-  height: 90%;
-  margin-bottom: 1rem;
-`;
-
-const MessagesContainer = styled.ul`
-  height: 100%;
-  overflow-y: auto;
-`;
-
 export interface IMessage {
   chatId?: string;
   chatID?: string;
@@ -32,7 +22,7 @@ interface IMessagesProps {
   isFetching: boolean;
 } // optional because of {chatId} = useParams()
 
-function Messages({ chatId, isFetching }: IMessagesProps) {
+export default function Messages({ chatId, isFetching }: IMessagesProps) {
   const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLUListElement>(null);
 
@@ -79,4 +69,12 @@ function Messages({ chatId, isFetching }: IMessagesProps) {
   );
 }
 
-export default Messages;
+const MessagesWrapper = styled.div`
+  height: 90%;
+  margin-bottom: 1rem;
+`;
+
+const MessagesContainer = styled.ul`
+  height: 100%;
+  overflow-y: auto;
+`;

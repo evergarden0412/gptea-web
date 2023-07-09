@@ -8,6 +8,73 @@ import { createScrapbook, modifyScrapbook } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
 import { IScrapbook } from "../pages/Scrapbooks";
 
+interface IScrapbookModal {
+  scrapbook: IScrapbook | null;
+}
+
+export default function ScrapbookModal({ scrapbook }: IScrapbookModal) {
+  const dispatch = useAppDispatch();
+  const [scrapbookName, setScrapbookName] = useState(scrapbook ? scrapbook.name : "");
+
+  const handleCloseScrapbookModal = () => {
+    dispatch(isOpenScrapbookModalAction.close());
+  };
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setScrapbookName(event.target.value);
+  };
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (scrapbook)
+      modifyScrapbook(scrapbook.id, { name: scrapbookName })
+        .then(() => {
+          setScrapbookName("");
+          toastSuccessToModifyScrapbookName();
+          dispatch(requestGetScrapbooks());
+          dispatch(isOpenScrapbookModalAction.close());
+        })
+        .catch(() => {
+          toastFailToRequest();
+        });
+    else
+      createScrapbook({ name: scrapbookName })
+        .then(() => {
+          setScrapbookName("");
+          toastSuccessToCreateScrapbook();
+          dispatch(requestGetScrapbooks());
+          dispatch(isOpenScrapbookModalAction.close());
+        })
+        .catch(() => {
+          toastFailToRequest();
+        });
+  };
+
+  return (
+    <ModalWrapper onClick={handleCloseScrapbookModal}>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <Title>
+          <span>Scrapbook 추가</span>
+        </Title>
+        <Form onSubmit={handleSubmitForm}>
+          <InputLine>
+            <Label>스크랩북 이름</Label>
+            <Input
+              placeholder="스크랩북 이름을 입력하세요."
+              value={scrapbookName}
+              onChange={handleChangeInput}
+              autoComplete="false"
+            ></Input>
+          </InputLine>
+
+          <Button>submit</Button>
+        </Form>
+      </ModalBox>
+    </ModalWrapper>
+  );
+}
+
 const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -84,72 +151,3 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-
-interface IScrapbookModal {
-  scrapbook: IScrapbook | null;
-}
-
-function ScrapbookModal({ scrapbook }: IScrapbookModal) {
-  const dispatch = useAppDispatch();
-  const [scrapbookName, setScrapbookName] = useState(scrapbook ? scrapbook.name : "");
-
-  const handleCloseScrapbookModal = () => {
-    dispatch(isOpenScrapbookModalAction.close());
-  };
-
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setScrapbookName(event.target.value);
-  };
-
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (scrapbook)
-      modifyScrapbook(scrapbook.id, { name: scrapbookName })
-        .then(() => {
-          setScrapbookName("");
-          toastSuccessToModifyScrapbookName();
-          dispatch(requestGetScrapbooks());
-          dispatch(isOpenScrapbookModalAction.close());
-        })
-        .catch(() => {
-          toastFailToRequest();
-        });
-    else
-      createScrapbook({ name: scrapbookName })
-        .then(() => {
-          setScrapbookName("");
-          toastSuccessToCreateScrapbook();
-          dispatch(requestGetScrapbooks());
-          dispatch(isOpenScrapbookModalAction.close());
-        })
-        .catch(() => {
-          toastFailToRequest();
-        });
-  };
-
-  return (
-    <ModalWrapper onClick={handleCloseScrapbookModal}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <Title>
-          <span>Scrapbook 추가</span>
-        </Title>
-        <Form onSubmit={handleSubmitForm}>
-          <InputLine>
-            <Label>스크랩북 이름</Label>
-            <Input
-              placeholder="스크랩북 이름을 입력하세요."
-              value={scrapbookName}
-              onChange={handleChangeInput}
-              autoComplete="false"
-            ></Input>
-          </InputLine>
-
-          <Button>submit</Button>
-        </Form>
-      </ModalBox>
-    </ModalWrapper>
-  );
-}
-
-export default ScrapbookModal;

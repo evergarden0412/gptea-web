@@ -17,98 +17,12 @@ import {
 import { IScrapbook } from "../pages/Scrapbooks";
 import { IMessage } from "./Messages";
 
-const ModalWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  cursor: pointer;
-`;
-
-const ModalBox = styled.div`
-  width: 600px;
-  height: auto;
-  min-height: 400px;
-  padding: 50px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--white);
-  cursor: auto;
-`;
-
-const Title = styled.div`
-  font-weight: 600;
-  margin-bottom: 50px;
-
-  & span {
-    font-size: 28px;
-    background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
-    padding: 0 5px;
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-const InputLine = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 50px;
-`;
-
-const Label = styled.label`
-  width: 250px;
-  height: 50px;
-  line-height: 50px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const Input = styled.input`
-  width: 50px;
-  height: 50px;
-`;
-
-const Button = styled.button`
-  width: 150px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
-`;
-
-const DeleteButton = styled.button`
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  background-color: transparent;
-
-  &:hover {
-    color: var(--gray);
-  }
-`;
-
 interface IScrapModal {
   message: IMessage | null;
   scrapId?: string;
 }
 
-function ScrapModal({ message, scrapId }: IScrapModal) {
+export default function ScrapModal({ message, scrapId }: IScrapModal) {
   const dispatch = useAppDispatch();
   const [checkedScrapbooks, setCheckedScrapbooks] = useState<string[]>([]);
 
@@ -226,4 +140,88 @@ function ScrapModal({ message, scrapId }: IScrapModal) {
   );
 }
 
-export default ScrapModal;
+const ModalWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  cursor: pointer;
+`;
+
+const ModalBox = styled.div`
+  width: 600px;
+  height: auto;
+  min-height: 400px;
+  padding: 50px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--white);
+  cursor: auto;
+`;
+
+const Title = styled.div`
+  font-weight: 600;
+  margin-bottom: 50px;
+
+  & span {
+    font-size: 28px;
+    background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+    padding: 0 5px;
+  }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const InputLine = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 50px;
+`;
+
+const Label = styled.label`
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const Input = styled.input`
+  width: 50px;
+  height: 50px;
+`;
+
+const Button = styled.button`
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+`;
+
+const DeleteButton = styled.button`
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: transparent;
+
+  &:hover {
+    color: var(--gray);
+  }
+`;

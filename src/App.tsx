@@ -18,27 +18,7 @@ import ScrapbookModal from "./components/ScrapbookModal";
 import ScrapModal from "./components/ScrapModal";
 import WithdrawalModal from "./components/WithdrawalModal";
 
-const AppWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
-
-const StyledToastContainer = styled(ToastContainer)`
-  // https://styled-components.com/docs/faqs#how-can-i-override-styles-with-higher-specificity
-  &&&.Toastify__toast-container {
-  }
-  .Toastify__toast {
-    width: fit-content;
-    min-width: 300px;
-    font-size: 20px;
-  }
-  .Toastify__toast-body {
-  }
-  .Toastify__progress-bar {
-  }
-`;
-
-function App() {
+export default function App() {
   const dispatch = useAppDispatch();
   const { isOpenChatItemModal, isOpenScrapbookModal, isOpenScrapModal, isOpenWithdrawalModal } = useAppSelector(
     (state) => state
@@ -105,4 +85,22 @@ function App() {
   );
 }
 
-export default App;
+const AppWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
+
+const StyledToastContainer = styled(ToastContainer)`
+  // https://styled-components.com/docs/faqs#how-can-i-override-styles-with-higher-specificity
+  &&&.Toastify__toast-container {
+  }
+  .Toastify__toast {
+    width: fit-content;
+    min-width: 300px;
+    font-size: 20px;
+  }
+  .Toastify__toast-body {
+  }
+  .Toastify__progress-bar {
+  }
+`;

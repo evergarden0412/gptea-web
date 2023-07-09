@@ -4,6 +4,31 @@ import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 import { IMessage } from "./Messages";
 
+interface IMessageProps {
+  message: IMessage;
+}
+
+export default function Message({ message }: IMessageProps) {
+  const dispatch = useAppDispatch();
+
+  const handleOpenScrapModal = () => {
+    if (message.scrap) dispatch(isOpenScrapModalAction.open({ message, scrapId: message.scrap.id }));
+    else dispatch(isOpenScrapModalAction.open({ message }));
+  };
+
+  return (
+    <MessageWrapper role={message.role} id={`${message.seq}`}>
+      <MessageContent>{message.content}</MessageContent>
+      <MessageInfo>
+        <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
+        <ScrapButton onClick={handleOpenScrapModal} $isScrap={message.scrap ? true : false}>
+          <i className="fa-solid fa-bookmark"></i>
+        </ScrapButton>
+      </MessageInfo>
+    </MessageWrapper>
+  );
+}
+
 const MessageWrapper = styled.li`
   width: 80%;
   background-color: ${(props) => (props.role === "user" ? "transparent" : "var(--message)")};
@@ -52,30 +77,3 @@ const ScrapButton = styled.button<{ $isScrap: boolean }>`
     color: ${(props) => (props.$isScrap ? "var(--lightaccent)" : "var(--lightgray)")};
   }
 `;
-
-interface IMessageProps {
-  message: IMessage;
-}
-
-function Message({ message }: IMessageProps) {
-  const dispatch = useAppDispatch();
-
-  const handleOpenScrapModal = () => {
-    if (message.scrap) dispatch(isOpenScrapModalAction.open({ message, scrapId: message.scrap.id }));
-    else dispatch(isOpenScrapModalAction.open({ message }));
-  };
-
-  return (
-    <MessageWrapper role={message.role} id={`${message.seq}`}>
-      <MessageContent>{message.content}</MessageContent>
-      <MessageInfo>
-        <MessageCreatedAt>{new Date(message.createdAt).toLocaleString()}</MessageCreatedAt>
-        <ScrapButton onClick={handleOpenScrapModal} $isScrap={message.scrap ? true : false}>
-          <i className="fa-solid fa-bookmark"></i>
-        </ScrapButton>
-      </MessageInfo>
-    </MessageWrapper>
-  );
-}
-
-export default Message;

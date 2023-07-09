@@ -6,19 +6,13 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import ChatItem from "../components/ChatItem";
 
-const ChatsWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-`;
-
 export interface IChat {
   createdAt: string;
   id: string;
   name: string;
 }
 
-function Chats() {
+export default function Chats() {
   const dispatch = useAppDispatch();
   const {
     requestGetChats: { data: chats },
@@ -43,4 +37,8 @@ function Chats() {
   );
 }
 
-export default Chats;
+const ChatsWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+`;

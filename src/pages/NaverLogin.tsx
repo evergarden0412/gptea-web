@@ -9,7 +9,7 @@ import { generateGpteaToken } from "./KakaoLogin";
 const NAVER = "naver";
 export const NAVER_ACCESS_TOKEN = "naver_access_token";
 
-function NaverLogin() {
+export default function NaverLogin() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -30,5 +30,3 @@ function NaverLogin() {
 
   return <></>;
 }
-
-export default NaverLogin;

@@ -6,6 +6,46 @@ import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
 import { IScrap } from "../pages/Scraps";
 
+interface IScrapProps {
+  scrap: IScrap;
+}
+
+export default function Scrap({ scrap }: IScrapProps) {
+  const [isExpand, setIsExpand] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleExpandScrap = () => {
+    setIsExpand((prev) => !prev);
+  };
+
+  const handleOpenScrapModal = () => {
+    dispatch(isOpenScrapModalAction.open({ message: scrap.message, scrapId: scrap.id }));
+  };
+
+  return (
+    <ScrapWrapper isExpand={isExpand} onClick={handleExpandScrap}>
+      <ScrapContent isExpand={isExpand}>{scrap.message?.content}</ScrapContent>
+      <Buttons
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <Button isExpand={isExpand} onClick={handleOpenScrapModal}>
+          <i className="Scrap__icon--remove fa-regular fa-bookmark"></i>
+        </Button>
+        {isExpand && (
+          <Button>
+            <Link to={`/chats/${scrap.message?.chatId}#${scrap.message?.seq}`}>
+              <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
+            </Link>
+          </Button>
+        )}
+      </Buttons>
+    </ScrapWrapper>
+  );
+}
+
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
   justify-content: space-between;
@@ -61,45 +101,3 @@ const Button = styled.button<{ isExpand?: boolean }>`
     background-color: var(--white);
   }
 `;
-
-interface IScrapProps {
-  scrap: IScrap;
-}
-
-function Scrap({ scrap }: IScrapProps) {
-  const [isExpand, setIsExpand] = useState(false);
-  const dispatch = useAppDispatch();
-
-  const handleExpandScrap = () => {
-    setIsExpand((prev) => !prev);
-  };
-
-  const handleOpenScrapModal = () => {
-    dispatch(isOpenScrapModalAction.open({ message: scrap.message, scrapId: scrap.id }));
-  };
-
-  return (
-    <ScrapWrapper isExpand={isExpand} onClick={handleExpandScrap}>
-      <ScrapContent isExpand={isExpand}>{scrap.message?.content}</ScrapContent>
-      <Buttons
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <Button isExpand={isExpand} onClick={handleOpenScrapModal}>
-          <i className="Scrap__icon--remove fa-regular fa-bookmark"></i>
-        </Button>
-        {isExpand && (
-          <Button>
-            <Link to={`/chats/${scrap.message?.chatId}#${scrap.message?.seq}`}>
-              <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
-            </Link>
-          </Button>
-        )}
-      </Buttons>
-    </ScrapWrapper>
-  );
-}
-
-export default Scrap;

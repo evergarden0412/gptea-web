@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-function Loading() {
+export default function Loading() {
   return (
     <>
       <Wrapper>
@@ -9,8 +9,6 @@ function Loading() {
     </>
   );
 }
-
-export default Loading;
 
 const Wrapper = styled.div`
   width: 100%;

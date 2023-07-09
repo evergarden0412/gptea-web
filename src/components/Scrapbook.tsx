@@ -4,6 +4,37 @@ import { useState } from "react";
 import { IScrapbook } from "../pages/Scrapbooks";
 import ScrapbookDropbox from "./ScrapbookDropbox";
 
+interface IScrapbookProps {
+  scrapbook: IScrapbook;
+}
+
+export default function Scrapbook({ scrapbook }: IScrapbookProps) {
+  const [isOpenDropbox, setIsOpenDrobpox] = useState(false);
+
+  return (
+    <ScrapbookWrapper>
+      <ScrapbookIcons>
+        <ScrapbookIcon className="Scrapbook__text--icon fa-regular fa-bookmark"></ScrapbookIcon>
+        {!scrapbook.isDefault && (
+          <ScrapbookButton
+            onClick={(event) => {
+              event.preventDefault();
+              setIsOpenDrobpox((prev) => !prev);
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512">
+              <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+            </svg>
+            {isOpenDropbox && <ScrapbookDropbox scrapbook={scrapbook} setIsOpenDrobpox={setIsOpenDrobpox} />}
+          </ScrapbookButton>
+        )}
+      </ScrapbookIcons>
+      <ScrapbookTitle>{scrapbook.isDefault ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
+      <ScrapbookColor></ScrapbookColor>
+    </ScrapbookWrapper>
+  );
+}
+
 const ScrapbookWrapper = styled.div`
   position: relative;
   width: 15rem;
@@ -63,36 +94,3 @@ const ScrapbookColor = styled.div`
   position: absolute;
   bottom: 2rem;
 `;
-
-interface IScrapbookProps {
-  scrapbook: IScrapbook;
-}
-
-function Scrapbook({ scrapbook }: IScrapbookProps) {
-  const [isOpenDropbox, setIsOpenDrobpox] = useState(false);
-
-  return (
-    <ScrapbookWrapper>
-      <ScrapbookIcons>
-        <ScrapbookIcon className="Scrapbook__text--icon fa-regular fa-bookmark"></ScrapbookIcon>
-        {!scrapbook.isDefault && (
-          <ScrapbookButton
-            onClick={(event) => {
-              event.preventDefault();
-              setIsOpenDrobpox((prev) => !prev);
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512">
-              <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
-            </svg>
-            {isOpenDropbox && <ScrapbookDropbox scrapbook={scrapbook} setIsOpenDrobpox={setIsOpenDrobpox} />}
-          </ScrapbookButton>
-        )}
-      </ScrapbookIcons>
-      <ScrapbookTitle>{scrapbook.isDefault ? "기본 스크랩 북" : scrapbook.name}</ScrapbookTitle>
-      <ScrapbookColor></ScrapbookColor>
-    </ScrapbookWrapper>
-  );
-}
-
-export default Scrapbook;

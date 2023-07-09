@@ -6,8 +6,6 @@ import { getScrapsInScrapbook } from "../api/gptea";
 import { IMessage } from "../components/Messages";
 import Scrap from "../components/Scrap";
 
-const ScrapsWrapper = styled.div``;
-
 export interface IScrap {
   createdAt: string;
   id: string;
@@ -15,7 +13,7 @@ export interface IScrap {
   message?: IMessage;
 }
 
-function Scraps() {
+export default function Scraps() {
   const { scrapbookId } = useParams();
   const [scraps, setScraps] = useState<IScrap[]>([]);
 
@@ -34,4 +32,4 @@ function Scraps() {
   );
 }
 
-export default Scraps;
+const ScrapsWrapper = styled.div``;

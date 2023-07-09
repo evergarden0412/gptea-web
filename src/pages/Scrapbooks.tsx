@@ -7,30 +7,6 @@ import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import Scrapbook from "../components/Scrapbook";
 import NewScrapbook from "../components/NewScrapbook";
 
-const ScrapbooksWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-`;
-
-const ScrapbooksSlide = styled.div`
-  width: 100%;
-  height: fit-content;
-  overflow: auto;
-`;
-
-const ScrapbooksContainer = styled.div`
-  width: max-content;
-  height: max-content;
-`;
-
-const ScrapbookLink = styled(Link)`
-  display: inline-block;
-  margin-right: 1rem;
-`;
-
 export interface IScrapbook {
   createdAt: string;
   id: string;
@@ -38,7 +14,7 @@ export interface IScrapbook {
   isDefault: boolean;
 }
 
-function Scrapbooks() {
+export default function Scrapbooks() {
   const dispatch = useAppDispatch();
   const {
     requestGetScrapbooks: { data: scrapbooks },
@@ -64,4 +40,26 @@ function Scrapbooks() {
   );
 }
 
-export default Scrapbooks;
+const ScrapbooksWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+`;
+
+const ScrapbooksSlide = styled.div`
+  width: 100%;
+  height: fit-content;
+  overflow: auto;
+`;
+
+const ScrapbooksContainer = styled.div`
+  width: max-content;
+  height: max-content;
+`;
+
+const ScrapbookLink = styled(Link)`
+  display: inline-block;
+  margin-right: 1rem;
+`;

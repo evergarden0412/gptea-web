@@ -9,6 +9,67 @@ import { deleteGpteaAccount } from "../api/gpteaAuth";
 import { unlinkKakaoAccount } from "../api/social";
 import { toastFailToRequest, toastFailToWithdrawal, toastLogout, toastSuccessToWithdrawal } from "../utils/toasts";
 
+export default function WithdrawalModal() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [input, setInput] = useState("");
+
+  const handleCloseWithdrawalModal = () => {
+    dispatch(isOpenWithdrawalModalAction.close());
+  };
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+
+  const handleUnregister = async () => {
+    try {
+      await unlinkKakaoAccount();
+      await deleteGpteaAccount();
+      localStorage.clear();
+      toastSuccessToWithdrawal();
+      dispatch(isOpenWithdrawalModalAction.close());
+
+      toastLogout();
+      dispatch(logout());
+      navigate("/");
+    } catch {
+      toastFailToRequest();
+    }
+  };
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (input !== "delete my account") toastFailToWithdrawal();
+    else handleUnregister();
+  };
+
+  return (
+    <ModalWrapper onClick={handleCloseWithdrawalModal}>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <Title>
+          <span>계정 삭제</span>
+        </Title>
+        <Form onSubmit={handleSubmitForm}>
+          <InputLine>
+            <Label htmlFor="input">다음 문구를 입력하세요</Label>
+            <Label>delete my account</Label>
+            <Input
+              id="input"
+              placeholder="delete my account"
+              value={input}
+              onChange={handleChangeInput}
+              autoComplete="off"
+            ></Input>
+          </InputLine>
+          <Button>확인</Button>
+        </Form>
+      </ModalBox>
+    </ModalWrapper>
+  );
+}
+
 const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -92,66 +153,3 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-
-function WithdrawalModal() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [input, setInput] = useState("");
-
-  const handleCloseWithdrawalModal = () => {
-    dispatch(isOpenWithdrawalModalAction.close());
-  };
-
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-  };
-
-  const handleUnregister = async () => {
-    try {
-      await unlinkKakaoAccount();
-      await deleteGpteaAccount();
-      localStorage.clear();
-      toastSuccessToWithdrawal();
-      dispatch(isOpenWithdrawalModalAction.close());
-
-      toastLogout();
-      dispatch(logout());
-      navigate("/");
-    } catch {
-      toastFailToRequest();
-    }
-  };
-
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (input !== "delete my account") toastFailToWithdrawal();
-    else handleUnregister();
-  };
-
-  return (
-    <ModalWrapper onClick={handleCloseWithdrawalModal}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <Title>
-          <span>계정 삭제</span>
-        </Title>
-        <Form onSubmit={handleSubmitForm}>
-          <InputLine>
-            <Label htmlFor="input">다음 문구를 입력하세요</Label>
-            <Label>delete my account</Label>
-            <Input
-              id="input"
-              placeholder="delete my account"
-              value={input}
-              onChange={handleChangeInput}
-              autoComplete="off"
-            ></Input>
-          </InputLine>
-          <Button>확인</Button>
-        </Form>
-      </ModalBox>
-    </ModalWrapper>
-  );
-}
-
-export default WithdrawalModal;

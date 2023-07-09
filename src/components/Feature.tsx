@@ -6,12 +6,7 @@ import Chat from "../pages/Chat";
 import Scrapbooks from "../pages/Scrapbooks";
 import Scraps from "../pages/Scraps";
 
-const FeatureWrapper = styled.section`
-  width: 80%;
-  height: 100%;
-`;
-
-function Feature() {
+export default function Feature() {
   return (
     <FeatureWrapper>
       <Routes>
@@ -24,4 +19,7 @@ function Feature() {
   );
 }
 
-export default Feature;
+const FeatureWrapper = styled.section`
+  width: 80%;
+  height: 100%;
+`;

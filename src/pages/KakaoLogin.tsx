@@ -37,7 +37,7 @@ export const generateGpteaToken = async (socialAccessToken: string, social: stri
   });
 };
 
-function KakaoLogin() {
+export default function KakaoLogin() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -90,5 +90,3 @@ function KakaoLogin() {
 
   return <></>;
 }
-
-export default KakaoLogin;

@@ -10,6 +10,73 @@ import { toastLogout } from "../utils/toasts";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
 
+export default function Nav() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+
+  const match = (routePath: string) => {
+    if (matchPath(routePath, pathname)) return true;
+    return false;
+  };
+
+  const removeSocialToken = () => {
+    if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
+      removeNaverToken();
+    } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
+      removeKakaoToken();
+    }
+  };
+
+  const handleLogout = () => {
+    removeSocialToken();
+    dispatch(logout());
+    localStorage.clear();
+    toastLogout();
+    navigate("/");
+  };
+
+  const handleWithdrawal = () => {
+    dispatch(isOpenWithdrawalModalAction.open());
+  };
+
+  const handleOpenChatItemModal = () => {
+    dispatch(isOpenChatItemModalAction.open(null));
+  };
+
+  return (
+    <NavWrapper>
+      <MainNav>
+        <NavItem to="/" $match={match("/") || match("/chats/:id")}>
+          <NavIcon>
+            <i className="fa-solid fa-mug-hot"></i>
+          </NavIcon>
+          <NavText>chat</NavText>
+          {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
+        </NavItem>
+        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
+          <NavIcon>
+            <i className="fa-regular fa-bookmark"></i>
+          </NavIcon>
+          <NavText>scrap</NavText>
+        </NavItem>
+        <NavItemButton onClick={handleLogout}>
+          <NavIcon>
+            <i className="fa-solid fa-right-from-bracket"></i>
+          </NavIcon>
+          <NavText>logout</NavText>
+        </NavItemButton>
+      </MainNav>
+      <NavItemButton onClick={handleWithdrawal}>
+        <NavIcon>
+          <i className="fa-solid fa-user"></i>
+        </NavIcon>
+        <NavText>withdrawal</NavText>
+      </NavItemButton>
+    </NavWrapper>
+  );
+}
+
 const NavWrapper = styled.section`
   width: 20%;
   height: 100%;
@@ -85,72 +152,3 @@ const NavButton = styled.button`
   cursor: pointer;
   z-index: 1;
 `;
-
-function Nav() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { pathname } = useLocation();
-
-  const match = (routePath: string) => {
-    if (matchPath(routePath, pathname)) return true;
-    return false;
-  };
-
-  const removeSocialToken = () => {
-    if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
-      removeNaverToken();
-    } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-      removeKakaoToken();
-    }
-  };
-
-  const handleLogout = () => {
-    removeSocialToken();
-    dispatch(logout());
-    localStorage.clear();
-    toastLogout();
-    navigate("/");
-  };
-
-  const handleWithdrawal = () => {
-    dispatch(isOpenWithdrawalModalAction.open());
-  };
-
-  const handleOpenChatItemModal = () => {
-    dispatch(isOpenChatItemModalAction.open(null));
-  };
-
-  return (
-    <NavWrapper>
-      <MainNav>
-        <NavItem to="/" $match={match("/") || match("/chats/:id")}>
-          <NavIcon>
-            <i className="fa-solid fa-mug-hot"></i>
-          </NavIcon>
-          <NavText>chat</NavText>
-          {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
-        </NavItem>
-        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
-          <NavIcon>
-            <i className="fa-regular fa-bookmark"></i>
-          </NavIcon>
-          <NavText>scrap</NavText>
-        </NavItem>
-        <NavItemButton onClick={handleLogout}>
-          <NavIcon>
-            <i className="fa-solid fa-right-from-bracket"></i>
-          </NavIcon>
-          <NavText>logout</NavText>
-        </NavItemButton>
-      </MainNav>
-      <NavItemButton onClick={handleWithdrawal}>
-        <NavIcon>
-          <i className="fa-solid fa-user"></i>
-        </NavIcon>
-        <NavText>withdrawal</NavText>
-      </NavItemButton>
-    </NavWrapper>
-  );
-}
-
-export default Nav;

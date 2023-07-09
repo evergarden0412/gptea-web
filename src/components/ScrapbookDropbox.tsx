@@ -8,41 +8,7 @@ import { deleteScrapbook } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
 import { IScrapbook } from "../pages/Scrapbooks";
 
-const DropboxWrapper = styled.div`
-  position: absolute;
-  top: 2.3rem;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  width: fit-content;
-  border-radius: 10px;
-`;
-
-const DropboxButton = styled.button.attrs({ type: "button" })`
-  width: 100px;
-  padding: 10px;
-  font-size: 1rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-
-  &:first-child {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`;
-
-function ScrapbookDropbox({
+export default function ScrapbookDropbox({
   scrapbook,
   setIsOpenDrobpox,
 }: {
@@ -80,4 +46,36 @@ function ScrapbookDropbox({
   );
 }
 
-export default ScrapbookDropbox;
+const DropboxWrapper = styled.div`
+  position: absolute;
+  top: 2.3rem;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: fit-content;
+  border-radius: 10px;
+`;
+
+const DropboxButton = styled.button.attrs({ type: "button" })`
+  width: 100px;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;

@@ -3,6 +3,20 @@ import styled from "styled-components";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 
+export default function NewScrapbook() {
+  const dispatch = useAppDispatch();
+
+  const handleOpenScrapbookModal = () => {
+    dispatch(isOpenScrapbookModalAction.open(null));
+  };
+
+  return (
+    <ScrapbookWrapper onClick={handleOpenScrapbookModal}>
+      <ScrapbookTitle>+</ScrapbookTitle>
+    </ScrapbookWrapper>
+  );
+}
+
 const ScrapbookWrapper = styled.div`
   display: inline-block;
   width: 15rem;
@@ -24,19 +38,3 @@ const ScrapbookTitle = styled.p`
   height: auto;
   font-size: 3rem;
 `;
-
-function NewScrapbook() {
-  const dispatch = useAppDispatch();
-
-  const handleOpenScrapbookModal = () => {
-    dispatch(isOpenScrapbookModalAction.open(null));
-  };
-
-  return (
-    <ScrapbookWrapper onClick={handleOpenScrapbookModal}>
-      <ScrapbookTitle>+</ScrapbookTitle>
-    </ScrapbookWrapper>
-  );
-}
-
-export default NewScrapbook;
