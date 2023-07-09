@@ -6,12 +6,6 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import ChatItem from "../components/ChatItem";
 
-export interface IChat {
-  createdAt: string;
-  id: string;
-  name: string;
-}
-
 export default function Chats() {
   const dispatch = useAppDispatch();
   const {

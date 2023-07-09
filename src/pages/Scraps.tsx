@@ -3,15 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { getScrapsInScrapbook } from "../api/gptea";
-import { IMessage } from "../components/Messages";
 import Scrap from "../components/Scrap";
-
-export interface IScrap {
-  createdAt: string;
-  id: string;
-  memo: string;
-  message?: IMessage;
-}
+import { IScrap } from "../utils/interfaces";
 
 export default function Scraps() {
   const { scrapbookId } = useParams();

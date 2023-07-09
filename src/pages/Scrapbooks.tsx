@@ -7,13 +7,6 @@ import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import Scrapbook from "../components/Scrapbook";
 import NewScrapbook from "../components/NewScrapbook";
 
-export interface IScrapbook {
-  createdAt: string;
-  id: string;
-  name: string;
-  isDefault: boolean;
-}
-
 export default function Scrapbooks() {
   const dispatch = useAppDispatch();
   const {

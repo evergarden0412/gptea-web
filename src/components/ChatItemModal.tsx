@@ -6,7 +6,7 @@ import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { createChat, modifyChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
-import { IChat } from "../pages/Chats";
+import { IChat } from "../utils/interfaces";
 
 interface IChatItemModalProps {
   chat: IChat | null;

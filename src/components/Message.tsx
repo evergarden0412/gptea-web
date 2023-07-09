@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
-import { IMessage } from "./Messages";
+import { IMessage } from "../utils/interfaces";
 
 interface IMessageProps {
   message: IMessage;

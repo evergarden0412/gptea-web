@@ -14,8 +14,7 @@ import {
   toastSuccessToDeleteAllScrap,
   toastSuccessToDeleteScrap,
 } from "../utils/toasts";
-import { IScrapbook } from "../pages/Scrapbooks";
-import { IMessage } from "./Messages";
+import { IMessage, IScrapbook } from "../utils/interfaces";
 
 interface IScrapModalProps {
   message: IMessage | null;

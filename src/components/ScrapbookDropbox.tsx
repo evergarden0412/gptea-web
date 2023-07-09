@@ -6,7 +6,7 @@ import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { deleteScrapbook } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
-import { IScrapbook } from "../pages/Scrapbooks";
+import { IScrapbook } from "../utils/interfaces";
 
 interface IScrapbookDropboxProps {
   scrapbook: IScrapbook;

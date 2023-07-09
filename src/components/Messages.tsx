@@ -3,19 +3,9 @@ import { useEffect, useRef } from "react";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
-import { IScrap } from "../pages/Scraps";
 import Message from "./Message";
 import Loading from "./Loading";
-
-export interface IMessage {
-  chatId?: string;
-  chatID?: string;
-  content: string;
-  createdAt: string;
-  seq: number;
-  role?: string;
-  scrap?: IScrap;
-}
+import { IMessage } from "../utils/interfaces";
 
 interface IMessagesProps {
   chatId?: string;

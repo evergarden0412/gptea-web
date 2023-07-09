@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import { IScrapbook } from "../pages/Scrapbooks";
 import ScrapbookDropbox from "./ScrapbookDropbox";
+import { IScrapbook } from "../utils/interfaces";
 
 interface IScrapbookProps {
   scrapbook: IScrapbook;

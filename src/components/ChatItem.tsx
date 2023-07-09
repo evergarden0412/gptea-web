@@ -5,7 +5,7 @@ import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { deleteChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
-import { IChat } from "../pages/Chats";
+import { IChat } from "../utils/interfaces";
 
 interface IChatItemProps {
   chat: IChat;

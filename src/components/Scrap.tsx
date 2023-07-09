@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
-import { IScrap } from "../pages/Scraps";
+import { IScrap } from "../utils/interfaces";
 
 interface IScrapProps {
   scrap: IScrap;
