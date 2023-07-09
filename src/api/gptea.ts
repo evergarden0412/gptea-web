@@ -29,9 +29,10 @@ export const getMessages = async (chatId: string | undefined) => {
   });
 
   const newMessages = messages.map((message: IMessage) => {
-    message.chatId = message.chatID;
-    delete message.chatID;
-    return message;
+    const newMessage = Object.assign({}, message);
+    newMessage.chatId = newMessage.chatID;
+    delete newMessage.chatID;
+    return newMessage;
   });
 
   return newMessages;
@@ -59,11 +60,12 @@ export const getScrapsInScrapbook = async (scrapbookId: string | undefined) => {
       Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
     },
   });
+
   const newScraps = scraps.map((scrap: IScrap) => {
-    if (!scrap.message) return;
-    scrap.message.chatId = scrap.message.chatID;
-    delete scrap.message.chatID;
-    return scrap;
+    const newScrap = JSON.parse(JSON.stringify(scrap));
+    newScrap.message.chatId = newScrap.message.chatID;
+    delete newScrap.message.chatID;
+    return newScrap;
   });
 
   return newScraps;
