@@ -32,4 +32,7 @@ export default function Scraps() {
   );
 }
 
-const ScrapsWrapper = styled.div``;
+const ScrapsWrapper = styled.div`
+  height: 100%;
+  overflow: auto;
+`;
