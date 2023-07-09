@@ -13,16 +13,10 @@ import MyGptea from "./pages/MyGptea";
 import Login from "./pages/Login";
 import NaverLogin from "./pages/NaverLogin";
 import KakaoLogin from "./pages/KakaoLogin";
-import ChatItemModal from "./components/ChatItemModal";
-import ScrapbookModal from "./components/ScrapbookModal";
-import ScrapModal from "./components/ScrapModal";
-import WithdrawalModal from "./components/WithdrawalModal";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const { isOpenChatItemModal, isOpenScrapbookModal, isOpenScrapModal, isOpenWithdrawalModal } = useAppSelector(
-    (state) => state
-  );
+  const { isLoggedIn } = useAppSelector((state) => state);
 
   const regenerateGpteaToken = async () => {
     recreateGpteaToken()
@@ -54,24 +48,8 @@ export default function App() {
     }
   }, []);
 
-  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
-
   return (
     <AppWrapper>
-      <Routes>
-        <Route path="/*" element={isLoggedIn ? <MyGptea /> : <Login />} />
-        <Route path="/login/naver" element={<NaverLogin />} />
-        <Route path="/login/kakao" element={<KakaoLogin />} />
-      </Routes>
-      {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
-      {isOpenScrapbookModal.status && <ScrapbookModal scrapbook={isOpenScrapbookModal.scrapbook} />}
-      {isOpenScrapModal.status &&
-        (isOpenScrapModal.scrapId ? (
-          <ScrapModal message={isOpenScrapModal.message} scrapId={isOpenScrapModal.scrapId} />
-        ) : (
-          <ScrapModal message={isOpenScrapModal.message} />
-        ))}
-      {isOpenWithdrawalModal.status && <WithdrawalModal />}
       <StyledToastContainer
         position="top-right"
         autoClose={1500}
@@ -81,6 +59,11 @@ export default function App() {
         closeButton={false}
         theme="light"
       />
+      <Routes>
+        <Route path="/*" element={isLoggedIn ? <MyGptea /> : <Login />} />
+        <Route path="/login/naver" element={<NaverLogin />} />
+        <Route path="/login/kakao" element={<KakaoLogin />} />
+      </Routes>
     </AppWrapper>
   );
 }
