@@ -1,7 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IScrapbook } from "../pages/Scrapbooks";
+
 import { getScrapbooks } from "../api/gptea";
 import { toastFailToRequest } from "../utils/toasts";
+import { IScrapbook } from "../pages/Scrapbooks";
 
 interface IrequestGetScrapbooks {
   data: IScrapbook[];

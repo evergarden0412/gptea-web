@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
-import { useNavigate } from "react-router-dom";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
-import { toastFailToRequest, toastFailToWithdrawal, toastLogout, toastSuccessToWithdrawal } from "../utils/toasts";
 import { deleteGpteaAccount } from "../api/gpteaAuth";
 import { unlinkKakaoAccount } from "../api/social";
+import { toastFailToRequest, toastFailToWithdrawal, toastLogout, toastSuccessToWithdrawal } from "../utils/toasts";
 
 const ModalWrapper = styled.div`
   width: 100vw;

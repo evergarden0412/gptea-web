@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 
-import Message from "./Message";
-
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 import { IScrap } from "../pages/Scraps";
+import Message from "./Message";
 import Loading from "./Loading";
 
 const MessagesWrapper = styled.div`

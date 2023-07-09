@@ -5,10 +5,10 @@ import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
+import { removeKakaoToken, removeNaverToken } from "../api/social";
 import { toastLogout } from "../utils/toasts";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
-import { removeKakaoToken, removeNaverToken } from "../api/social";
 
 const NavWrapper = styled.section`
   width: 20%;

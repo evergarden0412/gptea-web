@@ -1,5 +1,7 @@
 import { toast } from "react-toastify";
 
+/* 계정 */
+
 export const toastRegister = () => toast("계정 가입", { type: "success" }); //
 export const toastFailToRegister = () => toast("계정 가입 실패", { type: "error" }); //
 
@@ -9,17 +11,14 @@ export const toastFailToLogin = () => toast("로그인 실패", { type: "error" 
 export const toastLogout = () => toast("로그아웃", { type: "success" }); //
 export const toastFailToLogout = () => toast("로그아웃 실패", { type: "error" });
 
-//실패
+/* 실패 */
 
 export const toastFailToDeleteScrap = () => toast("하나 이상의 스크랩북에 저장해야 합니다.", { type: "error" }); //
-
 export const toastFailToCreateScrapbook = () => toast("이미 존재하는 이름입니다.", { type: "error" });
-
 export const toastFailToWithdrawal = () => toast("입력을 확인해주세요.", { type: "error" }); //
-
 export const toastFailToRequest = () => toast("요청에 실패했습니다.", { type: "error" }); //
 
-//성공
+/* 성공 */
 
 //스크랩북
 export const toastSuccessToCreateScrapbook = () => toast("스크랩북을 생성했습니다.", { type: "success" }); //

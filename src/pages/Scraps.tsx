@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import Scrap from "../components/Scrap";
-import { IMessage } from "../components/Messages";
 import { getScrapsInScrapbook } from "../api/gptea";
+import { IMessage } from "../components/Messages";
+import Scrap from "../components/Scrap";
 
 const ScrapsWrapper = styled.div``;
 

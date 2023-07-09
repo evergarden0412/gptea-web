@@ -2,11 +2,10 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { IScrapbook } from "../pages/Scrapbooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
-import { IMessage } from "./Messages";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import { addSingleScrap, createScrap, deleteAllScrap, deleteSingleScrap, getScrapParents } from "../api/gptea";
 import {
   toastFailToDeleteScrap,
   toastFailToRequest,
@@ -15,7 +14,8 @@ import {
   toastSuccessToDeleteAllScrap,
   toastSuccessToDeleteScrap,
 } from "../utils/toasts";
-import { addSingleScrap, createScrap, deleteAllScrap, deleteSingleScrap, getScrapParents } from "../api/gptea";
+import { IScrapbook } from "../pages/Scrapbooks";
+import { IMessage } from "./Messages";
 
 const ModalWrapper = styled.div`
   width: 100vw;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import ChatItem from "../components/ChatItem";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
+import ChatItem from "../components/ChatItem";
 
 const ChatsWrapper = styled.div`
   width: 100%;

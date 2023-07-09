@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
-import { IScrapbook } from "../pages/Scrapbooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
-import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
 import { createScrapbook, modifyScrapbook } from "../api/gptea";
+import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
+import { IScrapbook } from "../pages/Scrapbooks";
 
 const ModalWrapper = styled.div`
   width: 100vw;

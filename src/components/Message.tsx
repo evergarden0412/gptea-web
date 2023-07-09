@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { IMessage } from "./Messages";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
+import { IMessage } from "./Messages";
 
 const MessageWrapper = styled.li`
   width: 80%;

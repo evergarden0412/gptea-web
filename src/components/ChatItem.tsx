@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import { IChat } from "../pages/Chats";
-import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { useAppDispatch } from "../redux/hooks";
+import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
-import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
 import { deleteChat } from "../api/gptea";
+import { toastFailToRequest, toastSuccessToDeleteChat } from "../utils/toasts";
+import { IChat } from "../pages/Chats";
 
 const ChatItemWrapper = styled.li`
   display: flex;

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Dispatch, SetStateAction } from "react";
 
-import { IScrapbook } from "../pages/Scrapbooks";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
-import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
 import { deleteScrapbook } from "../api/gptea";
+import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
+import { IScrapbook } from "../pages/Scrapbooks";
 
 const DropboxWrapper = styled.div`
   position: absolute;

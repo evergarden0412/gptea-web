@@ -1,9 +1,9 @@
+import styled from "styled-components";
 import { useEffect } from "react";
 
 import kakaoLoginLogo from "../asset/kakao_login_logo.png";
 import chats from "../asset/chats.gif";
 import scraps from "../asset/scraps.gif";
-import styled from "styled-components";
 
 const naverLogin = new window.naver.LoginWithNaverId({
   clientId: process.env.REACT_APP_NAVER_CLIENT_ID,

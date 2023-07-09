@@ -1,8 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { IChat } from "../pages/Chats";
 import { getChats } from "../api/gptea";
 import { toastFailToRequest } from "../utils/toasts";
+import { IChat } from "../pages/Chats";
 
 interface IrequestGetChats {
   data: IChat[];

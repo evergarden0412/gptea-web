@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-
-import { IScrap } from "../pages/Scraps";
-import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
-import { useAppDispatch } from "../redux/hooks";
 import { Link } from "react-router-dom";
+
+import { useAppDispatch } from "../redux/hooks";
+import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
+import { IScrap } from "../pages/Scraps";
 
 const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;

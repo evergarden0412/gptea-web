@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
-import { IChat } from "../pages/Chats";
-import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
 import { createChat, modifyChat } from "../api/gptea";
+import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
+import { IChat } from "../pages/Chats";
 
 const ModalWrapper = styled.div`
   width: 100vw;

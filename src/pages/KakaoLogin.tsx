@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { decode } from "jsonwebtoken";
 
-import { ERROR_GET_KAKAO_TOKENS } from "../utils/errorMessage";
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
-import { decode } from "jsonwebtoken";
 import { createGpteaAccount, createGpteaToken, verifyGpteaToken } from "../api/gpteaAuth";
 import { setGpteaTokenInStorage } from "../utils/util";
 import { toastFailToRegister, toastLogin, toastRegister } from "../utils/toasts";
@@ -73,7 +72,7 @@ function KakaoLogin() {
             resolve(accessToken);
           }
         })
-        .catch((err) => reject({ ERROR_GET_KAKAO_TOKENS, err }));
+        .catch((err) => reject({ err }));
     });
   };
 
@@ -86,7 +85,7 @@ function KakaoLogin() {
           dispatch(login());
           navigate("/");
         })
-        .catch((err) => alert(err));
+        .catch((err) => console.log(err));
   }, []);
 
   return <></>;

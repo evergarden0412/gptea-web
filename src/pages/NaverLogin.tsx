@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/hooks";
 
+import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
 import { verifyGpteaToken } from "../api/gpteaAuth";
 import { generateGpteaToken } from "./KakaoLogin";

@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Messages from "../components/Messages";
 import Prompt from "../components/Prompt";
-import { useState } from "react";
 
 const ChatWrapper = styled.div`
   padding: 1rem;

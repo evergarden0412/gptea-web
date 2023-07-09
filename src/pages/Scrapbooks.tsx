@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import Scrapbook from "../components/Scrapbook";
-import NewScrapbook from "../components/NewScrapbook";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
+import Scrapbook from "../components/Scrapbook";
+import NewScrapbook from "../components/NewScrapbook";
 
 const ScrapbooksWrapper = styled.div`
   width: 100%;
