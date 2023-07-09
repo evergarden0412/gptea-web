@@ -8,11 +8,11 @@ import { createScrapbook, modifyScrapbook } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateScrapbook, toastSuccessToModifyScrapbookName } from "../utils/toasts";
 import { IScrapbook } from "../pages/Scrapbooks";
 
-interface IScrapbookModal {
+interface IScrapbookModalProps {
   scrapbook: IScrapbook | null;
 }
 
-export default function ScrapbookModal({ scrapbook }: IScrapbookModal) {
+export default function ScrapbookModal({ scrapbook }: IScrapbookModalProps) {
   const dispatch = useAppDispatch();
   const [scrapbookName, setScrapbookName] = useState(scrapbook ? scrapbook.name : "");
 

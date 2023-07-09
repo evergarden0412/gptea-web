@@ -8,13 +8,12 @@ import { deleteScrapbook } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToDeleteScrapbook } from "../utils/toasts";
 import { IScrapbook } from "../pages/Scrapbooks";
 
-export default function ScrapbookDropbox({
-  scrapbook,
-  setIsOpenDrobpox,
-}: {
+interface IScrapbookDropboxProps {
   scrapbook: IScrapbook;
   setIsOpenDrobpox: Dispatch<SetStateAction<boolean>>;
-}) {
+}
+
+export default function ScrapbookDropbox({ scrapbook, setIsOpenDrobpox }: IScrapbookDropboxProps) {
   const dispatch = useAppDispatch();
 
   const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

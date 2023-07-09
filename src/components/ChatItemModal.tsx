@@ -8,11 +8,11 @@ import { createChat, modifyChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
 import { IChat } from "../pages/Chats";
 
-interface INewChatModal {
+interface IChatItemModalProps {
   chat: IChat | null;
 }
 
-export default function ChatItemModal({ chat }: INewChatModal) {
+export default function ChatItemModal({ chat }: IChatItemModalProps) {
   const dispatch = useAppDispatch();
   const [chatName, setChatName] = useState(chat ? chat.name : "새 채팅");
 

@@ -6,13 +6,13 @@ import { requestGetMessages } from "../redux/requestGetMessagesSlice";
 import { sendMessage } from "../api/gptea";
 import { toastFailToRequest } from "../utils/toasts";
 
-interface IPrompt {
+interface IPromptProps {
   chatId?: string;
   isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Prompt({ chatId, isFetching, setIsFetching }: IPrompt) {
+export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptProps) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
 

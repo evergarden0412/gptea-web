@@ -17,12 +17,12 @@ import {
 import { IScrapbook } from "../pages/Scrapbooks";
 import { IMessage } from "./Messages";
 
-interface IScrapModal {
+interface IScrapModalProps {
   message: IMessage | null;
   scrapId?: string;
 }
 
-export default function ScrapModal({ message, scrapId }: IScrapModal) {
+export default function ScrapModal({ message, scrapId }: IScrapModalProps) {
   const dispatch = useAppDispatch();
   const [checkedScrapbooks, setCheckedScrapbooks] = useState<string[]>([]);
 
