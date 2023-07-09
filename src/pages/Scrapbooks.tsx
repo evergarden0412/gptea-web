@@ -12,7 +12,23 @@ const ScrapbooksWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  overflow-x: auto;
+  padding: 1rem;
+`;
+
+const ScrapbooksSlide = styled.div`
+  width: 100%;
+  height: fit-content;
+  overflow: auto;
+`;
+
+const ScrapbooksContainer = styled.div`
+  width: max-content;
+  height: max-content;
+`;
+
+const ScrapbookLink = styled(Link)`
+  display: inline-block;
+  margin-right: 1rem;
 `;
 
 export interface IScrapbook {
@@ -34,12 +50,16 @@ function Scrapbooks() {
 
   return (
     <ScrapbooksWrapper>
-      {scrapbooks.map((scrapbook) => (
-        <Link to={`/scrapbooks/${scrapbook.id}`} key={scrapbook.id}>
-          <Scrapbook scrapbook={scrapbook} />
-        </Link>
-      ))}
-      <NewScrapbook />
+      <ScrapbooksSlide>
+        <ScrapbooksContainer>
+          {scrapbooks.map((scrapbook) => (
+            <ScrapbookLink to={`/scrapbooks/${scrapbook.id}`} key={scrapbook.id}>
+              <Scrapbook scrapbook={scrapbook} />
+            </ScrapbookLink>
+          ))}
+          <NewScrapbook />
+        </ScrapbooksContainer>
+      </ScrapbooksSlide>
     </ScrapbooksWrapper>
   );
 }

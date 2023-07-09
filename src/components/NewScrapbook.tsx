@@ -3,26 +3,24 @@ import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapbookModalAction } from "../redux/isOpenScrapbookModalSlice";
 
 const ScrapbookWrapper = styled.div`
-  position: relative;
+  display: inline-block;
   width: 15rem;
   height: 20rem;
   background-color: rgba(0, 0, 0, 0.6);
-  margin: 0 2rem;
   padding: 2rem 1.5rem;
   border-radius: 1rem;
   color: white;
   cursor: pointer;
+  vertical-align: top;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
 `;
 
-const ScrapbookTitle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const ScrapbookTitle = styled.p`
+  width: auto;
+  height: auto;
   font-size: 3rem;
 `;
 
