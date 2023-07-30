@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -50,8 +50,13 @@ const ScrapWrapper = styled.li<{ isExpand: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${(props) => (props.isExpand ? "height: auto;" : "height: 4rem;")}
-  padding: 1rem 1.5rem;
+  padding: 1rem;
+  ${({ isExpand }) =>
+    isExpand &&
+    css`
+      height: auto;
+    `}
+
   cursor: pointer;
 
   &:not(:last-child) {
@@ -65,36 +70,39 @@ const ScrapWrapper = styled.li<{ isExpand: boolean }>`
 
 const ScrapContent = styled.div<{ isExpand: boolean }>`
   width: 90%;
+  font-size: 1.6rem;
+
   ${(props) =>
     props.isExpand
       ? ""
-      : `text-overflow: ellipsis;
-      overflow: hidden;
-      word-break: break-word;
+      : css`
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-break: break-word;
 
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;`}
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        `}
 `;
 
 const Buttons = styled.div`
-  width: 5%;
   display: flex;
   flex-direction: column;
   cursor: auto;
 `;
 
 const Button = styled.button<{ isExpand?: boolean }>`
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   ${(props) => props.isExpand && "margin-bottom: 1rem;"}
   border: none;
-  border-radius: 10px;
+  border-radius: 1rem;
   background-color: transparent;
   cursor: pointer;
 
   i {
-    font-size: 1rem;
+    font-size: 1.6rem;
   }
 
   &:hover {

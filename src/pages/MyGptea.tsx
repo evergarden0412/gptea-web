@@ -33,5 +33,8 @@ export default function MyGptea() {
 const MyGpteaWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+  }
 `;

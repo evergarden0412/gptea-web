@@ -69,8 +69,15 @@ export default function App() {
 }
 
 const AppWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
+  @media screen and (min-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: auto;
+  }
 `;
 
 const StyledToastContainer = styled(ToastContainer)`
@@ -80,7 +87,7 @@ const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
     width: fit-content;
     min-width: 300px;
-    font-size: 20px;
+    font-size: 2rem;
   }
   .Toastify__toast-body {
   }

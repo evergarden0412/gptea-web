@@ -45,12 +45,30 @@ export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptPro
 }
 
 const PromptWrapper = styled.div`
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
+  * {
+    font-size: 1.6rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    height: 10%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
 `;
 
 const PromptForm = styled.form`
@@ -62,13 +80,12 @@ const PromptForm = styled.form`
   height: 100%;
   padding: 0.5rem 1.5rem;
   border-radius: 1rem;
-  border: 2px solid #ededed;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
 `;
 
 const PromptInput = styled.input`
   width: 100%;
   height: 100%;
-  font-size: 1rem;
   background-color: transparent;
   border: none;
   outline: none;
@@ -87,10 +104,6 @@ const PromptButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   border: none;
-
-  i {
-    font-size: 1rem;
-  }
 
   &:hover {
     i {

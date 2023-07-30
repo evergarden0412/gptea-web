@@ -20,6 +20,15 @@ export default function Feature() {
 }
 
 const FeatureWrapper = styled.section`
-  width: 80%;
-  height: 100%;
+  @media screen and (min-width: 768px) {
+    width: 80%;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+    padding-top: 0;
+  }
 `;

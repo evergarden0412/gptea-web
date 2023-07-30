@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { useAppDispatch } from "../redux/hooks";
 import { isOpenScrapModalAction } from "../redux/isOpenScrapModalSlice";
@@ -30,23 +30,31 @@ export default function Message({ message }: IMessageProps) {
 }
 
 const MessageWrapper = styled.li`
-  width: 80%;
-  background-color: ${(props) => (props.role === "user" ? "transparent" : "var(--message)")};
-  color: ${(props) => (props.role === "user" ? "inherit" : "white")};
-  border: ${(props) => (props.role === "user" ? "1.5px solid var(--message)" : "none")};
+  min-width: 51%;
+  width: fit-content;
+  max-width: 80%;
+  border-radius: 2rem;
+  padding: 1.6rem 2rem;
+  margin: 1rem;
 
-  float: ${(props) => (props.role === "user" ? "left" : "right")};
-  border-radius: 3rem;
-  ${(props) => (props.role === "user" ? "border-top-left-radius: 0" : "border-bottom-right-radius:0")};
-  padding: 1rem 2rem;
+  ${(props) =>
+    props.role === "user"
+      ? css`
+          border-top-left-radius: 0;
+          background-color: transparent;
+          color: inherit;
+          box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.2);
+          float: left;
+        `
+      : css`
+          border-bottom-right-radius: 0;
+          background-color: var(--message);
+          color: white;
+          box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
+          float: right;
+        `};
 
-  &:not(:last-child) {
-    margin-bottom: 1rem;
-  }
-
-  * {
-    font-size: 0.8rem;
-  }
+  font-size: 1.6rem;
 `;
 
 const MessageContent = styled.div``;
@@ -58,18 +66,18 @@ const MessageInfo = styled.div`
 
 const MessageCreatedAt = styled.div`
   display: inline-block;
-  margin-right: 0.1rem;
+  margin-right: 0.5rem;
 `;
 
 const ScrapButton = styled.button<{ $isScrap: boolean }>`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
 
   i {
-    font-size: 1rem;
+    font-size: 1.6rem;
     color: ${(props) => (props.$isScrap ? "var(--accent)" : "var(--gray)")};
   }
 

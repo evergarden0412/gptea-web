@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate, NavLink, useLocation, matchPath } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/hooks";
@@ -9,11 +9,13 @@ import { removeKakaoToken, removeNaverToken } from "../api/social";
 import { toastLogout } from "../utils/toasts";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
+import { useState } from "react";
 
 export default function Nav() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
+  const [isOpenMenu, SetIsOpenMenu] = useState(false);
 
   const match = (routePath: string) => {
     if (matchPath(routePath, pathname)) return true;
@@ -44,53 +46,114 @@ export default function Nav() {
     dispatch(isOpenChatItemModalAction.open(null));
   };
 
+  const handleNavigateBack = () => {
+    navigate(-1);
+  };
+
+  const toggleOpenMenu = () => {
+    SetIsOpenMenu((prev) => !prev);
+  };
+
   return (
     <NavWrapper>
-      <NavItems>
-        <NavItemButton onClick={handleOpenChatItemModal}>
-          <NavIcon>
-            <i className="fa-solid fa-plus"></i>
-          </NavIcon>
-          <NavText>New Chat</NavText>
-        </NavItemButton>
-        <NavItem to="/" $match={match("/") || match("/chats/:id")}>
-          <NavIcon>
-            <i className="fa-solid fa-mug-hot"></i>
-          </NavIcon>
-          <NavText>Chat</NavText>
-        </NavItem>
-        <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
-          <NavIcon>
-            <i className="fa-regular fa-bookmark"></i>
-          </NavIcon>
-          <NavText>Scrap</NavText>
-        </NavItem>
-      </NavItems>
-      <NavItems>
-        <NavItemButton onClick={handleLogout}>
-          <NavIcon>
-            <i className="fa-solid fa-right-from-bracket"></i>
-          </NavIcon>
-          <NavText>Logout</NavText>
-        </NavItemButton>
-        <NavItemButton onClick={handleWithdrawal}>
-          <NavIcon>
-            <i className="fa-solid fa-user-slash"></i>
-          </NavIcon>
-          <NavText>Withdrawal</NavText>
-        </NavItemButton>
-      </NavItems>
+      <MobileHeader>
+        <MobileButton onClick={handleNavigateBack}>
+          <i className="fa-solid fa-arrow-left"></i>
+        </MobileButton>
+        <span>Gptea</span>
+        <MobileButton onClick={toggleOpenMenu}>
+          <i className="fa-solid fa-bars"></i>
+        </MobileButton>
+      </MobileHeader>
+      <NavMenu isOpenMenu={isOpenMenu} onClick={toggleOpenMenu}>
+        <NavItems>
+          <NavItemButton onClick={handleOpenChatItemModal}>
+            <NavIcon>
+              <i className="fa-solid fa-plus"></i>
+            </NavIcon>
+            <NavText>New Chat</NavText>
+          </NavItemButton>
+          <NavItem to="/" $match={match("/") || match("/chats/:id")}>
+            <NavIcon>
+              <i className="fa-solid fa-mug-hot"></i>
+            </NavIcon>
+            <NavText>Chat</NavText>
+          </NavItem>
+          <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
+            <NavIcon>
+              <i className="fa-regular fa-bookmark"></i>
+            </NavIcon>
+            <NavText>Scrap</NavText>
+          </NavItem>
+        </NavItems>
+        <NavItems>
+          <NavItemButton onClick={handleLogout}>
+            <NavIcon>
+              <i className="fa-solid fa-right-from-bracket"></i>
+            </NavIcon>
+            <NavText>Logout</NavText>
+          </NavItemButton>
+          <NavItemButton onClick={handleWithdrawal}>
+            <NavIcon>
+              <i className="fa-solid fa-user-slash"></i>
+            </NavIcon>
+            <NavText>Withdrawal</NavText>
+          </NavItemButton>
+        </NavItems>
+      </NavMenu>
     </NavWrapper>
   );
 }
 
+/* 태블릿 및 PC용 CSS */
+/* 모바일 우선 */
+
 const NavWrapper = styled.section`
-  width: 20%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--nav);
+  @media screen and (min-width: 768px) {
+    width: 20%;
+    min-width: 220px;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-width: 220px;
+    height: 7rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    font-size: 1.6rem;
+  }
+`;
+
+const NavMenu = styled.nav<{ isOpenMenu: boolean }>`
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--nav);
+    padding: 0 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    ${({ isOpenMenu }) =>
+      isOpenMenu
+        ? css`
+            display: flex;
+            flex-direction: column;
+            background-color: var(--message);
+            padding: 0 2rem;
+          `
+        : css`
+            display: none;
+          `};
+  }
 `;
 
 const NavItems = styled.div`
@@ -104,14 +167,14 @@ const NavItems = styled.div`
 const NavItem = styled(NavLink)<{ $match: boolean }>`
   display: flex;
   align-items: center;
-  font-size: 1rem;
   text-decoration: none;
-  padding: 0.7rem;
-  margin: 0.3rem;
+  padding: 2rem 1rem;
+  margin: 1rem 0;
   position: relative;
   background-color: ${(props) => (props.$match ? "var(--white)" : "transparent")};
-  border-radius: 5px;
+  border-radius: 0.5rem;
   color: ${(props) => (props.$match ? "var(--defalt)" : "var(--white)")};
+  font-size: 1.6rem;
 
   &:hover {
     background-color: var(--hover);
@@ -123,17 +186,17 @@ const NavItemButton = styled.button`
   height: auto;
   display: flex;
   align-items: center;
-  font-size: 1rem;
   text-decoration: none;
-  width: calc(100% - 0.6rem);
-  padding: 0.7rem;
-  margin: 0.3rem;
+  width: 100%;
+  padding: 2rem 1rem;
+  margin: 1rem 0;
   position: relative;
   background-color: transparent;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
   color: var(--white);
+  font-size: 1.6rem;
 
   &:hover {
     background-color: var(--white);
@@ -142,12 +205,38 @@ const NavItemButton = styled.button`
 `;
 
 const NavIcon = styled.div`
-  width: 2rem;
+  width: 2.5rem;
+  text-align: left;
 
   i {
     width: 2rem;
-    text-align: center;
   }
 `;
 
 const NavText = styled.div``;
+
+/* 모바일 전용 컴포넌트 */
+
+const MobileHeader = styled.header`
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+  }
+`;
+
+const MobileButton = styled.button`
+  font-size: 1.6rem;
+  padding: 0 2rem;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;

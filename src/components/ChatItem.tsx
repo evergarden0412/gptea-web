@@ -50,36 +50,49 @@ export default function ChatItem({ chat }: IChatItemProps) {
 }
 
 const ChatItemWrapper = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 3rem;
-  padding: 1rem 1.5rem;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    padding-right: 2rem;
 
-  &:hover {
-    font-weight: 600;
-    background-color: #f9f9f9;
+    &:hover {
+      font-weight: 600;
+      background-color: var(--lightgray);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    &:hover {
+      font-weight: 600;
+      background-color: var(--lightgray);
+    }
   }
 `;
 
 const ChatItemText = styled.div`
-  font-size: 1rem;
+  font-size: 1.6rem;
 `;
 
 const ChatItemButtons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3rem;
   cursor: auto;
 `;
 
 const ChatItemButton = styled.button`
-  width: 2rem;
-  height: 2rem;
-  background-color: transparent;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--lightgray);
   border: none;
-  border-radius: 10px;
+  border-radius: 1rem;
   cursor: pointer;
 
   &:hover {
@@ -91,6 +104,6 @@ const ChatItemButton = styled.button`
   }
 
   i {
-    font-size: 1rem;
+    font-size: 1.6rem;
   }
 `;

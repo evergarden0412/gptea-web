@@ -60,8 +60,15 @@ export default function Messages({ chatId, isFetching }: IMessagesProps) {
 }
 
 const MessagesWrapper = styled.div`
-  height: 90%;
-  margin-bottom: 1rem;
+  @media screen and (min-width: 768px) {
+    height: calc(90% - 2rem);
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: calc(100% - 80px);
+    margin-bottom: 1rem;
+  }
 `;
 
 const MessagesContainer = styled.ul`

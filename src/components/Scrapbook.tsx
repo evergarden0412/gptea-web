@@ -36,16 +36,32 @@ export default function Scrapbook({ scrapbook }: IScrapbookProps) {
 }
 
 const ScrapbookWrapper = styled.div`
-  position: relative;
-  width: 15rem;
-  height: 20rem;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 2rem 1.5rem;
-  border-radius: 1rem;
-  color: white;
+  @media screen and (min-width: 768px) {
+    position: relative;
+    width: 30rem;
+    aspect-ratio: 3/4;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem;
+    border-radius: 2rem;
+    color: white;
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem;
+    border-radius: 2rem;
+    color: white;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
   }
 `;
 
@@ -55,8 +71,7 @@ const ScrapbookIcons = styled.div`
 `;
 
 const ScrapbookIcon = styled.i`
-  font-size: 1.5rem;
-  padding: 0.3rem;
+  font-size: 3rem;
 `;
 
 const ScrapbookButton = styled.button`
@@ -71,8 +86,8 @@ const ScrapbookButton = styled.button`
   border-radius: 0.3rem;
 
   & svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 3rem;
+    height: 3rem;
     fill: white;
   }
 
@@ -83,14 +98,14 @@ const ScrapbookButton = styled.button`
 
 const ScrapbookTitle = styled.div`
   margin-top: 1rem;
-  font-size: 1.5rem;
+  font-size: 3rem;
 `;
 
 const ScrapbookColor = styled.div`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: pink;
   position: absolute;
-  bottom: 2rem;
+  bottom: 3rem;
 `;

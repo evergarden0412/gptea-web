@@ -58,16 +58,33 @@ export default function Login() {
 }
 
 const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  padding: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  background-color: rgba(0, 0, 0, 0.9);
+  @media screen and (min-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    padding: 100px;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-height: 100vh;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
 `;
 
-const TextContainer = styled.div``;
+const TextContainer = styled.div`
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
+`;
 
 const Text = styled.h1`
   color: white;
@@ -76,22 +93,41 @@ const Text = styled.h1`
 
 const DiscriptionContainer = styled.div`
   z-index: 1;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const ImageContainer = styled.div`
-  z-index: 1;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
+  @media screen and (min-width: 768px) {
+    z-index: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Image = styled.img`
-  width: 400px;
-  height: auto;
-  z-index: 1;
+  @media screen and (min-width: 768px) {
+    min-width: 300px;
+    width: 30%;
+    height: auto;
+    z-index: 1;
+    margin-bottom: 1rem;
 
-  &:first-of-type {
-    margin-right: 50px;
+    &:first-of-type {
+      margin-right: 1rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 1rem;
   }
 `;
 
