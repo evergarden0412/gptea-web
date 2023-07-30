@@ -46,33 +46,40 @@ export default function Nav() {
 
   return (
     <NavWrapper>
-      <MainNav>
+      <NavItems>
+        <NavItemButton onClick={handleOpenChatItemModal}>
+          <NavIcon>
+            <i className="fa-solid fa-plus"></i>
+          </NavIcon>
+          <NavText>New Chat</NavText>
+        </NavItemButton>
         <NavItem to="/" $match={match("/") || match("/chats/:id")}>
           <NavIcon>
             <i className="fa-solid fa-mug-hot"></i>
           </NavIcon>
-          <NavText>chat</NavText>
-          {match("/") && <NavButton onClick={handleOpenChatItemModal}>+</NavButton>}
+          <NavText>Chat</NavText>
         </NavItem>
         <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
           <NavIcon>
             <i className="fa-regular fa-bookmark"></i>
           </NavIcon>
-          <NavText>scrap</NavText>
+          <NavText>Scrap</NavText>
         </NavItem>
+      </NavItems>
+      <NavItems>
         <NavItemButton onClick={handleLogout}>
           <NavIcon>
             <i className="fa-solid fa-right-from-bracket"></i>
           </NavIcon>
-          <NavText>logout</NavText>
+          <NavText>Logout</NavText>
         </NavItemButton>
-      </MainNav>
-      <NavItemButton onClick={handleWithdrawal}>
-        <NavIcon>
-          <i className="fa-solid fa-user"></i>
-        </NavIcon>
-        <NavText>withdrawal</NavText>
-      </NavItemButton>
+        <NavItemButton onClick={handleWithdrawal}>
+          <NavIcon>
+            <i className="fa-solid fa-user-slash"></i>
+          </NavIcon>
+          <NavText>Withdrawal</NavText>
+        </NavItemButton>
+      </NavItems>
     </NavWrapper>
   );
 }
@@ -86,7 +93,13 @@ const NavWrapper = styled.section`
   background-color: var(--nav);
 `;
 
-const MainNav = styled.div``;
+const NavItems = styled.div`
+  &:last-child {
+    button {
+      color: var(--gray-dark);
+    }
+  }
+`;
 
 const NavItem = styled(NavLink)<{ $match: boolean }>`
   display: flex;
@@ -138,17 +151,3 @@ const NavIcon = styled.div`
 `;
 
 const NavText = styled.div``;
-
-const NavButton = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  position: absolute;
-  right: 1rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1;
-`;

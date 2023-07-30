@@ -7,6 +7,7 @@ import { requestGetChats } from "../redux/requestGetChatsSlice";
 import { createChat, modifyChat } from "../api/gptea";
 import { toastFailToRequest, toastSuccessToCreateChat, toastSuccessToModifyChatName } from "../utils/toasts";
 import { IChat } from "../utils/interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface IChatItemModalProps {
   chat: IChat | null;
@@ -14,6 +15,7 @@ interface IChatItemModalProps {
 
 export default function ChatItemModal({ chat }: IChatItemModalProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [chatName, setChatName] = useState(chat ? chat.name : "새 채팅");
 
   const handleCloseChatItemModal = () => {
@@ -45,6 +47,7 @@ export default function ChatItemModal({ chat }: IChatItemModalProps) {
           toastSuccessToCreateChat();
           dispatch(requestGetChats());
           dispatch(isOpenChatItemModalAction.close());
+          navigate("/");
         })
         .catch(() => {
           toastFailToRequest();
