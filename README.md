@@ -134,3 +134,12 @@ https://www.figma.com/proto/Hy9deg0PnnTrf90nye1pOV/gptea?node-id=112-772&startin
 - 스크랩 신규 추가할 때 scrapID 생성
 - 생성된 scrapID로 다른 스크랩북으로 옮기거나 추가하거나 제거
 - 삭제 기능으로 모든 스크랩북에서 해당 스크랩 삭제
+
+### 2-4. **모바일 반응형 디자인**
+
+<img width="300" alt="menu" src="https://github.com/evergarden0412/gptea-web/assets/88613455/80c11336-608a-4fb3-ba3f-a4d7b4315ae7">
+<img width="300" alt="chats" src="https://github.com/evergarden0412/gptea-web/assets/88613455/4f3b6edb-6b31-4824-a94f-5ddfd0daa5e0">
+<img width="300" alt="chat" src="https://github.com/evergarden0412/gptea-web/assets/88613455/470afe60-5868-4f47-ab38-02ef8f22c7b1">
+<img width="300" alt="scrap" src="https://github.com/evergarden0412/gptea-web/assets/88613455/ad25cd92-ea6f-4288-bc96-202309a81fa0">
+
+- 모바일 반응형 디자인 적용
