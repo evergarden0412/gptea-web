@@ -15,6 +15,7 @@ interface IMessagesProps {
 function Messages({ chatId, isFetching }: IMessagesProps) {
   const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLUListElement>(null);
+  const hashRef = useRef({ excutedTimes: 0 });
 
   const {
     requestGetMessages: { data: messages },
@@ -28,26 +29,28 @@ function Messages({ chatId, isFetching }: IMessagesProps) {
   useEffect(() => {
     dispatch(requestGetMessages(chatId));
 
+    return () => {
+      hashRef.current.excutedTimes = 0;
+    };
+  }, []);
+
+  useEffect(() => {
+    scrollRef.current &&
+      (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
+
+    const { hash } = window.location;
     const scrollToHashElement = () => {
-      const { hash } = window.location;
       const elementToScroll = document.getElementById(hash?.replace("#", ""));
       console.log("el", elementToScroll);
       if (!elementToScroll) return;
       scrollRef.current && (scrollRef.current.scrollTop = elementToScroll.offsetTop - 30);
     };
 
-    if (window.location.hash) {
+    if (hash && hashRef.current.excutedTimes < 2) {
       scrollToHashElement();
-      window.addEventListener("hashchange", scrollToHashElement);
+      hashRef.current.excutedTimes++;
     }
-    return () => window.removeEventListener("hashchange", scrollToHashElement);
-  }, []);
-
-  useEffect(() => {
-    if (window.location.hash) return;
-    scrollRef.current &&
-      (scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
-  }, [orderedMessages]);
+  }, [orderedMessages, isFetching]);
 
   return (
     <MessagesWrapper>
