@@ -1,4 +1,4 @@
-# gptea
+# GPTea
 
 
 ## 1️⃣ 프로젝트 소개
@@ -15,6 +15,9 @@ https://github.com/hahagarden
 BE 🧑🏻‍💼 Hankyeol Kyung  
 https://github.com/keenranger  
 
+### 배포 주소
+https://gptea-test.keenranger.dev  
+ChatGPT 접속량 증가 등으로 서비스 이용이 불가할 때에도 GPTea 서비스는 이용하실 수 있습니다.
 
 ### 1-3. 기술 스택
 
@@ -117,10 +120,10 @@ https://www.figma.com/proto/Hy9deg0PnnTrf90nye1pOV/gptea?node-id=112-772&startin
 
 ## 2️⃣ 핵심 기능
 
-### 2-1. **소셜로그인 및 Gptea JWT 인증**
+### 2-1. **소셜로그인 및 GPTea JWT 인증**
 
-- Kakao와 Naver API를 통해 소셜로그인을 하면 Gptea API로 JWT발급
-- localStorage에 저장된 Gptea 토큰으로 자동로그인 가능
+- Kakao와 Naver API를 통해 소셜로그인을 하면 GPTea API로 JWT발급
+- localStorage에 저장된 GPTea 토큰으로 자동로그인 가능
 - 로그아웃, 계정삭제 시 소셜로그인도 함께 API 요청
 
 ### 2-2. **서버데이터 동기화**
