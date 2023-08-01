@@ -94,25 +94,52 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalBox = styled.div`
-  width: 600px;
-  height: 400px;
-  padding: 50px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--white);
-  cursor: auto;
+  @media screen and (min-width: 768px) {
+    width: 600px;
+    height: 300px;
+    padding: 50px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--white);
+    cursor: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    height: 300px;
+    padding: 50px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--white);
+    cursor: auto;
+  }
 `;
 
 const Title = styled.div`
-  font-weight: 600;
-  margin-bottom: 50px;
+  @media screen and (min-width: 768px) {
+    font-weight: 600;
+    margin-bottom: 50px;
 
-  & span {
-    font-size: 28px;
-    background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
-    padding: 0 5px;
+    & span {
+      font-size: 1.6rem;
+      background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+      padding: 0 5px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    & span {
+      font-size: 1.6rem;
+      background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+      padding: 0 5px;
+    }
   }
 `;
 
@@ -124,34 +151,76 @@ const Form = styled.form`
 `;
 
 const InputLine = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 50px;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    display: flex;
+    margin-bottom: 50px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
 `;
 
 const Label = styled.label`
-  width: 150px;
-  min-width: fit-content;
-  height: 50px;
-  line-height: 50px;
+  @media screen and (min-width: 768px) {
+    width: 150px;
+    min-width: fit-content;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.6rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 150px;
+    min-width: fit-content;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.6rem;
+  }
 `;
 
 const Input = styled.input`
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 15px;
-  font-size: 24px;
-  background-color: #efefef;
-  border: none;
-  outline: none;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    font-size: 1.6rem;
+    border: none;
+    outline: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    font-size: 1.6rem;
+    border: none;
+    outline: none;
+  }
 `;
 
 const Button = styled.button`
-  width: 150px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
+  @media screen and (min-width: 768px) {
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.6rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.6rem;
+    border: none;
+    cursor: pointer;
+  }
 `;

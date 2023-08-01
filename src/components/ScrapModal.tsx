@@ -140,40 +140,85 @@ export default function ScrapModal({ message, scrapId }: IScrapModalProps) {
 }
 
 const ModalWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  cursor: pointer;
+  @media screen and (min-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+    cursor: pointer;
+  }
 `;
 
 const ModalBox = styled.div`
-  width: 600px;
-  height: auto;
-  min-height: 400px;
-  padding: 50px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--white);
-  cursor: auto;
+  @media screen and (min-width: 768px) {
+    width: 600px;
+    height: auto;
+    min-height: 400px;
+    padding: 50px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--white);
+    cursor: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    overflow-y: auto;
+    max-height: 70%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--white);
+    cursor: auto;
+  }
 `;
 
 const Title = styled.div`
-  font-weight: 600;
-  margin-bottom: 50px;
+  @media screen and (min-width: 768px) {
+    font-weight: 600;
+    margin-bottom: 50px;
 
-  & span {
-    font-size: 28px;
-    background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
-    padding: 0 5px;
+    & span {
+      font-size: 28px;
+      background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+      padding: 0 5px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-weight: 600;
+    margin-bottom: 30px;
+
+    & span {
+      font-size: 2rem;
+      background: linear-gradient(to top, #ffe69b 50%, transparent 50%);
+      padding: 0 5px;
+    }
   }
 `;
 
@@ -185,33 +230,72 @@ const Form = styled.form`
 `;
 
 const InputLine = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 50px;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
 `;
 
 const Label = styled.label`
-  width: 250px;
-  height: 50px;
-  line-height: 50px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @media screen and (min-width: 768px) {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 24px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 250px;
+    height: 30px;
+    line-height: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const Input = styled.input`
-  width: 50px;
-  height: 50px;
+  @media screen and (min-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Button = styled.button`
-  width: 150px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
+  @media screen and (min-width: 768px) {
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.6rem;
+    border: none;
+    cursor: pointer;
+  }
 `;
 
 const DeleteButton = styled.button`

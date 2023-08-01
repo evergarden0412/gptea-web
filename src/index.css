@@ -48,3 +48,8 @@ a {
 *::-webkit-scrollbar {
   display: none;
 }
+
+input,
+button {
+  background-color: var(--lightgray);
+}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
@@ -12,7 +12,7 @@ interface IMessagesProps {
   isFetching: boolean;
 } // optional because of {chatId} = useParams()
 
-export default function Messages({ chatId, isFetching }: IMessagesProps) {
+function Messages({ chatId, isFetching }: IMessagesProps) {
   const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLUListElement>(null);
 
@@ -20,7 +20,10 @@ export default function Messages({ chatId, isFetching }: IMessagesProps) {
     requestGetMessages: { data: messages },
   } = useAppSelector((state) => state);
 
-  const orderedMessages = JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq);
+  const orderedMessages = useMemo(
+    () => JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq),
+    [messages]
+  );
 
   useEffect(() => {
     dispatch(requestGetMessages(chatId));
@@ -58,6 +61,8 @@ export default function Messages({ chatId, isFetching }: IMessagesProps) {
     </MessagesWrapper>
   );
 }
+
+export default Messages;
 
 const MessagesWrapper = styled.div`
   @media screen and (min-width: 768px) {
