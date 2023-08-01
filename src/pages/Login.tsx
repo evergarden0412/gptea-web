@@ -16,7 +16,7 @@ const naverLogin = new window.naver.LoginWithNaverId({
   },
 });
 
-const kakaoLogin = window.Kakao;
+export const kakaoLogin = window.Kakao;
 
 export default function Login() {
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function Login() {
   const handleKakaoLogin = () => {
     kakaoLogin.Auth.authorize({
       redirectUri: process.env.REACT_APP_KAKAO_CALLBACK_URL,
+      prompts: "login",
     });
   };
 

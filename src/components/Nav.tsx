@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
 import { useNavigate, NavLink, useLocation, matchPath } from "react-router-dom";
+import { useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
-import { removeKakaoToken, removeNaverToken } from "../api/social";
+import { removeNaverToken } from "../api/social";
 import { toastLogout } from "../utils/toasts";
 import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
-import { KAKAO_ACCESS_TOKEN } from "../pages/KakaoLogin";
-import { useState } from "react";
+import { kakaoLogin } from "../pages/Login";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -22,16 +22,16 @@ export default function Nav() {
     return false;
   };
 
-  const removeSocialToken = () => {
+  const removeSocialToken = async () => {
     if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
       removeNaverToken();
-    } else if (localStorage.getItem(KAKAO_ACCESS_TOKEN)) {
-      removeKakaoToken();
+    } else if (kakaoLogin.Auth.getAccessToken()) {
+      kakaoLogin.Auth.logout().catch((err: any) => console.log(err));
     }
   };
 
-  const handleLogout = () => {
-    removeSocialToken();
+  const handleLogout = async () => {
+    await removeSocialToken();
     dispatch(logout());
     localStorage.clear();
     toastLogout();

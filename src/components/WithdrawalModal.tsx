@@ -6,8 +6,8 @@ import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
 import { deleteGpteaAccount } from "../api/gpteaAuth";
-import { unlinkKakaoAccount } from "../api/social";
 import { toastFailToRequest, toastFailToWithdrawal, toastLogout, toastSuccessToWithdrawal } from "../utils/toasts";
+import { kakaoLogin } from "../pages/Login";
 
 export default function WithdrawalModal() {
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ export default function WithdrawalModal() {
 
   const handleUnregister = async () => {
     try {
-      await unlinkKakaoAccount();
+      await kakaoLogin.API.request({ url: "/v1/user/unlink" });
       await deleteGpteaAccount();
       localStorage.clear();
       toastSuccessToWithdrawal();

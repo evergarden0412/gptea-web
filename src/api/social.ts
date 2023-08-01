@@ -1,40 +1,45 @@
 import axios from "axios";
+import { kakaoLogin } from "../pages/Login";
+import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 
 /* KAKAO */
+type IParamsForTokenRequest = {
+  [param: string]: string;
+};
 
-import { KAKAO_ACCESS_TOKEN, KAKAO_USER_ID } from "../pages/KakaoLogin";
+export const getKakaoAccessToken = (code: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const paramsForTokenRequest: IParamsForTokenRequest = {
+      grant_type: "authorization_code",
+      client_id: `${process.env.REACT_APP_KAKAO_API_KEY}`,
+      redirect_uri: `${process.env.REACT_APP_KAKAO_CALLBACK_URL}`,
+      code,
+      client_secret: `${process.env.REACT_APP_KAKAO_SECRET_KEY}`,
+    };
 
-export const unlinkKakaoAccount = async () => {
-  await axios({
-    url: `https://kapi.kakao.com/v1/user/unlink?target_id_type=user_id&target_id=${JSON.parse(
-      localStorage.getItem(KAKAO_USER_ID) || ""
-    )}`,
-    method: "POST",
-    headers: {
-      Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_ADMIN_KEY}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    const queryString = Object.keys(paramsForTokenRequest)
+      .map((param) => encodeURIComponent(param) + "=" + encodeURIComponent(paramsForTokenRequest[param]))
+      .join("&");
+
+    axios(`https://kauth.kakao.com/oauth/token?${queryString}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+      .then((res) => {
+        const { access_token: accessToken } = res.data;
+        if (accessToken) {
+          kakaoLogin.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+          kakaoLogin.Auth.setAccessToken(accessToken);
+          resolve(accessToken);
+        }
+      })
+      .catch((err) => reject({ err }));
   });
 };
 
-export const removeKakaoToken = async () => {
-  axios("https://kapi.kakao.com/v1/user/logout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Bearer ${localStorage.getItem(KAKAO_ACCESS_TOKEN)}`,
-    },
-  })
-    .then(() => {
-      localStorage.removeItem(KAKAO_USER_ID);
-      localStorage.removeItem(KAKAO_ACCESS_TOKEN);
-    })
-    .catch((err) => console.log("error!", err));
-};
-
 /* NAVER */
-
-import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
 
 export const removeNaverToken = async () => {
   axios(
