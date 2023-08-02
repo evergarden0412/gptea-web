@@ -41,7 +41,10 @@ const ScrapbookWrapper = styled.div`
     width: 30rem;
     aspect-ratio: 3/4;
     background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.8);
     padding: 3rem;
+    margin: 1rem 0;
+    margin-left: 1rem;
     border-radius: 2rem;
     color: white;
 
