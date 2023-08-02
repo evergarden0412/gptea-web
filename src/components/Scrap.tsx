@@ -36,7 +36,7 @@ export default function Scrap({ scrap }: IScrapProps) {
         </Button>
         {isExpand && (
           <Button>
-            <Link to={`/chats/${scrap.message?.chatId}#${scrap.message?.seq}`}>
+            <Link to={`/chat/${scrap.message?.chatId}#${scrap.message?.seq}`}>
               <i className="Scrap__icon--move fa-sharp fa-solid fa-share"></i>
             </Link>
           </Button>

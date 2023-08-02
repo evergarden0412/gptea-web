@@ -73,13 +73,13 @@ export default function Nav() {
             </NavIcon>
             <NavText>New Chat</NavText>
           </NavItemButton>
-          <NavItem to="/" $match={match("/") || match("/chats/:id")}>
+          <NavItem to="/" $match={match("/") || match("/chat/:id")}>
             <NavIcon>
               <i className="fa-solid fa-mug-hot"></i>
             </NavIcon>
             <NavText>Chat</NavText>
           </NavItem>
-          <NavItem to="/scrapbooks" $match={match("/scrapbooks") || match("/scrapbooks/:id")}>
+          <NavItem to="/scrapbook" $match={match("/scrapbook") || match("/scrapbook/:id")}>
             <NavIcon>
               <i className="fa-regular fa-bookmark"></i>
             </NavIcon>

@@ -11,9 +11,9 @@ export default function Feature() {
     <FeatureWrapper>
       <Routes>
         <Route path="/" element={<Chats />} />
-        <Route path="/chats/:chatId" element={<Chat />} />
-        <Route path="/scrapbooks" element={<Scrapbooks />} />
-        <Route path="/scrapbooks/:scrapbookId" element={<Scraps />} />
+        <Route path="/chat/:chatId" element={<Chat />} />
+        <Route path="/scrapbook" element={<Scrapbooks />} />
+        <Route path="/scrapbook/:scrapbookId" element={<Scraps />} />
       </Routes>
     </FeatureWrapper>
   );

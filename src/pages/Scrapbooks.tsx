@@ -22,7 +22,7 @@ export default function Scrapbooks() {
       <ScrapbooksSlide>
         <ScrapbooksContainer>
           {scrapbooks.map((scrapbook) => (
-            <ScrapbookLink to={`/scrapbooks/${scrapbook.id}`} key={scrapbook.id}>
+            <ScrapbookLink to={`/scrapbook/${scrapbook.id}`} key={scrapbook.id}>
               <Scrapbook scrapbook={scrapbook} />
             </ScrapbookLink>
           ))}

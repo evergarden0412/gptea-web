@@ -21,7 +21,7 @@ export default function Chats() {
       <ChatsWrapper>
         <ul className="Chats__list">
           {chats.map((chat) => (
-            <Link to={`/chats/${chat.id}`} key={chat.id}>
+            <Link to={`/chat/${chat.id}`} key={chat.id}>
               <ChatItem chat={chat} />
             </Link>
           ))}
