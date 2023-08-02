@@ -132,8 +132,11 @@ const Image = styled.img`
       margin-right: 1rem;
     }
   }
+
   @media screen and (max-width: 768px) {
     width: 100%;
+    height: auto;
+    aspect-ratio: 3/2;
     margin-bottom: 1rem;
   }
 `;
