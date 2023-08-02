@@ -26,12 +26,14 @@ export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptPro
       .then(() => {
         setMessage("");
         dispatch(requestGetMessages(chatId));
-        if (textareaRef.current) textareaRef.current.disabled = false;
       })
       .catch(() => {
         toastFailToRequest();
       })
-      .finally(() => setIsFetching(false));
+      .finally(() => {
+        setIsFetching(false);
+        if (textareaRef.current) textareaRef.current.disabled = false;
+      });
   };
 
   const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
