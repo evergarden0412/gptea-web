@@ -8,7 +8,11 @@ export const requestGetMessages = createAsyncThunk("requestGetMessages", getMess
 const requestGetMessagesSlice = createSlice({
   name: "requestGetMessages",
   initialState: { data: [], status: "none" },
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.data = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(requestGetMessages.pending, (state) => {
       state.status = "loading";
@@ -24,4 +28,6 @@ const requestGetMessagesSlice = createSlice({
   },
 });
 
+const { reset } = requestGetMessagesSlice.actions;
+export const requestGetMessagesAction = { reset };
 export default requestGetMessagesSlice.reducer;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useEffect, useMemo, useRef } from "react";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { requestGetMessages } from "../redux/requestGetMessagesSlice";
+import { requestGetMessages, requestGetMessagesAction } from "../redux/requestGetMessagesSlice";
 import Message from "./Message";
 import Loading from "./Loading";
 import { IMessage } from "../utils/interfaces";
@@ -30,6 +30,7 @@ function Messages({ chatId, isFetching }: IMessagesProps) {
     dispatch(requestGetMessages(chatId));
 
     return () => {
+      dispatch(requestGetMessagesAction.reset());
       hashRef.current.excutedTimes = 0;
     };
   }, []);
