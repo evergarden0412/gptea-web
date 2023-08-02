@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { getScrapsInScrapbook } from "../api/gptea";
 import Scrap from "../components/Scrap";
 import { IScrap } from "../utils/interfaces";
+import { Helmet } from "react-helmet-async";
 
 export default function Scraps() {
   const { scrapbookId } = useParams();
@@ -15,13 +16,18 @@ export default function Scraps() {
   }, []);
 
   return (
-    <ScrapsWrapper>
-      <ul className="Scraps__list">
-        {scraps.map((scrap) => (
-          <Scrap key={scrap.id} scrap={scrap} />
-        ))}
-      </ul>
-    </ScrapsWrapper>
+    <>
+      <Helmet>
+        <title>Scraps | GPTea</title>
+      </Helmet>
+      <ScrapsWrapper>
+        <ul className="Scraps__list">
+          {scraps.map((scrap) => (
+            <Scrap key={scrap.id} scrap={scrap} />
+          ))}
+        </ul>
+      </ScrapsWrapper>
+    </>
   );
 }
 

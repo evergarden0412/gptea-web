@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetScrapbooks } from "../redux/requestGetScrapbooksSlice";
 import Scrapbook from "../components/Scrapbook";
 import NewScrapbook from "../components/NewScrapbook";
+import { Helmet } from "react-helmet-async";
 
 export default function Scrapbooks() {
   const dispatch = useAppDispatch();
@@ -18,18 +19,23 @@ export default function Scrapbooks() {
   }, []);
 
   return (
-    <ScrapbooksWrapper>
-      <ScrapbooksSlide>
-        <ScrapbooksContainer>
-          {scrapbooks.map((scrapbook) => (
-            <ScrapbookLink to={`/scrapbook/${scrapbook.id}`} key={scrapbook.id}>
-              <Scrapbook scrapbook={scrapbook} />
-            </ScrapbookLink>
-          ))}
-          <NewScrapbook />
-        </ScrapbooksContainer>
-      </ScrapbooksSlide>
-    </ScrapbooksWrapper>
+    <>
+      <Helmet>
+        <title>Scrapbooks | GPTea</title>
+      </Helmet>
+      <ScrapbooksWrapper>
+        <ScrapbooksSlide>
+          <ScrapbooksContainer>
+            {scrapbooks.map((scrapbook) => (
+              <ScrapbookLink to={`/scrapbook/${scrapbook.id}`} key={scrapbook.id}>
+                <Scrapbook scrapbook={scrapbook} />
+              </ScrapbookLink>
+            ))}
+            <NewScrapbook />
+          </ScrapbooksContainer>
+        </ScrapbooksSlide>
+      </ScrapbooksWrapper>
+    </>
   );
 }
 

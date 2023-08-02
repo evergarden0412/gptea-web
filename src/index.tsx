@@ -7,14 +7,19 @@ import axios from "axios";
 import App from "./App";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
+import { HelmetProvider } from "react-helmet-async";
 
 axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "https://api.gptea-test.keenranger.dev";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+const app = (
+  <Provider store={store}>
+    <BrowserRouter>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </BrowserRouter>
+  </Provider>
 );
+
+root.render(app);

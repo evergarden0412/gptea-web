@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { requestGetChats } from "../redux/requestGetChatsSlice";
 import ChatItem from "../components/ChatItem";
+import { Helmet } from "react-helmet-async";
 
 export default function Chats() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,9 @@ export default function Chats() {
 
   return (
     <>
+      <Helmet>
+        <title>Chats | GPTea</title>
+      </Helmet>
       <ChatsWrapper>
         <ul className="Chats__list">
           {chats.map((chat) => (
