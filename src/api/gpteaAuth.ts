@@ -13,15 +13,6 @@ export const createGpteaToken = async (socialAccessToken: string, social: string
   return data;
 };
 
-export const verifyGpteaToken = async () => {
-  const { data } = await axios("/auth/token/verify", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
-  return data;
-};
-
 export const recreateGpteaToken = async () => {
   const { data } = await axios("/auth/token/refresh", {
     method: "POST",

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
-import { verifyGpteaToken } from "../api/gpteaAuth";
 import { generateGpteaToken } from "./KakaoLogin";
 
 const NAVER = "naver";
@@ -19,7 +18,6 @@ export default function NaverLogin() {
       // gptea login api에 전달 예정
       if (!localStorage.getItem(NAVER_ACCESS_TOKEN)) localStorage.setItem(NAVER_ACCESS_TOKEN, naverAccessToken);
       generateGpteaToken(naverAccessToken, NAVER)
-        .then(() => verifyGpteaToken())
         .then(() => {
           dispatch(login());
           navigate("/");

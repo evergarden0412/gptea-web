@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/hooks";
 import { login } from "../redux/isLoggedInSlice";
-import { createGpteaAccount, createGpteaToken, verifyGpteaToken } from "../api/gpteaAuth";
+import { createGpteaAccount, createGpteaToken } from "../api/gpteaAuth";
 import { getKakaoAccessToken } from "../api/social";
 import { setGpteaTokenInStorage } from "../utils/util";
 import { toastFailToRegister, toastLogin, toastRegister } from "../utils/toasts";
@@ -44,7 +44,6 @@ export default function KakaoLogin() {
     if (code)
       getKakaoAccessToken(code)
         .then((kakaoAccessToken) => generateGpteaToken(kakaoAccessToken, KAKAO))
-        .then(() => verifyGpteaToken())
         .then(() => {
           dispatch(login());
           navigate("/");
