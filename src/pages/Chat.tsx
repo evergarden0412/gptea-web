@@ -1,19 +1,26 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Messages from "../components/Messages";
 import Prompt from "../components/Prompt";
 import { Helmet } from "react-helmet-async";
+import { getChat } from "../api/gptea";
+import { IChat } from "../utils/interfaces";
 
 export default function Chat() {
   const { chatId } = useParams();
   const [isFetching, setIsFetching] = useState(false);
+  const [chat, setChat] = useState<IChat>();
+
+  useEffect(() => {
+    getChat(chatId).then((res) => setChat(res));
+  }, []);
 
   return (
     <>
       <Helmet>
-        <title>Chat | GPTea</title>
+        <title>{`${chat?.name || ""}  |  GPTea Chat`}</title>
       </Helmet>
       <ChatWrapper>
         <Messages chatId={chatId} isFetching={isFetching} />

@@ -18,6 +18,17 @@ export const getChats = async () => {
   return chats;
 }; //thunk
 
+export const getChat = async (chatId: string | undefined) => {
+  const { data } = await axios(`/me/chats/${chatId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+    },
+  });
+
+  return data;
+};
+
 export const getMessages = async (chatId: string | undefined) => {
   const {
     data: { messages },
@@ -50,6 +61,17 @@ export const getScrapbooks = async () => {
 
   return scrapbooks;
 }; //thunk
+
+export const getScrapbook = async (scrapbookId: string | undefined) => {
+  const { data } = await axios(`/me/scrapbooks/${scrapbookId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
+    },
+  });
+
+  return data;
+};
 
 export const getScrapsInScrapbook = async (scrapbookId: string | undefined) => {
   const {
