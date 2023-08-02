@@ -25,6 +25,7 @@ export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptPro
     sendMessage(chatId, { content: message })
       .then(() => {
         setMessage("");
+        if (textareaRef.current) textareaRef.current.style.height = "auto";
         dispatch(requestGetMessages(chatId));
       })
       .catch(() => {
