@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { useAppDispatch } from "../redux/hooks";
 import { requestGetMessages } from "../redux/requestGetMessagesSlice";
@@ -15,9 +15,10 @@ interface IPromptProps {
 export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptProps) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleSubmitMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmitMessage = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     if (isFetching) return;
 
     setIsFetching(true);
@@ -25,6 +26,7 @@ export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptPro
       .then(() => {
         setMessage("");
         dispatch(requestGetMessages(chatId));
+        if (textareaRef.current) textareaRef.current.disabled = false;
       })
       .catch(() => {
         toastFailToRequest();
@@ -32,10 +34,29 @@ export default function Prompt({ chatId, isFetching, setIsFetching }: IPromptPro
       .finally(() => setIsFetching(false));
   };
 
+  const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+    e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+  };
+
+  const handleKeyUpEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.currentTarget.disabled = true;
+      handleSubmitMessage();
+    }
+  };
+
   return (
     <PromptWrapper>
       <PromptForm onSubmit={handleSubmitMessage}>
-        <PromptInput placeholder="ask anything" value={message} onChange={(e) => setMessage(e.target.value)} />
+        <PromptTextarea
+          ref={textareaRef}
+          placeholder="ask anything"
+          value={message}
+          rows={1}
+          onChange={handleChangeTextarea}
+          onKeyUp={handleKeyUpEnter}
+        />
         <PromptButton>
           <i className="Prompt__button--submit fa-solid fa-paper-plane"></i>
         </PromptButton>
@@ -78,14 +99,16 @@ const PromptForm = styled.form`
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 0.5rem 1.5rem;
+  padding: 1.5rem 2rem;
+  padding-right: 4rem;
   border-radius: 1rem;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const PromptInput = styled.input`
+const PromptTextarea = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   background-color: transparent;
   border: none;
   outline: none;
@@ -99,8 +122,8 @@ const PromptInput = styled.input`
 const PromptButton = styled.button`
   position: absolute;
   right: 1.5rem;
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   background-color: transparent;
   cursor: pointer;
   border: none;
