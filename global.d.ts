@@ -5,3 +5,4 @@ declare interface Window {
 
 declare module "*.png";
 declare module "*.gif";
+declare module "*.svg";
