@@ -1,30 +1,18 @@
-import axios from "axios";
-
-import { GPTEA_ACCESS_TOKEN } from "../utils/util";
 import { IMessage, IScrap } from "../utils/interfaces";
+import { apiWithAuth } from "./axiosApi";
 
 /* GET */
 /* thunk함수는 thunk에서 toastFailToRequest 호출 */
 export const getChats = async () => {
   const {
     data: { chats },
-  } = await axios("/me/chats", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  } = await apiWithAuth.get("/me/chats");
 
   return chats;
 }; //thunk
 
 export const getChat = async (chatId: string | undefined) => {
-  const { data } = await axios(`/me/chats/${chatId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  const { data } = await apiWithAuth.get(`/me/chats/${chatId}`);
 
   return data;
 };
@@ -32,12 +20,7 @@ export const getChat = async (chatId: string | undefined) => {
 export const getMessages = async (chatId: string | undefined) => {
   const {
     data: { messages },
-  } = await axios(`/me/chats/${chatId}/messages`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  } = await apiWithAuth.get(`/me/chats/${chatId}/messages`);
 
   const newMessages = messages.map((message: IMessage) => {
     const newMessage = Object.assign({}, message);
@@ -52,23 +35,13 @@ export const getMessages = async (chatId: string | undefined) => {
 export const getScrapbooks = async () => {
   const {
     data: { scrapbooks },
-  } = await axios("/me/scrapbooks", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  } = await apiWithAuth.get("/me/scrapbooks");
 
   return scrapbooks;
 }; //thunk
 
 export const getScrapbook = async (scrapbookId: string | undefined) => {
-  const { data } = await axios(`/me/scrapbooks/${scrapbookId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  const { data } = await apiWithAuth.get(`/me/scrapbooks/${scrapbookId}`);
 
   return data;
 };
@@ -76,12 +49,7 @@ export const getScrapbook = async (scrapbookId: string | undefined) => {
 export const getScrapsInScrapbook = async (scrapbookId: string | undefined) => {
   const {
     data: { scraps },
-  } = await axios(`/me/scrapbooks/${scrapbookId}/scraps`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  } = await apiWithAuth.get(`/me/scrapbooks/${scrapbookId}/scraps`);
 
   const newScraps = scraps.map((scrap: IScrap) => {
     const newScrap = JSON.parse(JSON.stringify(scrap));
@@ -96,41 +64,22 @@ export const getScrapsInScrapbook = async (scrapbookId: string | undefined) => {
 export const getScrapParents = async (scrapId: string | undefined) => {
   const {
     data: { scrapbooks },
-  } = await axios(`/me/scraps/${scrapId}/scrapbooks`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  } = await apiWithAuth.get(`/me/scraps/${scrapId}/scrapbooks`);
 
   return scrapbooks;
 };
 
 /* POST */
 export const createChat = async (data: { name: string }) => {
-  await axios("/me/chats", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-    data,
-  });
+  await apiWithAuth.post("/me/chats", data);
 };
 
 export const sendMessage = async (chatId: string | undefined, data: { content: string }) => {
-  await axios(`/me/chats/${chatId}/messages`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-    data,
-  });
+  await apiWithAuth.post(`/me/chats/${chatId}/messages`, data);
 };
 
 export const createScrapbook = async (data: { name: string }) => {
-  await axios("/me/scrapbooks", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-    data,
-  });
+  await apiWithAuth.post("/me/scrapbooks", data);
 };
 
 export const createScrap = async (data: {
@@ -139,73 +88,35 @@ export const createScrap = async (data: {
   seq: number | undefined;
   scrapbookIDs: string[];
 }) => {
-  await axios(`/me/scraps`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-      "Content-Type": "application/json",
-    },
-    data,
-  });
+  await apiWithAuth.post(`/me/scraps`, data);
 };
 
 export const addSingleScrap = async (scrapId: string | undefined, scrapbookId: string) => {
-  await axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  await apiWithAuth.post(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`);
 };
 
 /* PATCH */
 export const modifyChat = async (chatId: string, data: { name: string }) => {
-  await axios(`/me/chats/${chatId}`, {
-    method: "PATCH",
-    headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-    data,
-  });
+  await apiWithAuth.patch(`/me/chats/${chatId}`, data);
 };
 
 export const modifyScrapbook = async (scrapbookId: string, data: { name: string }) => {
-  await axios(`/me/scrapbooks/${scrapbookId}`, {
-    method: "PATCH",
-    headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-    data,
-  });
+  await apiWithAuth.patch(`/me/scrapbooks/${scrapbookId}`, data);
 };
 
 /* DELETE */
 export const deleteChat = async (chatId: string) => {
-  await axios(`/me/chats/${chatId}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}` },
-  });
+  await apiWithAuth.delete(`/me/chats/${chatId}`);
 };
 
 export const deleteScrapbook = async (scrapbookId: string) => {
-  await axios(`/me/scrapbooks/${scrapbookId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  await apiWithAuth.delete(`/me/scrapbooks/${scrapbookId}`);
 };
 
 export const deleteSingleScrap = async (scrapId: string | undefined, scrapbookId: string) => {
-  await axios(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  await apiWithAuth.delete(`/me/scraps/${scrapId}/scrapbooks/${scrapbookId}`);
 };
 
 export const deleteAllScrap = async (scrapId: string | undefined) => {
-  axios(`/me/scraps/${scrapId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(GPTEA_ACCESS_TOKEN)}`,
-    },
-  });
+  apiWithAuth.delete(`/me/scraps/${scrapId}`);
 };

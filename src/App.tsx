@@ -2,12 +2,11 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { decode } from "jsonwebtoken";
 
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { login } from "./redux/isLoggedInSlice";
 import { recreateGpteaToken } from "./api/gpteaAuth";
-import { GPTEA_ACCESS_TOKEN, setGpteaTokenInStorage } from "./utils/util";
+import { GPTEA_ACCESS_TOKEN, GPTEA_EXPIRES_IN, setGpteaTokenInStorage } from "./utils/util";
 import { toastLogin } from "./utils/toasts";
 import MyGptea from "./pages/MyGptea";
 import Login from "./pages/Login";
@@ -40,8 +39,7 @@ export default function App() {
     // 재발급 성공하면 로그인
     // 재발급 실패하면 로컬스토리지 비우며 토큰 정보 삭제
     if (localStorage.getItem(GPTEA_ACCESS_TOKEN)) {
-      const decoded = decode(localStorage.getItem(GPTEA_ACCESS_TOKEN) || "") as { exp: number };
-      if (decoded.exp > Date.now() / 1000) {
+      if (Number(localStorage.getItem(GPTEA_EXPIRES_IN)) > Date.now() / 1000 + 60) {
         toastLogin();
         dispatch(login());
       } else regenerateGpteaToken();
