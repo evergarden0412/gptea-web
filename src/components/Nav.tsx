@@ -6,10 +6,8 @@ import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/isLoggedInSlice";
 import { isOpenChatItemModalAction } from "../redux/isOpenChatItemModalSlice";
 import { isOpenWithdrawalModalAction } from "../redux/isOpenWithdrawalModalSlice";
-import { removeNaverToken } from "../api/social";
 import { toastLogout } from "../utils/toasts";
-import { NAVER_ACCESS_TOKEN } from "../pages/NaverLogin";
-import { kakaoLogin } from "../pages/Login";
+import { deleteGpteaToken } from "../api/gpteaAuth";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -22,16 +20,8 @@ export default function Nav() {
     return false;
   };
 
-  const removeSocialToken = async () => {
-    if (localStorage.getItem(NAVER_ACCESS_TOKEN)) {
-      removeNaverToken();
-    } else if (kakaoLogin.Auth.getAccessToken()) {
-      kakaoLogin.Auth.logout().catch((err: any) => console.log(err));
-    }
-  };
-
   const handleLogout = async () => {
-    await removeSocialToken();
+    await deleteGpteaToken();
     dispatch(logout());
     localStorage.clear();
     toastLogout();

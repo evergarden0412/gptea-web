@@ -27,3 +27,7 @@ export const recreateGpteaToken = async () => {
 export const deleteGpteaAccount = async () => {
   await apiWithAuth.delete("/me");
 };
+
+export const deleteGpteaToken = async () => {
+  await apiWithAuth.delete("/auth/cred/logout");
+};
