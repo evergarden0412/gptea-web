@@ -17,9 +17,7 @@ function Messages({ chatId, isFetching }: IMessagesProps) {
   const scrollRef = useRef<HTMLUListElement>(null);
   const hashRef = useRef({ excutedTimes: 0 });
 
-  const {
-    requestGetMessages: { data: messages },
-  } = useAppSelector((state) => state);
+  const messages = useAppSelector((state) => state.requestGetMessages.data);
 
   const orderedMessages = useMemo(
     () => JSON.parse(JSON.stringify(messages)).sort((a: IMessage, b: IMessage) => a.seq - b.seq),

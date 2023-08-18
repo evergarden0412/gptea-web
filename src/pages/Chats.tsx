@@ -9,9 +9,7 @@ import ChatItem from "../components/ChatItem";
 
 export default function Chats() {
   const dispatch = useAppDispatch();
-  const {
-    requestGetChats: { data: chats },
-  } = useAppSelector((state) => state);
+  const chats = useAppSelector((state) => state.requestGetChats.data);
 
   useEffect(() => {
     dispatch(requestGetChats());

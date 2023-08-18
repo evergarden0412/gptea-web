@@ -15,7 +15,7 @@ import KakaoLogin from "./pages/KakaoLogin";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector((state) => state);
+  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
 
   const regenerateGpteaToken = async () => {
     recreateGpteaToken()

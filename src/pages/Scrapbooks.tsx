@@ -10,9 +10,7 @@ import { Helmet } from "react-helmet-async";
 
 export default function Scrapbooks() {
   const dispatch = useAppDispatch();
-  const {
-    requestGetScrapbooks: { data: scrapbooks },
-  } = useAppSelector((state) => state);
+  const scrapbooks = useAppSelector((state) => state.requestGetScrapbooks.data);
 
   useEffect(() => {
     dispatch(requestGetScrapbooks());

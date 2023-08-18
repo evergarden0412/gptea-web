@@ -9,9 +9,10 @@ import ScrapModal from "../components/ScrapModal";
 import WithdrawalModal from "../components/WithdrawalModal";
 
 export default function MyGptea() {
-  const { isOpenChatItemModal, isOpenScrapbookModal, isOpenScrapModal, isOpenWithdrawalModal } = useAppSelector(
-    (state) => state
-  );
+  const isOpenChatItemModal = useAppSelector((state) => state.isOpenChatItemModal);
+  const isOpenScrapbookModal = useAppSelector((state) => state.isOpenScrapbookModal);
+  const isOpenScrapModal = useAppSelector((state) => state.isOpenScrapModal);
+  const isOpenWithdrawalModal = useAppSelector((state) => state.isOpenWithdrawalModal);
 
   return (
     <MyGpteaWrapper>
@@ -19,12 +20,7 @@ export default function MyGptea() {
       <Feature />
       {isOpenChatItemModal.status && <ChatItemModal chat={isOpenChatItemModal.chat} />}
       {isOpenScrapbookModal.status && <ScrapbookModal scrapbook={isOpenScrapbookModal.scrapbook} />}
-      {isOpenScrapModal.status &&
-        (isOpenScrapModal.scrapId ? (
-          <ScrapModal message={isOpenScrapModal.message} scrapId={isOpenScrapModal.scrapId} />
-        ) : (
-          <ScrapModal message={isOpenScrapModal.message} />
-        ))}
+      {isOpenScrapModal.status && <ScrapModal message={isOpenScrapModal.message} scrapId={isOpenScrapModal.scrapId} />}
       {isOpenWithdrawalModal.status && <WithdrawalModal />}
     </MyGpteaWrapper>
   );

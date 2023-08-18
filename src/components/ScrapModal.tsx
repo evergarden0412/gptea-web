@@ -75,9 +75,7 @@ export default function ScrapModal({ message, scrapId }: IScrapModalProps) {
       .catch(() => toastFailToRequest());
   };
 
-  const {
-    requestGetScrapbooks: { data: scrapbooks },
-  } = useAppSelector((state) => state);
+  const scrapbooks = useAppSelector((state) => state.requestGetScrapbooks.data);
 
   useEffect(() => {
     if (scrapbooks.length === 0) dispatch(requestGetScrapbooks());
